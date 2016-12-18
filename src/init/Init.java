@@ -10,6 +10,7 @@ import gui.EvolutionFrame;
 import gui.InputManagerFrame;
 import gui.InputWindowFrame;
 import gui.MetronomeFrame;
+import gui.MidiKeyboardDummyFrame;
 import gui.OutputManagerFrame;
 import gui.PrimitiveBassistFrame;
 import gui.RuleManagerFrame;
@@ -93,7 +94,7 @@ public class Init {
 			metronome.addMetronomeListener(bassist);
 			new PrimitiveBassistFrame(bassist);
 			
-//			new MidiKeyboardDummyFrame(outputManager, inputManager);
+			new MidiKeyboardDummyFrame(outputManager, inputManager);
 
 		
 		} catch (Exception e) {
