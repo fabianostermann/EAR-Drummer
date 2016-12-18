@@ -15,7 +15,7 @@ public class InputWindowFrame extends ManagedFrame {
 		this.setTitle("Input Window");
 		
 		this.initGUI();
-		this.setSize(1000, 300);
+		this.setSize(1000, 250);
 		
 		this.setLocationByPlatform(true);
 		this.setVisible(true);

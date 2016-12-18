@@ -28,7 +28,7 @@ public class OutputManagerFrame extends ManagedFrame implements ItemListener {
 		this.setTitle("Midi Output Manager");
 		
 		this.initGUI();
-		this.setSize(400,300);
+		this.setSize(400,250);
 		this.setResizable(false);
 
 		this.setLocationByPlatform(true);

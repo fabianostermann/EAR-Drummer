@@ -27,7 +27,7 @@ public class InputManagerFrame extends ManagedFrame implements ItemListener {
 		this.setTitle("Midi Input Manager");
 		
 		this.initGUI();
-		this.setSize(400,300);
+		this.setSize(400,250);
 		this.setResizable(false);
 
 		this.setLocationByPlatform(true);

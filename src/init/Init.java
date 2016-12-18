@@ -7,6 +7,7 @@ import genetic.mutations.MutationManager;
 import genetic.rules.RuleManager;
 import gui.DrumPatternFrame;
 import gui.EvolutionFrame;
+import gui.FrameManager;
 import gui.InputManagerFrame;
 import gui.InputWindowFrame;
 import gui.MetronomeFrame;
@@ -95,7 +96,8 @@ public class Init {
 			new PrimitiveBassistFrame(bassist);
 			
 			new MidiKeyboardDummyFrame(outputManager, inputManager);
-
+			
+			FrameManager.getInstance().rearrange();
 		
 		} catch (Exception e) {
 			e.printStackTrace();

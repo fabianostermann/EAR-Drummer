@@ -35,8 +35,8 @@ public class MetronomeFrame extends ManagedFrame implements MetronomeListener, C
 		this.setTitle("Metronome");
 		
 		this.initGUI();
-		this.pack();
-		this.setResizable(false);
+		this.setSize(250, 220);
+		this.setResizable(true);
 		
 		this.metronome.addMetronomeListener(this);
 

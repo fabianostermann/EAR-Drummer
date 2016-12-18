@@ -79,6 +79,23 @@ public class FrameManager extends JFrame {
 		}
 	}
 	
+	int xLocation = 10, yLocation = 10, maxHeight = 0;
+	public void rearrange() {
+		this.setLocation(xLocation, yLocation);
+		xLocation = this.getLocation().x + this.getWidth() + 10;
+		maxHeight = this.getHeight();
+		for (FrameBox frameBox : frameBoxes) {
+			if (xLocation + frameBox.frame.getWidth() + 10 > 1920) {
+				xLocation = 10;
+				yLocation += maxHeight + 50;
+				maxHeight = 0;
+			}
+			frameBox.frame.setLocation(xLocation, yLocation);
+			maxHeight = Math.max(frameBox.frame.getHeight(), maxHeight);
+			xLocation += frameBox.frame.getWidth() + 10;
+		}
+	}
+	
 	@Override
 	public void dispose() {
 		super.dispose();
@@ -114,4 +131,5 @@ public class FrameManager extends JFrame {
 		}
 		
 	}
+
 }
