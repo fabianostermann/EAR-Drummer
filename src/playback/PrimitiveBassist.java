@@ -77,14 +77,14 @@ public class PrimitiveBassist implements MetronomeListener {
 			return;
 		}
 		
-		int volumeAvg = 0;
-		if (evolution.inputAnalysis != null) {
-			volumeAvg = (int) evolution.inputAnalysis.volumeAverage;
-		}
-		if (volumeAvg > 0)
-			volume = volumeAvg;
-		else
-			volume = 100;
+//		int volumeAvg = 0;
+//		if (evolution.inputAnalysis != null) {
+//			volumeAvg = (int) evolution.inputAnalysis.volumeAverage;
+//		}
+//		if (volumeAvg > 0)
+//			volume = volumeAvg;
+//		else
+//			volume = 100;
 		
 		if (metronome.getTick() == 0) {
 			
@@ -92,7 +92,6 @@ public class PrimitiveBassist implements MetronomeListener {
 			
 			count++;
 		}
-		
 		
 		if (metronome.getTick() == 0) {
 			bassGenerator.play(currentChord[0], volume);
