@@ -40,13 +40,14 @@ public class PrimitiveBassist implements MetronomeListener {
 	public static final int[] Db7 = new int[] { Db2, F2, Ab2, B2 };
 	public static final int[] Dm7 = new int[] { D2, F2, A2, C3 };
 	
-	public static int[][] chordChart = { Cm7 };//, Cm7, Cm7, Cm7,
+	public static int[][] chordChart = { Cm7, Cm7, Cm7, Cm7,
+										Fm7, Fm7, Fm7, Fm7 };
 //										Ebm7, Ebm7, Ebm7, Ebm7,
 //										Cm7, Cm7, Dm7, Db7 };
 	private int[] currentChord;
 	private int count = 0;
 	
-	public int volume = 100;
+	public int volume = 90;
 	
 	private BassGenerator bassGenerator;
 	private Evolution evolution;
