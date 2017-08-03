@@ -8,9 +8,14 @@ import init.Streams;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Observable;
@@ -19,16 +24,21 @@ import java.util.Observer;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
+import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class RuleManagerFrame extends ManagedFrame {
 
 	private static final long serialVersionUID = 6691172634839759228L;
-
+	private static final String SAVE_FOLDER = "./weightings/";
+	
 	private boolean running = false;
 	
 	private RuleManager ruleManager;
@@ -48,7 +58,6 @@ public class RuleManagerFrame extends ManagedFrame {
 		startSliderColorThread();
 	}
 
-
 	//Window components
 	private JPanel rulesPane = new JPanel(new GridLayout(1,0));
 		private ArrayList<RuleSlider> sliderList = new ArrayList<RuleSlider>();
@@ -56,7 +65,14 @@ public class RuleManagerFrame extends ManagedFrame {
 		private JButton randomAllButton = new JButton("R A N D O M   A L L");
 		private JButton randomOneButton = new JButton("R A N D O M   O N E");
 		private JButton zeroButton = new JButton("Z E R O");
-	
+
+	private JPanel loadSavePane = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		private JMenuBar menuBar;
+		private JMenu loadMenu;
+		private JTextField saveTagField = new JTextField("My Drummer                            ");
+		private JButton saveButton = new JButton("Save");
+		private JTextField infoLabel = new JTextField("                                                               ");
+		
 	private void initGUI() {
 		
 		for (Rule rule : ruleManager.getList()) {
@@ -95,11 +111,72 @@ public class RuleManagerFrame extends ManagedFrame {
 		buttonsPane.add(zeroButton);
 		
 		this.getContentPane().add(buttonsPane, BorderLayout.EAST);
+		
+		menuBar = new JMenuBar();
+		loadMenu = new JMenu("Load");
+		menuBar.add(loadMenu);
+		updateLoadMenu();
+		saveButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				File saveFile = new File(SAVE_FOLDER + saveTagField.getText().trim());
+				if (saveFile.exists())
+					// TODO warning and asking when overwriting files
+					infoLabel.setText("Overwrite "+saveFile.getName());
+				else
+					infoLabel.setText("Save to "+saveFile.getName());
+				saveToFile(saveFile);
+				updateLoadMenu();
+			}
+		});
+		buttonsPane.add(saveButton);
+		
+		infoLabel.setEditable(false);
+		
+		loadSavePane.add(menuBar);
+		loadSavePane.add(saveTagField);
+		loadSavePane.add(saveButton);
+		loadSavePane.add(infoLabel);
+		
+		this.getContentPane().add(loadSavePane, BorderLayout.NORTH);
 	}
 	
+	private void updateLoadMenu() {
+		
+		loadMenu.removeAll();
+		
+		File saveFolder = new File(SAVE_FOLDER);
+		if (!saveFolder.exists())
+			saveFolder.mkdir();
+		for (File file : saveFolder.listFiles()) {
+			JMenuItem item = new JMenuItem(file.getName());
+			final File loadFile = file;
+			item.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (loadFile.exists()) {
+						loadFromFile(loadFile);
+						saveTagField.setText(loadFile.getName());
+					}
+					updateLoadMenu();
+				}
+			});
+			loadMenu.add(item);
+		}
+		
+		loadMenu.addSeparator();
+		JMenuItem item = new JMenuItem("update list");
+		item.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				updateLoadMenu();
+			}
+		});
+		loadMenu.add(item);
+		
+	}
 	
-	
-	protected void randomOneButtonClicked() {
+	private void randomOneButtonClicked() {
 		
 		int randomValue = Random.rangeInt( 0, RuleSlider.sliderFactor);
 		this.sliderList.get(Random.nextInt(sliderList.size())).setValue(randomValue);
@@ -115,13 +192,38 @@ public class RuleManagerFrame extends ManagedFrame {
 		}
 	}
 
-
-
 	private void randomAllButtonClicked() {
 		
 		for (RuleSlider slider : this.sliderList) {
 			slider.setValue(Random.rangeInt( 0, RuleSlider.sliderFactor));
 		}
+	}
+
+	private void loadFromFile(File file) {
+		try {
+			RandomAccessFile raf = new RandomAccessFile(file, "r");
+			String line = "";
+			while ((line = raf.readLine()) != null) {
+				String[] ruleSpec = line.split(":");
+				if (ruleSpec.length == 2)
+					for (RuleSlider slider : this.sliderList) {
+						if (slider.getName().equalsIgnoreCase(ruleSpec[0]))
+							slider.setWeight(Float.parseFloat(ruleSpec[1]));
+					}
+			}
+			raf.close();
+		} catch (IOException ioe) { ioe.printStackTrace(); }
+	}
+
+	private void saveToFile(File file) {
+		try {
+			RandomAccessFile raf = new RandomAccessFile(file, "rw");
+			raf.setLength(0);
+			for (RuleSlider slider : this.sliderList) {
+				raf.writeBytes(slider.getName()+":"+slider.getWeight()+"\n");
+			}
+			raf.close();
+		} catch (IOException ioe) { ioe.printStackTrace(); }
 	}
 	
 	private void startSliderColorThread() {
@@ -235,6 +337,14 @@ public class RuleManagerFrame extends ManagedFrame {
 		public void setValue(int value) {
 			this.slider.setValue(value);
 		}
+		
+		public float getWeight() {
+			return (float)this.slider.getValue() / sliderFactor;
+		}
+		
+		public void setWeight(float w) {
+			this.setValue((int)(w * sliderFactor));
+		}
 
 		@Override
 		public void update(Observable rule, Object weightedRate) {
@@ -246,6 +356,10 @@ public class RuleManagerFrame extends ManagedFrame {
 					this.setColor(rate);
 			}
 			
+		}
+		
+		public String getName() {
+			return rule.getName();
 		}
 		
 	}
