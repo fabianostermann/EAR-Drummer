@@ -39,15 +39,24 @@ public class PrimitiveBassist implements MetronomeListener {
 	public static final int[] Fm7 = new int[] { F2, Ab2, C3, Eb3 };
 	public static final int[] Db7 = new int[] { Db2, F2, Ab2, B2 };
 	public static final int[] Dm7 = new int[] { D2, F2, A2, C3 };
+	public static final int[] Dm7b5 = new int[] { D2, F2, Ab2, C3 };
+	public static final int[] G7 = new int[] { G2, B2, D2, F3 };
+	public static final int[] Ab7 = new int[] { Ab2, C2, Eb2, Gb3 };
+	public static final int[] Dbmaj7 = new int[] { Db2, F2, Ab2, B3 };
 	
-	public static int[][] chordChart = { Cm7, Cm7, Cm7, Cm7,
-										Fm7, Fm7, Fm7, Fm7 };
+	public static int[][] chordChart = { Cm7, Cm7, Fm7, Fm7,
+										Dm7b5, G7, Cm7, Cm7,
+										Ebm7, Ab7, Dbmaj7, Dbmaj7,
+										Dm7b5, G7, Cm7, G7 };
 //										Ebm7, Ebm7, Ebm7, Ebm7,
 //										Cm7, Cm7, Dm7, Db7 };
-	private int[] currentChord;
+	private int[] currentChord = chordChart[0];
 	private int count = 0;
 	
 	public int volume = 90;
+	
+	boolean swing = false;
+	boolean bossa = true;
 	
 	private BassGenerator bassGenerator;
 	private Evolution evolution;
@@ -73,50 +82,68 @@ public class PrimitiveBassist implements MetronomeListener {
 	
 	@Override
 	public void tick(Metronome metronome) {
-		
 		if (!enabled) {
 			return;
 		}
 		
-//		int volumeAvg = 0;
-//		if (evolution.inputAnalysis != null) {
-//			volumeAvg = (int) evolution.inputAnalysis.volumeAverage;
-//		}
-//		if (volumeAvg > 0)
-//			volume = volumeAvg;
-//		else
-//			volume = 100;
-		
-		if (metronome.getTick() == 0) {
+		if (swing) {
+	//		int volumeAvg = 0;
+	//		if (evolution.inputAnalysis != null) {
+	//			volumeAvg = (int) evolution.inputAnalysis.volumeAverage;
+	//		}
+	//		if (volumeAvg > 0)
+	//			volume = volumeAvg;
+	//		else
+	//			volume = 100;
 			
-			currentChord = chordChart[count % chordChart.length];
+			if (metronome.getTick() == 0) {
+				currentChord = chordChart[count % chordChart.length];
+				count++;
+			}
 			
-			count++;
-		}
-		
-		if (metronome.getTick() == 0) {
-			bassGenerator.play(currentChord[0], volume);
-			return;
-		}
-		
-		if (metronome.getTick() % 2 == 0) {
-			if (metronome.getTick() >= metronome.getTicks()-2) {
-				int chromatic;
-				if (Random.nextBoolean())
-					chromatic = currentChord[0]-1;
-				else
-					chromatic = currentChord[0]+1;
-				
-				bassGenerator.play(chromatic, volume);
+			if (metronome.getTick() == 0) {
+				bassGenerator.play(currentChord[0], volume);
 				return;
 			}
 			
-			int octaveDown = 0;
-			if (Random.nextBoolean())
-				octaveDown = 12;
+			if (metronome.getTick() % 2 == 0) {
+				if (metronome.getTick() >= metronome.getTicks()-2) {
+					int chromatic;
+					if (Random.nextBoolean())
+						chromatic = currentChord[0]-1;
+					else
+						chromatic = currentChord[0]+1;
+					
+					bassGenerator.play(chromatic, volume);
+					return;
+				}
+				
+				int octaveDown = 0;
+				if (Random.nextBoolean())
+					octaveDown = 12;
+				
+				bassGenerator.play(currentChord[Random.rangeInt(1, 4)] - octaveDown, volume);
+				return;
+			}
+		} else if (bossa) {
 			
-			bassGenerator.play(currentChord[Random.rangeInt(1, 4)] - octaveDown, volume);
-			return;
+			if (metronome.getTick() == metronome.getTicks()-1) {
+				count++;
+				currentChord = chordChart[count % chordChart.length];
+			}
+			
+			if (metronome.getTick() == 0) {
+				bassGenerator.play(currentChord[0], volume);
+				return;
+			}
+			if (metronome.getTick() == 3 || metronome.getTick() == 4) {
+				bassGenerator.play(currentChord[2], volume);
+				return;
+			}
+			if (metronome.getTick() == metronome.getTicks()-1) {
+				bassGenerator.play(currentChord[0], volume);
+				return;
+			}
 		}
 	}
 
