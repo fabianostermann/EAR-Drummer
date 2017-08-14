@@ -25,7 +25,7 @@ public class Streams {
 		}
 	}
 	
-	public static final PrintStream evolutionOut = System.out;
+	public static final PrintStream evolutionOut = debugStream;
 	public static final PrintStream inputAnalysisOut = debugStream;
 	public static final PrintStream mutationOut = debugStream;
 	public static final PrintStream ruleOut = debugStream;

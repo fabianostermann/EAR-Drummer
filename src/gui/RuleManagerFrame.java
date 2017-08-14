@@ -8,7 +8,6 @@ import init.Streams;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -27,6 +26,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
@@ -69,9 +69,10 @@ public class RuleManagerFrame extends ManagedFrame {
 	private JPanel loadSavePane = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		private JMenuBar menuBar;
 		private JMenu loadMenu;
-		private JTextField saveTagField = new JTextField("My Drummer                            ");
+		private JTextField saveTagField = new JTextField("My Drummer", 15);
 		private JButton saveButton = new JButton("Save");
-		private JTextField infoLabel = new JTextField("                                                               ");
+		private JButton deleteButton = new JButton("Delete");
+		private JTextField infoLabel = new JTextField(30);
 		
 	private void initGUI() {
 		
@@ -120,22 +121,49 @@ public class RuleManagerFrame extends ManagedFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				File saveFile = new File(SAVE_FOLDER + saveTagField.getText().trim());
-				if (saveFile.exists())
-					// TODO warning and asking when overwriting files
-					infoLabel.setText("Overwrite "+saveFile.getName());
+				if (saveFile.exists()) {
+					if (0 == JOptionPane.showConfirmDialog(null,
+							"Sure you want to overwrite '"+saveFile.getName()+"'?",
+							"Warning", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE))
+						infoLabel.setText(saveFile.getName()+" overwritten.");
+					else {
+						infoLabel.setText(saveFile.getName()+" not saved.");
+						return;
+					}
+				}
 				else
-					infoLabel.setText("Save to "+saveFile.getName());
+					infoLabel.setText(saveFile.getName()+" saved.");
 				saveToFile(saveFile);
 				updateLoadMenu();
 			}
 		});
-		buttonsPane.add(saveButton);
+		
+		deleteButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				File deleteFile = new File(SAVE_FOLDER + saveTagField.getText().trim());
+				if (deleteFile.exists()) {
+					if (0 == JOptionPane.showConfirmDialog(null,
+							"Sure you want to delete '"+deleteFile.getName()+"'?",
+							"Warning", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
+						infoLabel.setText(deleteFile.getName()+" deleted.");
+						deleteFile.delete();
+						updateLoadMenu();
+					}
+					else
+						infoLabel.setText(deleteFile.getName()+" not deleted.");
+				}
+				else
+					infoLabel.setText(deleteFile.getName()+" does not exist.");
+			}
+		});
 		
 		infoLabel.setEditable(false);
 		
 		loadSavePane.add(menuBar);
 		loadSavePane.add(saveTagField);
 		loadSavePane.add(saveButton);
+		loadSavePane.add(deleteButton);
 		loadSavePane.add(infoLabel);
 		
 		this.getContentPane().add(loadSavePane, BorderLayout.NORTH);

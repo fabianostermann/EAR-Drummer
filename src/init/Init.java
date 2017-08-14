@@ -90,10 +90,11 @@ public class Init {
 			Evolution evolution = new Evolution(inputWindow, ruleManager, mutationManager);
 			new EvolutionFrame(evolution);
 			
-			BassGenerator bassGenerator = new BassGenerator(outputGenerator);
-			PrimitiveBassist bassist = new PrimitiveBassist(bassGenerator, evolution);
-			metronome.addMetronomeListener(bassist);
-			new PrimitiveBassistFrame(bassist);
+			// TODO work on Bassist
+			//BassGenerator bassGenerator = new BassGenerator(outputGenerator);
+			//PrimitiveBassist bassist = new PrimitiveBassist(bassGenerator, evolution);
+			//metronome.addMetronomeListener(bassist);
+			//new PrimitiveBassistFrame(bassist);
 			
 			new MidiKeyboardDummyFrame(outputManager, inputManager);
 			
