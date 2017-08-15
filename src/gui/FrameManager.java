@@ -1,6 +1,8 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -79,15 +81,21 @@ public class FrameManager extends JFrame {
 		}
 	}
 	
-	int xLocation = 10, yLocation = 10, maxHeight = 0;
 	public void rearrange() {
+		
+		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		Rectangle rect = env.getDefaultScreenDevice().getDefaultConfiguration().getBounds();
+		System.out.println(rect);
+		
+		int xLocation = rect.x + 10, yLocation = rect.y + 10, maxHeight = 0;
+		
 		this.setLocation(xLocation, yLocation);
 		xLocation = this.getLocation().x + this.getWidth() + 10;
 		maxHeight = this.getHeight();
 		for (FrameBox frameBox : frameBoxes) {
-			if (xLocation + frameBox.frame.getWidth() + 10 > 1920) {
-				xLocation = 10;
-				yLocation += maxHeight + 50;
+			if (xLocation + frameBox.frame.getWidth() + 10 > rect.width) {
+				xLocation = rect.x + 10;
+				yLocation += maxHeight + 100;
 				maxHeight = 0;
 			}
 			frameBox.frame.setLocation(xLocation, yLocation);
