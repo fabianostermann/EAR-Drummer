@@ -34,10 +34,9 @@ import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-public class RuleManagerFrame extends ManagedFrame {
+public class RuleManagerFrame extends ManagedFrame implements LoadSaveable {
 
 	private static final long serialVersionUID = 6691172634839759228L;
-	private static final String SAVE_FOLDER = "./weightings/";
 	
 	private boolean running = false;
 	
@@ -65,15 +64,8 @@ public class RuleManagerFrame extends ManagedFrame {
 		private JButton randomAllButton = new JButton("R A N D O M   A L L");
 		private JButton randomOneButton = new JButton("R A N D O M   O N E");
 		private JButton zeroButton = new JButton("Z E R O");
+	private LoadSavePanel loadSavePanel = new LoadSavePanel(this, "./weightings/");
 
-	private JPanel loadSavePane = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		private JMenuBar menuBar;
-		private JMenu loadMenu;
-		private JTextField saveTagField = new JTextField("My Drummer", 15);
-		private JButton saveButton = new JButton("Save");
-		private JButton deleteButton = new JButton("Delete");
-		private JTextField infoLabel = new JTextField(30);
-		
 	private void initGUI() {
 		
 		for (Rule rule : ruleManager.getList()) {
@@ -113,95 +105,7 @@ public class RuleManagerFrame extends ManagedFrame {
 		
 		this.getContentPane().add(buttonsPane, BorderLayout.EAST);
 		
-		menuBar = new JMenuBar();
-		loadMenu = new JMenu("Load");
-		menuBar.add(loadMenu);
-		updateLoadMenu();
-		saveButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				File saveFile = new File(SAVE_FOLDER + saveTagField.getText().trim());
-				if (saveFile.exists()) {
-					if (0 == JOptionPane.showConfirmDialog(null,
-							"Sure you want to overwrite '"+saveFile.getName()+"'?",
-							"Warning", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE))
-						infoLabel.setText(saveFile.getName()+" overwritten.");
-					else {
-						infoLabel.setText(saveFile.getName()+" not saved.");
-						return;
-					}
-				}
-				else
-					infoLabel.setText(saveFile.getName()+" saved.");
-				saveToFile(saveFile);
-				updateLoadMenu();
-			}
-		});
-		
-		deleteButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				File deleteFile = new File(SAVE_FOLDER + saveTagField.getText().trim());
-				if (deleteFile.exists()) {
-					if (0 == JOptionPane.showConfirmDialog(null,
-							"Sure you want to delete '"+deleteFile.getName()+"'?",
-							"Warning", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
-						infoLabel.setText(deleteFile.getName()+" deleted.");
-						deleteFile.delete();
-						updateLoadMenu();
-					}
-					else
-						infoLabel.setText(deleteFile.getName()+" not deleted.");
-				}
-				else
-					infoLabel.setText(deleteFile.getName()+" does not exist.");
-			}
-		});
-		
-		infoLabel.setEditable(false);
-		
-		loadSavePane.add(menuBar);
-		loadSavePane.add(saveTagField);
-		loadSavePane.add(saveButton);
-		loadSavePane.add(deleteButton);
-		loadSavePane.add(infoLabel);
-		
-		this.getContentPane().add(loadSavePane, BorderLayout.NORTH);
-	}
-	
-	private void updateLoadMenu() {
-		
-		loadMenu.removeAll();
-		
-		File saveFolder = new File(SAVE_FOLDER);
-		if (!saveFolder.exists())
-			saveFolder.mkdir();
-		for (File file : saveFolder.listFiles()) {
-			JMenuItem item = new JMenuItem(file.getName());
-			final File loadFile = file;
-			item.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					if (loadFile.exists()) {
-						loadFromFile(loadFile);
-						saveTagField.setText(loadFile.getName());
-					}
-					updateLoadMenu();
-				}
-			});
-			loadMenu.add(item);
-		}
-		
-		loadMenu.addSeparator();
-		JMenuItem item = new JMenuItem("update list");
-		item.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				updateLoadMenu();
-			}
-		});
-		loadMenu.add(item);
-		
+		this.getContentPane().add(loadSavePanel, BorderLayout.NORTH);
 	}
 	
 	private void randomOneButtonClicked() {
@@ -210,8 +114,6 @@ public class RuleManagerFrame extends ManagedFrame {
 		this.sliderList.get(Random.nextInt(sliderList.size())).setValue(randomValue);
 		
 	}
-
-
 
 	private void zeroButtonClicked() {
 		
@@ -226,10 +128,8 @@ public class RuleManagerFrame extends ManagedFrame {
 			slider.setValue(Random.rangeInt( 0, RuleSlider.sliderFactor));
 		}
 	}
-
-	private void loadFromFile(File file) {
-		try {
-			RandomAccessFile raf = new RandomAccessFile(file, "r");
+	
+	public void loadFromFile(RandomAccessFile raf) throws IOException {
 			String line = "";
 			while ((line = raf.readLine()) != null) {
 				String[] ruleSpec = line.split(":");
@@ -239,19 +139,12 @@ public class RuleManagerFrame extends ManagedFrame {
 							slider.setWeight(Float.parseFloat(ruleSpec[1]));
 					}
 			}
-			raf.close();
-		} catch (IOException ioe) { ioe.printStackTrace(); }
 	}
 
-	private void saveToFile(File file) {
-		try {
-			RandomAccessFile raf = new RandomAccessFile(file, "rw");
-			raf.setLength(0);
+	public void saveToFile(RandomAccessFile raf) throws IOException {
 			for (RuleSlider slider : this.sliderList) {
 				raf.writeBytes(slider.getName()+":"+slider.getWeight()+"\n");
 			}
-			raf.close();
-		} catch (IOException ioe) { ioe.printStackTrace(); }
 	}
 	
 	private void startSliderColorThread() {
