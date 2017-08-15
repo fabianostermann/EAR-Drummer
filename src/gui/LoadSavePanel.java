@@ -43,7 +43,13 @@ public class LoadSavePanel extends JPanel {
 		saveButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				File saveFile = new File(SAVE_FOLDER + saveTagField.getText().trim());
+				String filename = saveTagField.getText().trim();
+				if(filename.isEmpty()) {
+					infoLabel.setText("Filename is empty.");
+					return;
+				}
+				File saveFile = new File(SAVE_FOLDER + filename);
+				System.out.println(filename + ", " + filename.length());
 				if (saveFile.exists()) {
 					if (0 == JOptionPane.showConfirmDialog(null,
 							"Sure you want to overwrite '"+saveFile.getName()+"'?",
@@ -62,7 +68,7 @@ public class LoadSavePanel extends JPanel {
 					raf.setLength(0);
 					parent.saveToFile(raf);
 					raf.close();
-				} catch (IOException ioe) { ioe.printStackTrace(); }
+				} catch (IOException ioe) { ioe.printStackTrace(); infoLabel.setText("Error:"+ioe.getMessage()); }
 				updateLoadMenu();
 			}
 		});
@@ -70,13 +76,18 @@ public class LoadSavePanel extends JPanel {
 		deleteButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				File deleteFile = new File(SAVE_FOLDER + saveTagField.getText().trim());
+				String filename = saveTagField.getText().trim();
+				if (filename.isEmpty()) {
+					infoLabel.setText("Filename is empty.");
+					return;
+				}
+				File deleteFile = new File(SAVE_FOLDER + filename);
 				if (deleteFile.exists()) {
 					if (0 == JOptionPane.showConfirmDialog(null,
 							"Sure you want to delete '"+deleteFile.getName()+"'?",
 							"Warning", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
-						infoLabel.setText(deleteFile.getName()+" deleted.");
 						deleteFile.delete();
+						infoLabel.setText(deleteFile.getName()+" deleted.");
 						updateLoadMenu();
 					}
 					else
@@ -114,8 +125,9 @@ public class LoadSavePanel extends JPanel {
 							RandomAccessFile raf = new RandomAccessFile(loadFile, "r");
 							parent.loadFromFile(raf);
 							raf.close();
-						} catch (IOException ioe) { ioe.printStackTrace(); }
+						} catch (IOException ioe) { ioe.printStackTrace(); infoLabel.setText("Error:"+ioe.getMessage()); }
 						saveTagField.setText(loadFile.getName());
+						infoLabel.setText(loadFile.getName() + " loaded.");
 					}
 					updateLoadMenu();
 				}
