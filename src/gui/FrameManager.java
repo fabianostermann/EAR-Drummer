@@ -85,7 +85,6 @@ public class FrameManager extends JFrame {
 		
 		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		Rectangle rect = env.getDefaultScreenDevice().getDefaultConfiguration().getBounds();
-		System.out.println(rect);
 		
 		int xLocation = rect.x + 10, yLocation = rect.y + 10, maxHeight = 0;
 		
