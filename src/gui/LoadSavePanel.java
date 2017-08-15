@@ -34,7 +34,7 @@ public class LoadSavePanel extends JPanel {
 		super(new FlowLayout(FlowLayout.LEFT));
 		
 		this.parent = loadSaveable;
-		this.SAVE_FOLDER = saveFolder;
+		this.SAVE_FOLDER = "./"+saveFolder+"/";
 		
 		menuBar = new JMenuBar();
 		loadMenu = new JMenu("Load");
@@ -49,7 +49,6 @@ public class LoadSavePanel extends JPanel {
 					return;
 				}
 				File saveFile = new File(SAVE_FOLDER + filename);
-				System.out.println(filename + ", " + filename.length());
 				if (saveFile.exists()) {
 					if (0 == JOptionPane.showConfirmDialog(null,
 							"Sure you want to overwrite '"+saveFile.getName()+"'?",
@@ -68,7 +67,7 @@ public class LoadSavePanel extends JPanel {
 					raf.setLength(0);
 					parent.saveToFile(raf);
 					raf.close();
-				} catch (IOException ioe) { ioe.printStackTrace(); infoLabel.setText("Error:"+ioe.getMessage()); }
+				} catch (Exception ex) { ex.printStackTrace(); infoLabel.setText("Error:"+ex.getMessage()); }
 				updateLoadMenu();
 			}
 		});
@@ -125,9 +124,9 @@ public class LoadSavePanel extends JPanel {
 							RandomAccessFile raf = new RandomAccessFile(loadFile, "r");
 							parent.loadFromFile(raf);
 							raf.close();
-						} catch (IOException ioe) { ioe.printStackTrace(); infoLabel.setText("Error:"+ioe.getMessage()); }
-						saveTagField.setText(loadFile.getName());
-						infoLabel.setText(loadFile.getName() + " loaded.");
+							saveTagField.setText(loadFile.getName());
+							infoLabel.setText(loadFile.getName() + " loaded.");
+						} catch (Exception ex) { ex.printStackTrace(); infoLabel.setText("Error:"+ex.getMessage()); }
 					}
 					updateLoadMenu();
 				}
