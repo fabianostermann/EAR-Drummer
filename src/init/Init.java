@@ -15,6 +15,7 @@ import gui.MidiKeyboardDummyFrame;
 import gui.OutputManagerFrame;
 import gui.PrimitiveBassistFrame;
 import gui.RuleManagerFrame;
+import gui.SoloRecorderFrame;
 import input.InputManager;
 import input.InputReceiver;
 import input.InputWindow;
@@ -25,6 +26,7 @@ import output.OutputManager;
 import playback.Metronome;
 import playback.PatternPlayer;
 import playback.PrimitiveBassist;
+import record.SoloRecorder;
 
 public class Init {
 	
@@ -50,7 +52,8 @@ public class Init {
 			
 			//initiate all frames and components
 			InputWindow inputWindow = new InputWindow();
-			InputManager inputManager = new InputManager(new InputReceiver(inputWindow));
+			InputReceiver inputReceiver = new InputReceiver(inputWindow);
+			InputManager inputManager = new InputManager(inputReceiver);
 			new InputManagerFrame(inputManager);
 			new InputWindowFrame(inputWindow);
 			
@@ -63,6 +66,9 @@ public class Init {
 			DrumGenerator drumGenerator = new DrumGenerator(outputGenerator);
 			PatternPlayer patternPlayer = new PatternPlayer(drumGenerator);
 			metronome.addMetronomeListener(patternPlayer);
+			
+			SoloRecorder soloRecorder = new SoloRecorder(metronome, inputReceiver);
+			SoloRecorderFrame soloRecorderFrame = new SoloRecorderFrame(soloRecorder);
 			
 			DrumPattern pattern = new DrumPattern(Settings.TICKS);
 			

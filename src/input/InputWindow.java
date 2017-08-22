@@ -11,7 +11,7 @@ public class InputWindow extends Observable{
 		notes.add(note);
 		
 		setChanged();
-		notifyObservers();
+		notifyObservers(note);
 	}
 	
 	public synchronized void clear() {
