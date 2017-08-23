@@ -40,14 +40,18 @@ public class Init {
 						Settings.DEBUG = true;
 				}
 			}
-			if (Settings.DEBUG)
+			if (Settings.DEBUG) {
 				Streams.debugStream.println("debug stream enabled");
-			else
+				System.out.println("debug stream enabled");
+			}
+			else {
 				Streams.debugStream.println("debug stream is disabled, use argument '--debug' to enable");
+				System.out.println("debug stream is disabled, use argument '--debug' to enable");
+			}
 			
 			
 			//TODO settings window!
-			//needs to be able to set up following: Settings.Ticks, RhythmNote.numberOfDrums, default pattern!
+			//needs to be able to set up following (maybe online?): Settings.Ticks, RhythmNote.numberOfDrums, default pattern!
 			
 			
 			//initiate all frames and components
