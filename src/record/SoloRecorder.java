@@ -42,7 +42,11 @@ public class SoloRecorder implements MetronomeListener{
 		if (record != null) record.endRecord();
 	}
 	
-	public void playbackRecord() {}
+	public void playbackRecord() {
+		if (!record.isRecording()) {
+			// TODO implement playback
+		}
+	}
 	
 	public void setRecord() {}
 	

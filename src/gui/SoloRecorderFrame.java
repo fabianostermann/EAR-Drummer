@@ -33,20 +33,21 @@ public class SoloRecorderFrame extends ManagedFrame{
 
 	//Window components
 	private JPanel buttonPane = new JPanel();
-		private JButton buttonStart = new JButton("START");
+		private JButton buttonRec = new JButton("REC");
 		private JButton buttonStop = new JButton("STOP");
+		private JButton buttonPlay = new JButton("PLAY");
 	
 	private void initGUI() {
 
 		buttonPane.setLayout(new FlowLayout());
 		
-			buttonStart.addActionListener(new ActionListener() {
+			buttonRec.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent a) {
-					buttonStartClicked();
+					buttonRecClicked();
 				}
 			});
-			buttonPane.add(buttonStart);
+			buttonPane.add(buttonRec);
 			
 			buttonStop.addActionListener(new ActionListener() {
 				@Override
@@ -56,17 +57,34 @@ public class SoloRecorderFrame extends ManagedFrame{
 			});
 			buttonPane.add(buttonStop);
 			buttonStop.setEnabled(false);
+			
+			buttonPlay.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent a) {
+					buttonPlayClicked();
+				}
+			});
+			buttonPane.add(buttonPlay);
+			
+			// TODO manage enabling of play button
+			buttonPlay.setEnabled(false);
 		
-		this.getContentPane().add(buttonPane, BorderLayout.CENTER);	
+		this.getContentPane().add(buttonPane, BorderLayout.CENTER);
 	}
 	
 	private void buttonStopClicked() {
-		
 		this.soloRecorder.stopRecording();
+		buttonRec.setEnabled(true);
+		buttonStop.setEnabled(false);
 	}
 	
-	private void buttonStartClicked() {
-
+	private void buttonRecClicked() {
 		this.soloRecorder.startNewRecording();
+		buttonRec.setEnabled(false);
+		buttonStop.setEnabled(true);
+	}	
+	
+	private void buttonPlayClicked() {
+		this.soloRecorder.playbackRecord();
 	}
 }

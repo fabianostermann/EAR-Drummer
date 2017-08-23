@@ -36,6 +36,9 @@ public class Record {
 	public void endRecord() {
 		isRecording = false;
 		Collections.sort(events);
+		
+		if (Settings.DEBUG) 
+			Streams.recordOut.println("Recording ended, record was sorted: " + events);
 	}
 	
 	public void saveRecord(RandomAccessFile raf) {
@@ -67,7 +70,7 @@ public class Record {
 		
 		@Override
 		public String toString() {
-			return "[" + timestamp + " - " + object.toString() + "]";
+			return "(" + timestamp + "-" + object + ")";
 		}
 	}
 
