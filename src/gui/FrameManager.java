@@ -83,19 +83,24 @@ public class FrameManager extends JFrame {
 	
 	public void rearrange() {
 		
+		// try to place all frames on one screen
 		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		Rectangle rect = env.getDefaultScreenDevice().getDefaultConfiguration().getBounds();
+		Rectangle screenBounds = env.getDefaultScreenDevice().getDefaultConfiguration().getBounds();
 		
-		int xLocation = rect.x + 10, yLocation = rect.y + 10, maxHeight = 0;
+		int xLocation = screenBounds.x + 10, yLocation = screenBounds.y + 10, maxHeight = 0;
 		
 		this.setLocation(xLocation, yLocation);
 		xLocation = this.getLocation().x + this.getWidth() + 10;
 		maxHeight = this.getHeight();
 		for (FrameBox frameBox : frameBoxes) {
-			if (xLocation + frameBox.frame.getWidth() + 10 > rect.width) {
-				xLocation = rect.x + 10;
-				yLocation += maxHeight + 100;
+			if (xLocation + frameBox.frame.getWidth() + 10 > screenBounds.width) {
+				xLocation = screenBounds.x + 10;
+				yLocation += maxHeight + 20;
 				maxHeight = 0;
+			}
+			if (yLocation + frameBox.frame.getHeight() > screenBounds.height) {
+				yLocation = screenBounds.y + 10;
+				System.err.println("Could not arrange windows probably, screen size to small.");
 			}
 			frameBox.frame.setLocation(xLocation, yLocation);
 			maxHeight = Math.max(frameBox.frame.getHeight(), maxHeight);
