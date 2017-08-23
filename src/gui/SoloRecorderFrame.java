@@ -67,7 +67,7 @@ public class SoloRecorderFrame extends ManagedFrame{
 			buttonPane.add(buttonPlay);
 			
 			// TODO manage enabling of play button
-			buttonPlay.setEnabled(false);
+			buttonPlay.setEnabled(true);
 		
 		this.getContentPane().add(buttonPane, BorderLayout.CENTER);
 	}

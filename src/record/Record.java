@@ -4,14 +4,19 @@ import init.Settings;
 import init.Streams;
 
 import java.io.RandomAccessFile;
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
+import java.util.ListIterator;
+
+import javax.sound.midi.ShortMessage;
 
 public class Record {
 
 	public final long startTimestamp = System.currentTimeMillis();
 
-	private ArrayList<Event> events = new ArrayList<>();
+	private LinkedList<Event> events = new LinkedList<>();
+	private ListIterator<Event> iterator;
+	
 	private boolean isRecording = true;
 	
 	public Record() {}
@@ -23,7 +28,7 @@ public class Record {
 	
 	public void addEvent(Event event) {
 		if (isRecording()) {
-			events.add(event);
+			events.addLast(event);
 			if (Settings.DEBUG) 
 				Streams.recordOut.println("New record event: " + event);
 		}
@@ -36,9 +41,21 @@ public class Record {
 	public void endRecord() {
 		isRecording = false;
 		Collections.sort(events);
+		rewind();
 		
 		if (Settings.DEBUG) 
 			Streams.recordOut.println("Recording ended, record was sorted: " + events);
+	}
+	
+	public void rewind() {
+		iterator = events.listIterator();
+	}
+	
+	public Event nextEvent() {
+		if (iterator.hasNext())
+			return iterator.next();
+		else
+			return null;
 	}
 	
 	public void saveRecord(RandomAccessFile raf) {
@@ -50,7 +67,7 @@ public class Record {
 		private long timestamp;
 		private Object object;
 		
-		public Event(long timestamp, long startTimestamp, Object object) {
+		private Event(long timestamp, long startTimestamp, Object object) {
 			this.timestamp = timestamp - startTimestamp;
 			this.object = object;
 		}
@@ -59,7 +76,7 @@ public class Record {
 			return timestamp;
 		}
 		
-		public Object getObject() {
+		protected Object getObject() {
 			return object;
 		}
 		
@@ -67,11 +84,41 @@ public class Record {
 		public int compareTo(Event other) {
 			return (int)(this.getTimestamp() - other.getTimestamp());
 		}
-		
-		@Override
-		public String toString() {
-			return "(" + timestamp + "-" + object + ")";
-		}
 	}
 
+	public static class MidiEvent extends Event {
+
+		public MidiEvent(long timestamp, long startTimestamp, ShortMessage message) {
+			super(timestamp, startTimestamp, message);
+		}
+		
+		public ShortMessage getMidi() {
+			return (ShortMessage) getObject();
+		}
+
+		@Override
+		public String toString() {
+			String command = getMidi().getCommand() == ShortMessage.NOTE_ON ? "NOTE_ON" : "NOTE_OFF";
+			String key = ""+getMidi().getData1();
+			String vel = ""+getMidi().getData2();
+			return "(" + getTimestamp() + "|midi="+command+",key="+key+",vel="+vel+ ")";
+		}
+	}
+	
+	public static class TickEvent extends Event {
+
+		public TickEvent(long timestamp, long startTimestamp, int tick) {
+			super(timestamp, startTimestamp, tick);
+		}
+		
+		public int getTick() {
+			return (int) getObject();
+		}
+
+		@Override
+		public String toString() {
+			return "(" + getTimestamp() + "|tick=" + getTick() + ")";
+		}
+	}	
+	
 }
