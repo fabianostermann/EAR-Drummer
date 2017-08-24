@@ -30,7 +30,7 @@ public class Record {
 		if (isRecording()) {
 			events.addLast(event);
 			if (Settings.DEBUG) 
-				Streams.recordOut.println("New record event: " + event);
+				Streams.recordOut.println("New event recorded: " + event);
 		}
 	}
 	
@@ -41,7 +41,6 @@ public class Record {
 	public void endRecord() {
 		isRecording = false;
 		Collections.sort(events);
-		rewind();
 		
 		if (Settings.DEBUG) 
 			Streams.recordOut.println("Recording ended, record was sorted: " + events);

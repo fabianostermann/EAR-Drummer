@@ -71,8 +71,10 @@ public class Init {
 			PatternPlayer patternPlayer = new PatternPlayer(drumGenerator);
 			metronome.addMetronomeListener(patternPlayer);
 			
-			SoloRecorder soloRecorder = new SoloRecorder(metronome, inputReceiver);
-			SoloRecorderFrame soloRecorderFrame = new SoloRecorderFrame(soloRecorder);
+			SoloRecorder soloRecorder = new SoloRecorder(inputManager, outputManager);
+			metronome.addMetronomeListener(soloRecorder);
+			inputReceiver.setRecorder(soloRecorder);
+			new SoloRecorderFrame(soloRecorder);
 			
 			DrumPattern pattern = new DrumPattern(Settings.TICKS);
 			
@@ -111,6 +113,7 @@ public class Init {
 			FrameManager.getInstance().rearrange();
 		
 		} catch (Exception e) {
+			// TODO show error information window
 			e.printStackTrace();
 			System.exit(1);
 		}
