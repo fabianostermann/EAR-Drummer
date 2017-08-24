@@ -8,9 +8,6 @@ public class RandomRule extends Rule {
 	
 	public RandomRule() {
 		super("Random", "Adds a random value to the fitness");
-		
-		//TODO: erase debug random = 0
-		this.weight = 0f;
 	}
 
 	@Override

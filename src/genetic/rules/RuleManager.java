@@ -17,6 +17,8 @@ public class RuleManager {
 	
 	private void initiateRules() {
 		
+		// TODO erase hard coded weighting, do it in loadSavePanel stuff
+		
 		//keep original rules
 		list.add(new OriginalRule());
 		list.get(list.size()-1).weight = 1.f;
