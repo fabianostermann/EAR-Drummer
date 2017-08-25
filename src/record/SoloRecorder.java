@@ -15,22 +15,33 @@ public class SoloRecorder implements MetronomeListener, Runnable{
 	
 	private InputManager inputManager;
 	private OutputManager outputManager;
+	private Metronome metronome;
 	
 	private Record record;
 	
-	private long playbackTimer;
 	private boolean isPlaying = false;
 		
-	public SoloRecorder(InputManager inputManager, OutputManager outputManager) {
+	public SoloRecorder(InputManager inputManager, OutputManager outputManager, Metronome metronome) {
 		
 		this.inputManager = inputManager;
 		this.outputManager = outputManager;
+		this.metronome = metronome;
+		
+		if (inputManager.getReceiver() != null
+				&& inputManager.getReceiver().getClass() == InputReceiver.class)
+			((InputReceiver)inputManager.getReceiver()).setRecorder(this);
+		else
+			System.err.println("SoloRecorder has not found suitable inputReceiver.");
+		
+		metronome.addMetronomeListener(this);
 	}
-
+	
 	@Override
 	public void tick(Metronome metronome) {
 		if (record != null)
 			record.addTickEvent(metronome.getTick());
+		
+		/* TODO playback triggering here, syncs via tickEvents */
 	}
 	
 	public void addMidiEvent(ShortMessage message) {
@@ -65,30 +76,41 @@ public class SoloRecorder implements MetronomeListener, Runnable{
 		
 		record.rewind();
 		
-		Record.Event event;
-		Record.MidiEvent midiEvent;
-		
-		isPlaying = true;
-		playbackTimer = 0;
-		long startTimestamp = System.currentTimeMillis();
-		
-		while((event = record.nextEvent()) != null) {
-			playbackTimer = System.currentTimeMillis() - startTimestamp;
-			
-			try {
-				Thread.sleep(Math.max(0L, event.getTimestamp() - playbackTimer));
-			} catch (InterruptedException e) { e.printStackTrace(); }
-			
-			if (event.getClass() == Record.MidiEvent.class) {
-				midiEvent = (Record.MidiEvent) event;
-				inputManager.getReceiver().send(midiEvent.getMidi(), -1);
-				outputManager.getReceiver().send(midiEvent.getMidi(), -1);
-			}
-			
-			if (Settings.DEBUG)
-				Streams.recordOut.println(System.currentTimeMillis() - startTimestamp + ": " + event);			
-		}
-		isPlaying = false;
+		/*  TODO this idea does not work for syncing, use metronome trigger tick() instead */
+//		Record.Event event;
+//		Record.MidiEvent midiEvent;
+//		
+//		isPlaying = true;
+//		long playbackTimer = 0;
+//		long staticTimer = 0;
+//		long startTimestamp = System.currentTimeMillis();
+//		long roundStartTime = startTimestamp;
+//		
+//		while((event = record.nextEvent()) != null) {
+//			
+//			roundStartTime = System.currentTimeMillis();
+//			
+//			try {
+//				Thread.sleep(Math.max(0L, event.getTimestamp() - playbackTimer));
+//			} catch (InterruptedException e) { e.printStackTrace(); }
+//			
+//			if (event.getClass() == Record.MidiEvent.class) {
+//				midiEvent = (Record.MidiEvent) event;
+//				inputManager.getReceiver().send(midiEvent.getMidi(), -1);
+//				outputManager.getReceiver().send(midiEvent.getMidi(), -1);
+//			}
+//			
+//			if (event.getClass() == Record.TickEvent.class) {
+//				
+//			}
+//			
+//			playbackTimer += (System.currentTimeMillis() - roundStartTime);
+//			staticTimer = System.currentTimeMillis() - startTimestamp;
+//			
+//			if (Settings.DEBUG)
+//				Streams.recordOut.println("sT=" + staticTimer + ", pT=" + playbackTimer + ": " + event);			
+//		}
+//		isPlaying = false;
 	}
 	
 	public boolean isPlaying() {

@@ -71,8 +71,7 @@ public class Init {
 			PatternPlayer patternPlayer = new PatternPlayer(drumGenerator);
 			metronome.addMetronomeListener(patternPlayer);
 			
-			SoloRecorder soloRecorder = new SoloRecorder(inputManager, outputManager);
-			metronome.addMetronomeListener(soloRecorder);
+			SoloRecorder soloRecorder = new SoloRecorder(inputManager, outputManager, metronome);
 			inputReceiver.setRecorder(soloRecorder);
 			new SoloRecorderFrame(soloRecorder);
 			
