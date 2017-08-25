@@ -73,6 +73,8 @@ public class SoloRecorder implements MetronomeListener, Runnable{
 		long startTimestamp = System.currentTimeMillis();
 		
 		while((event = record.nextEvent()) != null) {
+			playbackTimer = System.currentTimeMillis() - startTimestamp;
+			
 			try {
 				Thread.sleep(Math.max(0L, event.getTimestamp() - playbackTimer));
 			} catch (InterruptedException e) { e.printStackTrace(); }
@@ -83,10 +85,8 @@ public class SoloRecorder implements MetronomeListener, Runnable{
 				outputManager.getReceiver().send(midiEvent.getMidi(), -1);
 			}
 			
-			playbackTimer = System.currentTimeMillis() - startTimestamp;
-			
 			if (Settings.DEBUG)
-				Streams.recordOut.println(playbackTimer + ": " + event);
+				Streams.recordOut.println(System.currentTimeMillis() - startTimestamp + ": " + event);			
 		}
 		isPlaying = false;
 	}
