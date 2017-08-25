@@ -12,26 +12,46 @@ import javax.sound.midi.ShortMessage;
 
 public class Record {
 
-	public final long startTimestamp = System.currentTimeMillis();
+	public long startTimestamp;
 
 	private LinkedList<Event> events = new LinkedList<>();
 	private ListIterator<Event> iterator;
 	
-	private boolean isRecording = true;
+	private boolean isRecording = false;
+	private boolean recordEnded = false;
 	
+	/** Creates a new record that is recording when next bar is reached
+	 *  (trigger is metronome.getTick()==0) */
 	public Record() {}
 	
 	public Record(RandomAccessFile raf) {
-		/** TODO loading record */
+		/* TODO loading record */
 		endRecord();
 	}
 	
-	public void addEvent(Event event) {
-		if (isRecording()) {
-			events.addLast(event);
-			if (Settings.DEBUG) 
-				Streams.recordOut.println("New event recorded: " + event);
+	public void addMidiEvent(ShortMessage message) {
+		if (isRecording())
+			this.addEvent(new Record.MidiEvent(System.currentTimeMillis(), startTimestamp, message));
+	}
+	
+	public void addTickEvent(int tick) {
+		if (isRecording())
+			this.addEvent(new Record.TickEvent(System.currentTimeMillis(), startTimestamp, tick));
+		else
+			if (!recordEnded && tick == 0) {
+			// wait with recording until tick 0 comes up
+			// then set startTimestamp to current time
+			isRecording = true;
+			startTimestamp = System.currentTimeMillis();
+			this.addEvent(new Record.TickEvent(startTimestamp, startTimestamp, tick));
+			return;
 		}
+	}
+	
+	private void addEvent(Event event) {
+		events.addLast(event);
+		if (Settings.DEBUG) 
+			Streams.recordOut.println("New event recorded: " + event);
 	}
 	
 	public boolean isRecording() {
@@ -40,6 +60,7 @@ public class Record {
 	
 	public void endRecord() {
 		isRecording = false;
+		recordEnded = true;
 		Collections.sort(events);
 		
 		if (Settings.DEBUG) 
@@ -58,7 +79,7 @@ public class Record {
 	}
 	
 	public void saveRecord(RandomAccessFile raf) {
-		/** TODO saving record */
+		/* TODO saving record */
 	}
 	
 	public static class Event implements Comparable<Event> {
