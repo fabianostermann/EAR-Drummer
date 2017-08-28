@@ -134,6 +134,8 @@ public class MetronomeFrame extends ManagedFrame implements MetronomeListener, C
 			else
 				lights[i].setBackground(Color.BLACK);
 		}
+		
+		update();
 	}
 	
 	private void buttonStopClicked() {

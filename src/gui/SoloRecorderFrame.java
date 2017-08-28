@@ -10,6 +10,9 @@ import javax.swing.JPanel;
 
 import record.SoloRecorder;
 
+/* TODO include this in metronome frame
+ * and forbid changing metronome settings while recording */
+
 @SuppressWarnings("serial")
 public class SoloRecorderFrame extends ManagedFrame{
 	

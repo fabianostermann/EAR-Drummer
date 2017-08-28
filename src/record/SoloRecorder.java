@@ -46,7 +46,7 @@ public class SoloRecorder implements MetronomeListener {
 	@Override
 	public void tick(Metronome metronome) {
 		if (record != null)
-			record.addTickEvent(metronome.getTick());
+			record.addTickEvent(metronome.getTick(), metronome.getSettingsClone());
 		
 		if (isPlaying) {
 			// initialize event object
@@ -64,10 +64,15 @@ public class SoloRecorder implements MetronomeListener {
 			
 			// wait for the next suitable tick
 			// be careful here, if getTick() is higher than max ticks of metronome it hangs
+			if (((Record.TickEvent) event).getTick() >= metronome.getTicks()) {
+				throw new IllegalArgumentException("Ticks of metronome are smaller than expected tick, dead loop!");
+			}
 			if (((Record.TickEvent) event).getTick() != metronome.getTick()) {
 				Streams.recordOut.println("Skip tick=" + metronome.getTick());
 				return;
 			}
+			
+			metronome.setSettings(((Record.TickEvent) event).getSettings());
 			
 			long metronomeTickTimestamp = System.currentTimeMillis();
 			long tickEventTimestamp = ((Record.TickEvent) event).getTimestamp();

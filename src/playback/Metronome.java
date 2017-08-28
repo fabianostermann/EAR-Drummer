@@ -6,11 +6,25 @@ public class Metronome implements Runnable{
 
 	private Vector<MetronomeListener> listenerList = new Vector<>();
 	
-	public class Settings {
-		public int ticks;
+	public class Settings implements Cloneable{
 		public int tpm;
 		public float shuffle;
+		
+		@Override
+		protected Settings clone() {
+			Settings clone = new Settings();
+			clone.tpm = this.tpm;
+			clone.shuffle = this.shuffle;
+			return clone;
+		}
+		
+		@Override
+		public String toString() {
+			return "(tpm=" + tpm + ", shuffle=" + shuffle + ")";
+		}
 	}
+	
+	public int ticks;
 	
 	private Settings settings;
 	
@@ -23,13 +37,16 @@ public class Metronome implements Runnable{
 	private boolean running = false;
 	
 	public Metronome(int ticks) {
-		this.settings.ticks = ticks;
+		this.ticks = ticks;
+		this.settings = new Settings();
+		this.settings.tpm = 200;
+		this.settings.shuffle = 0.5f;
 		recalculateDuration();
 	}
 	
 	public Metronome(int ticks, int tpm, float shuffle) {
+		this.ticks = ticks;
 		this.settings = new Settings();
-		this.settings.ticks = ticks;
 		this.settings.tpm = tpm;
 		this.settings.shuffle = shuffle;
 		recalculateDuration();
@@ -84,7 +101,7 @@ public class Metronome implements Runnable{
 	
 	private void increaseTick() {
 		this.tick++;
-		if (this.tick >= this.settings.ticks)
+		if (this.tick >= this.ticks)
 			this.tick = 0;
 	}
 	
@@ -101,7 +118,7 @@ public class Metronome implements Runnable{
 		return tick;
 	}
 	public int getTicks() {
-		return this.settings.ticks;
+		return this.ticks;
 	}
 
 	public int getTpm() {
@@ -126,4 +143,16 @@ public class Metronome implements Runnable{
 		return running;
 	}
 
+	public Settings getSettingsClone() {
+		return this.settings.clone();
+	}
+	
+	/**
+	 * Sets the settings from an object,
+	 * but does not update ticks!
+	 */
+	public void setSettings(Metronome.Settings newSettings) {
+		this.setTpm(newSettings.tpm);
+		this.setShuffle(newSettings.shuffle);
+	}
 }

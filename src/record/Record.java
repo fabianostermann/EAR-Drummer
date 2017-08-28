@@ -10,6 +10,8 @@ import java.util.ListIterator;
 
 import javax.sound.midi.ShortMessage;
 
+import playback.Metronome;
+
 public class Record {
 
 	public long startTimestamp;
@@ -34,16 +36,16 @@ public class Record {
 			this.addEvent(new Record.MidiEvent(System.currentTimeMillis(), startTimestamp, message));
 	}
 	
-	public void addTickEvent(int tick) {
+	public void addTickEvent(int tick, Metronome.Settings settings) {
 		if (isRecording())
-			this.addEvent(new Record.TickEvent(System.currentTimeMillis(), startTimestamp, tick));
+			this.addEvent(new Record.TickEvent(System.currentTimeMillis(), startTimestamp, tick, settings));
 		else
 			if (!recordEnded && tick == 0) {
 			// wait with recording until tick 0 comes up
 			// then set startTimestamp to current time
 			isRecording = true;
 			startTimestamp = System.currentTimeMillis();
-			this.addEvent(new Record.TickEvent(startTimestamp, startTimestamp, tick));
+			this.addEvent(new Record.TickEvent(startTimestamp, startTimestamp, tick, settings));
 			return;
 		}
 	}
@@ -127,17 +129,24 @@ public class Record {
 	
 	public static class TickEvent extends Event {
 
-		public TickEvent(long timestamp, long startTimestamp, int tick) {
+		Metronome.Settings settings;
+		
+		public TickEvent(long timestamp, long startTimestamp, int tick, Metronome.Settings settings) {
 			super(timestamp, startTimestamp, tick);
+			this.settings = settings;
 		}
 		
 		public int getTick() {
 			return (int) getObject();
 		}
+		
+		public Metronome.Settings getSettings() {
+			return this.settings;
+		}
 
 		@Override
 		public String toString() {
-			return "(" + getTimestamp() + "|tick=" + getTick() + ")";
+			return "(" + getTimestamp() + "|tick=" + getTick() + ",settings=" + getSettings() + ")";
 		}
 	}	
 	
