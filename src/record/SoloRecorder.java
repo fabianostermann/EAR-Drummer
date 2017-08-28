@@ -1,15 +1,18 @@
 package record;
 
-import init.Settings;
 import init.Streams;
 import input.InputManager;
 import input.InputReceiver;
+
+import java.util.ArrayList;
 
 import javax.sound.midi.ShortMessage;
 
 import output.OutputManager;
 import playback.Metronome;
 import playback.MetronomeListener;
+import record.Record.Event;
+
 
 public class SoloRecorder implements MetronomeListener, Runnable{
 	
@@ -17,10 +20,15 @@ public class SoloRecorder implements MetronomeListener, Runnable{
 	private OutputManager outputManager;
 	private Metronome metronome;
 	
-	private Record record;
+	protected Record record;
 	
 	private boolean isPlaying = false;
 		
+	/* variables for playback in tick() */
+	boolean foundFirstTick = false;
+	Event event; // memorize last event
+	PlaybackThread currentThread;
+	
 	public SoloRecorder(InputManager inputManager, OutputManager outputManager, Metronome metronome) {
 		
 		this.inputManager = inputManager;
@@ -41,7 +49,52 @@ public class SoloRecorder implements MetronomeListener, Runnable{
 		if (record != null)
 			record.addTickEvent(metronome.getTick());
 		
-		/* TODO playback triggering here, syncs via tickEvents */
+		if (isPlaying) {
+			// initialize event object
+			if (event == null) {
+				Streams.recordOut.println("Initializing first event");
+				record.rewind();
+				event = record.nextEvent();
+				new Thread(this).start();
+			}
+			
+			// expecting tick event, skip any midi event
+			while (event.getClass() != Record.TickEvent.class) {
+				event = record.nextEvent();
+				Streams.recordOut.println("Expected tick event, skipping " + event);
+			}
+			
+			// wait for the next suitable tick
+			// be careful here, if getTick() is higher than max ticks of metronome it hangs
+			if (((Record.TickEvent) event).getTick() != metronome.getTick()) {
+				Streams.recordOut.println("Skip tick=" + metronome.getTick());
+				return;
+			}
+			
+			long metronomeTickTimestamp = System.currentTimeMillis();
+			long tickEventTimestamp = ((Record.TickEvent) event).getTimestamp();
+			
+			currentThread = new PlaybackThread(metronomeTickTimestamp, tickEventTimestamp, inputManager, outputManager);
+				
+			Streams.recordOut.println("Found suitable tick event " + event + ", metronome.tick=" + metronome.getTick());
+			
+			// playback of midi events
+			event = record.nextEvent();
+			while (event != null && event.getClass() == Record.MidiEvent.class) {
+				currentThread.add((Record.MidiEvent)event);
+				Streams.recordOut.println("Added " + event + " to thread events");
+				event = record.nextEvent();
+			}
+			
+			currentThread.start();
+			
+			if (event == null) {
+				isPlaying = false;
+				Streams.recordOut.println("Playback ended.");
+			} else {
+				Streams.recordOut.println("Tick() ended, should have next tick here: " + event);
+			}
+		}
 	}
 	
 	public void addMidiEvent(ShortMessage message) {
@@ -61,10 +114,10 @@ public class SoloRecorder implements MetronomeListener, Runnable{
 		if (record!= null && !record.isRecording())
 			if (isPlaying())
 				Streams.recordOut.println("Connot playback record, already playing.");
-			else // start playback thread
-				new Thread(this).start();
+			else // start playback synced by tick()
+				isPlaying = true;
 		else
-			System.err.println("Cannot playback record, still recording.");
+			Streams.recordOut.println("Cannot playback record, still recording.");
 	}
 	
 	/**
@@ -74,12 +127,8 @@ public class SoloRecorder implements MetronomeListener, Runnable{
 	@Override
 	public void run() {
 		
-		record.rewind();
 		
-		/*  TODO this idea does not work for syncing, use metronome trigger tick() instead */
-//		Record.Event event;
-//		Record.MidiEvent midiEvent;
-//		
+		
 //		isPlaying = true;
 //		long playbackTimer = 0;
 //		long staticTimer = 0;
