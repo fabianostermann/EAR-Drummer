@@ -14,7 +14,7 @@ import playback.MetronomeListener;
 import record.Record.Event;
 
 
-public class SoloRecorder implements MetronomeListener, Runnable{
+public class SoloRecorder implements MetronomeListener {
 	
 	private InputManager inputManager;
 	private OutputManager outputManager;
@@ -25,7 +25,6 @@ public class SoloRecorder implements MetronomeListener, Runnable{
 	private boolean isPlaying = false;
 		
 	/* variables for playback in tick() */
-	boolean foundFirstTick = false;
 	Event event; // memorize last event
 	PlaybackThread currentThread;
 	
@@ -41,7 +40,7 @@ public class SoloRecorder implements MetronomeListener, Runnable{
 		else
 			System.err.println("SoloRecorder has not found suitable inputReceiver.");
 		
-		metronome.addMetronomeListener(this);
+		this.metronome.addMetronomeListener(this);
 	}
 	
 	@Override
@@ -114,52 +113,10 @@ public class SoloRecorder implements MetronomeListener, Runnable{
 		if (record!= null && !record.isRecording())
 			if (isPlaying())
 				Streams.recordOut.println("Connot playback record, already playing.");
-			else // start playback synced by tick()
+			else // start playback synchronized by tick()
 				isPlaying = true;
 		else
 			Streams.recordOut.println("Cannot playback record, still recording.");
-	}
-	
-	/**
-	 *  Plays back the current record in a thread
-	 *  and syncronizes with metronome
-	 */
-	@Override
-	public void run() {
-		
-		
-		
-//		isPlaying = true;
-//		long playbackTimer = 0;
-//		long staticTimer = 0;
-//		long startTimestamp = System.currentTimeMillis();
-//		long roundStartTime = startTimestamp;
-//		
-//		while((event = record.nextEvent()) != null) {
-//			
-//			roundStartTime = System.currentTimeMillis();
-//			
-//			try {
-//				Thread.sleep(Math.max(0L, event.getTimestamp() - playbackTimer));
-//			} catch (InterruptedException e) { e.printStackTrace(); }
-//			
-//			if (event.getClass() == Record.MidiEvent.class) {
-//				midiEvent = (Record.MidiEvent) event;
-//				inputManager.getReceiver().send(midiEvent.getMidi(), -1);
-//				outputManager.getReceiver().send(midiEvent.getMidi(), -1);
-//			}
-//			
-//			if (event.getClass() == Record.TickEvent.class) {
-//				
-//			}
-//			
-//			playbackTimer += (System.currentTimeMillis() - roundStartTime);
-//			staticTimer = System.currentTimeMillis() - startTimestamp;
-//			
-//			if (Settings.DEBUG)
-//				Streams.recordOut.println("sT=" + staticTimer + ", pT=" + playbackTimer + ": " + event);			
-//		}
-//		isPlaying = false;
 	}
 	
 	public boolean isPlaying() {
