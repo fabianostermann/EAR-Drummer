@@ -167,10 +167,10 @@ public class MidiKeyboardDummyFrame extends ManagedFrame implements KeyListener 
 			@Override
 			public void run() {
 				
-				play(60, true);
-				play(64, true);
-				play(70, true);
-				play(75, true);
+				play(24, true);
+//				play(64, true);
+//				play(70, true);
+//				play(75, true);
 				
 				try {
 					Thread.sleep(500);
@@ -178,10 +178,10 @@ public class MidiKeyboardDummyFrame extends ManagedFrame implements KeyListener 
 					e.printStackTrace();
 				}
 				
-				play(60, false);
-				play(64, false);
-				play(70, false);
-				play(75, false);
+				play(24, false);
+//				play(64, false);
+//				play(70, false);
+//				play(75, false);
 			}
 		}).start();
 	}
