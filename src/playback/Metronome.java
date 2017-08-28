@@ -6,9 +6,13 @@ public class Metronome implements Runnable{
 
 	private Vector<MetronomeListener> listenerList = new Vector<>();
 	
-	private int ticks;
-	private int tpm = 200;
-	private float shuffle = 0.5f;
+	public class Settings {
+		public int ticks;
+		public int tpm;
+		public float shuffle;
+	}
+	
+	private Settings settings;
 	
 	private int durationOnBeat;
 	private int durationOffBeat;
@@ -19,14 +23,15 @@ public class Metronome implements Runnable{
 	private boolean running = false;
 	
 	public Metronome(int ticks) {
-		this.ticks = ticks;
+		this.settings.ticks = ticks;
 		recalculateDuration();
 	}
 	
 	public Metronome(int ticks, int tpm, float shuffle) {
-		this.ticks = ticks;
-		this.tpm = tpm;
-		this.shuffle = shuffle;
+		this.settings = new Settings();
+		this.settings.ticks = ticks;
+		this.settings.tpm = tpm;
+		this.settings.shuffle = shuffle;
 		recalculateDuration();
 	}
 	
@@ -79,13 +84,13 @@ public class Metronome implements Runnable{
 	
 	private void increaseTick() {
 		this.tick++;
-		if (this.tick >= this.ticks)
+		if (this.tick >= this.settings.ticks)
 			this.tick = 0;
 	}
 	
 	private void recalculateDuration() {
-		this.durationOnBeat = (int)((float)(2 * shuffle * 60000) / tpm);
-		this.durationOffBeat = (int)((float)(2 * (1 - shuffle) * 60000) / tpm);
+		this.durationOnBeat = (int)((float)(2 * this.settings.shuffle * 60000) / this.settings.tpm);
+		this.durationOffBeat = (int)((float)(2 * (1 - this.settings.shuffle) * 60000) / this.settings.tpm);
 	}
 
 	public void addMetronomeListener(MetronomeListener listener) {
@@ -96,30 +101,29 @@ public class Metronome implements Runnable{
 		return tick;
 	}
 	public int getTicks() {
-		return ticks;
+		return this.settings.ticks;
 	}
 
 	public int getTpm() {
-		return tpm;
+		return this.settings.tpm;
 	}
 
 	public void setTpm(int tpm) {
-		this.tpm = tpm;
+		this.settings.tpm = tpm;
 		this.recalculateDuration();
 	}
 
 	public float getShuffle() {
-		return shuffle;
+		return this.settings.shuffle;
 	}
 
 	public void setShuffle(float shuffle) {
-		this.shuffle = shuffle;
+		this.settings.shuffle = shuffle;
 		this.recalculateDuration();
 	}
 	
 	public boolean isRunning() {
 		return running;
 	}
-	
 
 }
