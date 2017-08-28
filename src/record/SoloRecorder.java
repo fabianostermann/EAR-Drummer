@@ -54,7 +54,6 @@ public class SoloRecorder implements MetronomeListener {
 				Streams.recordOut.println("Initializing first event");
 				record.rewind();
 				event = record.nextEvent();
-				new Thread(this).start();
 			}
 			
 			// expecting tick event, skip any midi event
