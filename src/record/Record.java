@@ -1,8 +1,10 @@
 package record;
 
+import gui.LoadSaveable;
 import init.Settings;
 import init.Streams;
 
+import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -12,7 +14,7 @@ import javax.sound.midi.ShortMessage;
 
 import playback.Metronome;
 
-public class Record {
+public class Record implements LoadSaveable {
 
 	public long startTimestamp;
 
@@ -26,9 +28,42 @@ public class Record {
 	 *  (trigger is metronome.getTick()==0) */
 	public Record() {}
 	
-	public Record(RandomAccessFile raf) {
-		/* TODO loading record */
-		endRecord();
+	public void loadFromFile(RandomAccessFile raf) throws IOException {
+		this.endRecord();
+		events.clear();
+		
+		/* TODO load record analog to saveToFile() */
+		
+		Streams.recordOut.println("Loaded record " + this);
+	}
+	
+	public void saveToFile(RandomAccessFile raf) throws IOException {
+		this.endRecord();
+		
+		TickEvent tickEvent;
+		MidiEvent midiEvent;
+		for (Event event : events) {
+			if (event.getClass() == Record.TickEvent.class) {
+				tickEvent = (TickEvent) event;
+				raf.writeBytes("TICK:");
+				raf.writeBytes(tickEvent.getTimestamp() + ":");
+				raf.writeBytes(tickEvent.getTick() + ":");
+				raf.writeBytes(tickEvent.getSettings().tpm + ":");
+				raf.writeBytes(tickEvent.getSettings().shuffle + ":");
+				raf.writeBytes("\n");
+			} else if (event.getClass() == Record.MidiEvent.class) {
+				midiEvent = (MidiEvent) event;
+				raf.writeBytes("MIDI:");
+				raf.writeBytes(midiEvent.getTimestamp() + ":");
+				// TODO maybe save midi message human readable?
+				raf.writeBytes(midiEvent.getMidi().getMessage() + ":");
+				raf.writeBytes("\n");
+			} else {
+				System.err.println("Event " + event + "is not saveable!");
+			}
+		}
+		
+		Streams.recordOut.println("Saved record " + this);
 	}
 	
 	public void addMidiEvent(ShortMessage message) {
@@ -80,8 +115,8 @@ public class Record {
 			return null;
 	}
 	
-	public void saveRecord(RandomAccessFile raf) {
-		/* TODO saving record */
+	public int size() {
+		return events.size();
 	}
 	
 	public static class Event implements Comparable<Event> {
@@ -148,6 +183,5 @@ public class Record {
 		public String toString() {
 			return "(" + getTimestamp() + "|tick=" + getTick() + ",settings=" + getSettings() + ")";
 		}
-	}	
-	
+	}
 }

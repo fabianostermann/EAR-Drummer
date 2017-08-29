@@ -1,10 +1,12 @@
 package record;
 
+import java.io.IOException;
+import java.io.RandomAccessFile;
+
+import gui.LoadSaveable;
 import init.Streams;
 import input.InputManager;
 import input.InputReceiver;
-
-import java.util.ArrayList;
 
 import javax.sound.midi.ShortMessage;
 
@@ -14,17 +16,17 @@ import playback.MetronomeListener;
 import record.Record.Event;
 
 
-public class SoloRecorder implements MetronomeListener {
+public class SoloRecorder implements MetronomeListener, LoadSaveable {
 	
 	private InputManager inputManager;
 	private OutputManager outputManager;
 	private Metronome metronome;
 	
-	protected Record record;
+	private Record record;
 	
 	private boolean isPlaying = false;
 		
-	/* variables for playback in tick() */
+	/** variables for playback in tick() */
 	Event event; // memorize last event
 	PlaybackThread currentThread;
 	
@@ -48,6 +50,10 @@ public class SoloRecorder implements MetronomeListener {
 		if (record != null)
 			record.addTickEvent(metronome.getTick(), metronome.getSettingsClone());
 		
+		if (record.size() <= 0) {
+			isPlaying = false;
+			Streams.recordOut.println("Cannot play back, record is empty.");
+		}
 		if (isPlaying) {
 			// initialize event object
 			if (event == null) {
@@ -129,6 +135,20 @@ public class SoloRecorder implements MetronomeListener {
 	
 	public void setRecord(Record record) {
 		this.record = record;
+	}
+
+	@Override
+	public void loadFromFile(RandomAccessFile raf) throws IOException {
+		this.record = new Record();
+		this.record.loadFromFile(raf);
+	}
+
+	@Override
+	public void saveToFile(RandomAccessFile raf) throws IOException {
+		if (this.record != null)
+			this.record.saveToFile(raf);
+		else
+			Streams.recordOut.println("No record to save.");
 	}
 	
 }

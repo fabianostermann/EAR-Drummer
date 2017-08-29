@@ -14,13 +14,14 @@ import record.SoloRecorder;
  * and forbid changing metronome settings while recording */
 
 @SuppressWarnings("serial")
-public class SoloRecorderFrame extends ManagedFrame{
+public class SoloRecorderFrame extends ManagedFrame {
 	
 	private SoloRecorder soloRecorder;
 
 	public SoloRecorderFrame(SoloRecorder soloRecorder) {
 		
 		this.soloRecorder = soloRecorder;
+		loadSavePanel = new LoadSavePanel(soloRecorder, "records");
 		
 		this.setTitle("SoloRecorder");
 		
@@ -39,6 +40,8 @@ public class SoloRecorderFrame extends ManagedFrame{
 		private JButton buttonRec = new JButton("REC");
 		private JButton buttonStop = new JButton("STOP");
 		private JButton buttonPlay = new JButton("PLAY");
+		
+	private LoadSavePanel loadSavePanel;
 	
 	private void initGUI() {
 
@@ -73,6 +76,8 @@ public class SoloRecorderFrame extends ManagedFrame{
 			buttonPlay.setEnabled(true);
 		
 		this.getContentPane().add(buttonPane, BorderLayout.CENTER);
+		
+		this.getContentPane().add(loadSavePanel, BorderLayout.NORTH);
 	}
 	
 	private void buttonStopClicked() {
