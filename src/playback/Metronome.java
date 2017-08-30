@@ -10,11 +10,15 @@ public class Metronome implements Runnable{
 		public int tpm;
 		public float shuffle;
 		
+		public Settings() {}
+		public Settings(int tpm, float shuffle) {
+			this.tpm = tpm;
+			this.shuffle = shuffle;
+		}
+		
 		@Override
 		protected Settings clone() {
-			Settings clone = new Settings();
-			clone.tpm = this.tpm;
-			clone.shuffle = this.shuffle;
+			Settings clone = new Settings(this.tpm, this.shuffle);
 			return clone;
 		}
 		

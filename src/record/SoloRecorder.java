@@ -50,7 +50,7 @@ public class SoloRecorder implements MetronomeListener, LoadSaveable {
 		if (record != null)
 			record.addTickEvent(metronome.getTick(), metronome.getSettingsClone());
 		
-		if (record.size() <= 0) {
+		if (record == null || record.size() <= 0) {
 			isPlaying = false;
 			Streams.recordOut.println("Cannot play back, record is empty.");
 		}
@@ -129,6 +129,10 @@ public class SoloRecorder implements MetronomeListener, LoadSaveable {
 			Streams.recordOut.println("Cannot playback record, still recording.");
 	}
 	
+	public void stopPlayback() {
+		isPlaying = false;
+	}
+	
 	public boolean isPlaying() {
 		return isPlaying;
 	}
@@ -139,8 +143,11 @@ public class SoloRecorder implements MetronomeListener, LoadSaveable {
 
 	@Override
 	public void loadFromFile(RandomAccessFile raf) throws IOException {
-		this.record = new Record();
-		this.record.loadFromFile(raf);
+		stopPlayback();
+		if (!record.isRecording()) {
+			this.record = new Record();
+			this.record.loadFromFile(raf);
+		}
 	}
 
 	@Override

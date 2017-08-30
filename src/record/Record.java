@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
+import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.ShortMessage;
 
 import playback.Metronome;
@@ -27,44 +28,6 @@ public class Record implements LoadSaveable {
 	/** Creates a new record that is recording when next bar is reached
 	 *  (trigger is metronome.getTick()==0) */
 	public Record() {}
-	
-	public void loadFromFile(RandomAccessFile raf) throws IOException {
-		this.endRecord();
-		events.clear();
-		
-		/* TODO load record analog to saveToFile() */
-		
-		Streams.recordOut.println("Loaded record " + this);
-	}
-	
-	public void saveToFile(RandomAccessFile raf) throws IOException {
-		this.endRecord();
-		
-		TickEvent tickEvent;
-		MidiEvent midiEvent;
-		for (Event event : events) {
-			if (event.getClass() == Record.TickEvent.class) {
-				tickEvent = (TickEvent) event;
-				raf.writeBytes("TICK:");
-				raf.writeBytes(tickEvent.getTimestamp() + ":");
-				raf.writeBytes(tickEvent.getTick() + ":");
-				raf.writeBytes(tickEvent.getSettings().tpm + ":");
-				raf.writeBytes(tickEvent.getSettings().shuffle + ":");
-				raf.writeBytes("\n");
-			} else if (event.getClass() == Record.MidiEvent.class) {
-				midiEvent = (MidiEvent) event;
-				raf.writeBytes("MIDI:");
-				raf.writeBytes(midiEvent.getTimestamp() + ":");
-				// TODO maybe save midi message human readable?
-				raf.writeBytes(midiEvent.getMidi().getMessage() + ":");
-				raf.writeBytes("\n");
-			} else {
-				System.err.println("Event " + event + "is not saveable!");
-			}
-		}
-		
-		Streams.recordOut.println("Saved record " + this);
-	}
 	
 	public void addMidiEvent(ShortMessage message) {
 		if (isRecording())
@@ -96,12 +59,13 @@ public class Record implements LoadSaveable {
 	}
 	
 	public void endRecord() {
+		if (isRecording()) { 
+			Collections.sort(events);
+			Streams.recordOut.println("Recording ended, record was sorted: " + events);
+		}
+		
 		isRecording = false;
 		recordEnded = true;
-		Collections.sort(events);
-		
-		if (Settings.DEBUG) 
-			Streams.recordOut.println("Recording ended, record was sorted: " + events);
 	}
 	
 	public void rewind() {
@@ -119,6 +83,78 @@ public class Record implements LoadSaveable {
 		return events.size();
 	}
 	
+	public void loadFromFile(RandomAccessFile raf) throws IOException {
+		this.endRecord();
+		events.clear();
+		
+		// load record analog to saveToFile()
+		String line;
+		int lineNumber = 0;
+		while ((line = raf.readLine()) != null) {
+			lineNumber++;
+			try {
+			String[] parts = line.split(":");
+			if (parts.length > 0)
+				if (parts[0].equals("TICK")) {
+					long timestamp = Long.parseLong(parts[1]);
+					int tick = Integer.parseInt(parts[2]);
+					int tpm = Integer.parseInt(parts[3]);
+					float shuffle = Float.parseFloat(parts[4]);
+					Metronome.Settings settings = (new Metronome(Settings.TICKS)).new Settings(tpm, shuffle);
+					events.add(new TickEvent(timestamp, 0, tick, settings));
+				}
+				else if (parts[0].equals("MIDI")) {
+					long timestamp = Long.parseLong(parts[1]);
+					int command = Integer.parseInt(parts[2]);
+					int channel = Integer.parseInt(parts[3]);
+					int data1 = Integer.parseInt(parts[4]);
+					int data2 = Integer.parseInt(parts[5]);
+					ShortMessage message = new ShortMessage(command, channel, data1, data2);
+					events.add(new MidiEvent(timestamp, 0, message));
+				}
+			} catch (Exception e) {
+				Streams.recordOut.println("Error while reading input at line " + lineNumber);
+				e.printStackTrace();
+			}
+		}
+		
+		Streams.recordOut.println("Loaded record " + this + ": " + events);
+	}
+
+	public void saveToFile(RandomAccessFile raf) throws IOException {
+		this.endRecord();
+		
+		// save record analog to loadToFile()
+		TickEvent tickEvent;
+		MidiEvent midiEvent;
+		for (Event event : events) {
+			if (event.getClass() == Record.TickEvent.class) {
+				tickEvent = (TickEvent) event;
+				raf.writeBytes("TICK:");
+				raf.writeBytes(tickEvent.getTimestamp() + ":");
+				raf.writeBytes(tickEvent.getTick() + ":");
+				raf.writeBytes(tickEvent.getSettings().tpm + ":");
+				raf.writeBytes(tickEvent.getSettings().shuffle + ":");
+				raf.writeBytes("\n");
+			}
+			else if (event.getClass() == Record.MidiEvent.class) {
+				midiEvent = (MidiEvent) event;
+				raf.writeBytes("MIDI:");
+				raf.writeBytes(midiEvent.getTimestamp() + ":");
+				raf.writeBytes(midiEvent.getMidi().getCommand() + ":");
+				raf.writeBytes(midiEvent.getMidi().getChannel() + ":");
+				raf.writeBytes(midiEvent.getMidi().getData1() + ":");
+				raf.writeBytes(midiEvent.getMidi().getData2() + ":");
+				raf.writeBytes("\n");
+			} 
+			else {
+				System.err.println("Event " + event + "is not saveable!");
+			}
+		}
+		
+		Streams.recordOut.println("Saved record " + this + ": " + events);
+	}
+
 	public static class Event implements Comparable<Event> {
 		
 		private long timestamp;
