@@ -30,6 +30,15 @@ public class LoadSavePanel extends JPanel {
 	
 	private final LoadSaveable parent;
 	
+	@Override
+	public void setEnabled(boolean enabled) {
+		super.setEnabled(enabled);
+		this.menuBar.setEnabled(enabled);
+		this.loadMenu.setEnabled(enabled);
+		this.saveButton.setEnabled(enabled);
+		this.deleteButton.setEnabled(enabled);
+	}
+	
 	public LoadSavePanel(LoadSaveable loadSaveable, String saveFolder) {
 		super(new FlowLayout(FlowLayout.LEFT));
 		
