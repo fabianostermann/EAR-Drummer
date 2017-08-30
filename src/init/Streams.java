@@ -5,6 +5,8 @@ import java.io.PrintStream;
 public class Streams {
 
 	//TODO set all streams to debugStream and System.err = errorStream
+	//TODO only use these streams for output, make them print only in DEBUG mode by default
+	// and then both to debug stream and standard stream
 	
 	//streams settings
 	public static PrintStream debugStream = null;
