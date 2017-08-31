@@ -23,7 +23,7 @@ public class SoloRecorderFrame extends ManagedFrame {
 		this.soloRecorder = soloRecorder;
 		loadSavePanel = new LoadSavePanel(soloRecorder, "records");
 		
-		this.setTitle("SoloRecorder");
+		this.setTitle("Solo Recorder");
 		
 		this.initGUI();
 //		this.setSize(250, 220);

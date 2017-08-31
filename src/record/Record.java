@@ -143,6 +143,7 @@ public class Record implements LoadSaveable {
 				raf.writeBytes(midiEvent.getTimestamp() + ":");
 				raf.writeBytes(midiEvent.getMidi().getCommand() + ":");
 				raf.writeBytes(midiEvent.getMidi().getChannel() + ":");
+				/* TODO write readable NOTE_ON or NOTE_OFF */
 				raf.writeBytes(midiEvent.getMidi().getData1() + ":");
 				raf.writeBytes(midiEvent.getMidi().getData2() + ":");
 				raf.writeBytes("\n");
