@@ -120,7 +120,9 @@ public class SoloRecorder implements MetronomeListener, LoadSaveable {
 	}
 	
 	public void stopRecording() {
-		if (record != null) record.endRecord();
+		if (record != null) {
+			record.endRecord();
+		}
 	}
 	
 	public void playbackRecord() {
@@ -148,7 +150,7 @@ public class SoloRecorder implements MetronomeListener, LoadSaveable {
 	@Override
 	public void loadFromFile(RandomAccessFile raf) throws IOException {
 		stopPlayback();
-		if (!record.isRecording()) {
+		if ((record != null && !record.isRecording()) || record == null) {
 			this.record = new Record();
 			this.record.loadFromFile(raf);
 		}

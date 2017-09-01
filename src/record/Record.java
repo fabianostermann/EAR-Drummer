@@ -63,6 +63,7 @@ public class Record implements LoadSaveable {
 			Collections.sort(events);
 			Streams.recordOut.println("Recording ended, record was sorted: " + events);
 		}
+		this.rewind();
 		
 		isRecording = false;
 		recordEnded = true;
@@ -105,7 +106,13 @@ public class Record implements LoadSaveable {
 				}
 				else if (parts[0].equals("MIDI")) {
 					long timestamp = Long.parseLong(parts[1]);
-					int command = Integer.parseInt(parts[2]);
+					int command;
+					if (parts[2].equals("NOTE_ON"))
+						command = ShortMessage.NOTE_ON;
+					else if (parts[2].equals("NOTE_OFF"))
+						command = ShortMessage.NOTE_OFF;
+					else
+						command = Integer.parseInt(parts[2]);
 					int channel = Integer.parseInt(parts[3]);
 					int data1 = Integer.parseInt(parts[4]);
 					int data2 = Integer.parseInt(parts[5]);
@@ -141,9 +148,13 @@ public class Record implements LoadSaveable {
 				midiEvent = (MidiEvent) event;
 				raf.writeBytes("MIDI:");
 				raf.writeBytes(midiEvent.getTimestamp() + ":");
-				raf.writeBytes(midiEvent.getMidi().getCommand() + ":");
+				if (midiEvent.getMidi().getCommand() == ShortMessage.NOTE_ON)
+					raf.writeBytes("NOTE_ON" + ":");
+				else if (midiEvent.getMidi().getCommand() == ShortMessage.NOTE_OFF)
+					raf.writeBytes("NOTE_OFF" + ":");
+				else
+					raf.writeBytes(midiEvent.getMidi().getCommand() + ":");
 				raf.writeBytes(midiEvent.getMidi().getChannel() + ":");
-				/* TODO write readable NOTE_ON or NOTE_OFF */
 				raf.writeBytes(midiEvent.getMidi().getData1() + ":");
 				raf.writeBytes(midiEvent.getMidi().getData2() + ":");
 				raf.writeBytes("\n");
