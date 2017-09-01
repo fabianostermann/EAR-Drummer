@@ -32,7 +32,7 @@ public class RhythmNote {
 	private final int volume;
 	
 	//TODO make the intelligent drum choice disableable via gui
-	private static boolean intelligentDrum = true;
+	private static boolean useIntelligentDrum = true;
 	
 	public RhythmNote(int instrument, int volume) {
 		this.instrument = instrument;
@@ -48,19 +48,19 @@ public class RhythmNote {
 		switch(instrument) {
 		case BASS: return MIDI_BASS;
 		case HIHAT:
-			if (intelligentDrum && this.volume < 70)
+			if (useIntelligentDrum && this.volume < 70)
 				return MIDI_HIHAT_PEDAL;
-			else if (!intelligentDrum || this.volume <= 120)
+			else if (!useIntelligentDrum || this.volume <= 120)
 				return MIDI_HIHAT_CLOSED;
 			else
 				return MIDI_HIHAT_OPEN;
 		case SNARE:
-			if (intelligentDrum && this.volume < 70)
+			if (useIntelligentDrum && this.volume < 70)
 				return MIDI_SIDE_STICK;
 			else
 				return MIDI_SNARE;
 		case RIDE:
-			if (!intelligentDrum || this.volume < 110)
+			if (!useIntelligentDrum || this.volume < 110)
 				return MIDI_RIDE;
 			else if (this.volume < 122)
 				return MIDI_RIDE_BELL;
@@ -74,12 +74,12 @@ public class RhythmNote {
 		throw new IllegalArgumentException("instrument "+instrument+" undefined");
 	}
 	
-	public static void enableIntelligentDrum(boolean b) {
-		RhythmNote.intelligentDrum = b;
+	public static void setIntelligentDrumEnabled(boolean b) {
+		RhythmNote.useIntelligentDrum = b;
 	}
 	
 	public static boolean isIntelligentDrumEnabled() {
-		return RhythmNote.intelligentDrum;
+		return RhythmNote.useIntelligentDrum;
 	}
 	
 	public int getVolume() {

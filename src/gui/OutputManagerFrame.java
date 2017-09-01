@@ -1,5 +1,7 @@
 package gui;
 
+import genetic.RhythmNote;
+
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
@@ -9,10 +11,13 @@ import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiUnavailableException;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import output.OutputManager;
 
@@ -43,6 +48,7 @@ public class OutputManagerFrame extends ManagedFrame implements ItemListener {
 		private JLabel labelTransmitter;
 		private JLabel labelReceiver;
 		private JLabel labelConnected;
+		private JCheckBox checkBoxIntelligentDrum;
 	
 	private JScrollPane scrollPaneConsole;
 		private ConsoleArea console;
@@ -68,6 +74,16 @@ public class OutputManagerFrame extends ManagedFrame implements ItemListener {
 			labelConnected = new JLabel();
 			infoPane.add(labelConnected);
 			
+			checkBoxIntelligentDrum = new JCheckBox("use intelligent drum");
+			checkBoxIntelligentDrum.addItemListener(new ItemListener() {
+				@Override
+				public void itemStateChanged(ItemEvent e) {
+					if (e.getSource() == checkBoxIntelligentDrum) {
+						RhythmNote.setIntelligentDrumEnabled(e.getStateChange() == ItemEvent.SELECTED);
+					}
+				}
+			});
+			infoPane.add(checkBoxIntelligentDrum);
 			
 			updateInfo();
 		this.getContentPane().add(infoPane, BorderLayout.NORTH);
