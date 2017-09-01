@@ -31,7 +31,6 @@ public class RhythmNote {
 	private final int instrument;
 	private final int volume;
 	
-	//TODO make the intelligent drum choice disableable via gui
 	private static boolean useIntelligentDrum = true;
 	
 	public RhythmNote(int instrument, int volume) {
