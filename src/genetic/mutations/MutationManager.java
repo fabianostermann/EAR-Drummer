@@ -28,8 +28,7 @@ public class MutationManager {
 //		list.add(new ShuffleTicksMutation());
 //		list.add(new ShuffleInstrumentsMutation());
 		
-		if (Settings.DEBUG) 
-			Streams.mutationOut.println("Mutations initiated.");
+		Streams.mutationOut.println("Mutations initiated.");
 	}
 	
 	public ArrayList<Mutation> getList() {

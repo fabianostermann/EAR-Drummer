@@ -22,9 +22,9 @@ public class SortMutation extends Mutation {
 			
 		// MESSAGE debug sort mutation message
 		if (down)
-			if (Settings.DEBUG) Streams.mutationOut.println("Sort down mutation..");
+			Streams.mutationOut.println("Sort down mutation..");
 		else
-			if (Settings.DEBUG) Streams.mutationOut.println("Sort up mutation..");
+			Streams.mutationOut.println("Sort up mutation..");
 		
 		int[][] newMatrix = new int[p.matrix.length][p.matrix[0].length];
 		

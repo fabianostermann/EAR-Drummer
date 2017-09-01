@@ -51,15 +51,13 @@ public class UnusedMutationLibrary {
 		p.matrix[i][j] = Random.rangeInt(0, 127);
 		
 		// MESSAGE debug simple mutation message
-		if (Settings.DEBUG)
-			Streams.mutationOut.println("Point ("+i+","+j+")="+p.matrix[i][j]+" mutation..");
+		Streams.mutationOut.println("Point ("+i+","+j+")="+p.matrix[i][j]+" mutation..");
 	}
 	
 	public static void reverse(DrumPattern p) {
 		
 		// MESSAGE debug reverse mutation message
-		if (Settings.DEBUG) 
-			Streams.mutationOut.println("Reverse mutation..");
+		Streams.mutationOut.println("Reverse mutation..");
 		
 		int[][] newMatrix = new int[p.matrix.length][p.matrix[0].length];
 		
@@ -79,8 +77,7 @@ public class UnusedMutationLibrary {
 	public static void rotate(DrumPattern p, int steps) {
 		
 		// MESSAGE debug rotate mutation message
-		if (Settings.DEBUG) 
-			Streams.mutationOut.println("Rotate "+steps+" mutation..");
+		Streams.mutationOut.println("Rotate "+steps+" mutation..");
 		
 		if (steps < 0) {
 			steps = -steps;
@@ -107,9 +104,9 @@ public class UnusedMutationLibrary {
 		
 		// MESSAGE debug sort mutation message
 		if (down)
-			if (Settings.DEBUG) Streams.mutationOut.println("Sort down mutation..");
+			Streams.mutationOut.println("Sort down mutation..");
 		else
-			if (Settings.DEBUG) Streams.mutationOut.println("Sort up mutation..");
+			Streams.mutationOut.println("Sort up mutation..");
 		
 		int[][] newMatrix = new int[p.matrix.length][p.matrix[0].length];
 		
@@ -140,8 +137,7 @@ public class UnusedMutationLibrary {
 		target = Math.min(127, target);
 		
 		// MESSAGE debug loudness mutation message
-		if (Settings.DEBUG) 
-			Streams.mutationOut.println("Loudness "+target+" mutation..");
+		Streams.mutationOut.println("Loudness "+target+" mutation..");
 		
 		int[][] newMatrix = p.matrix.clone();
 			
@@ -193,8 +189,7 @@ public class UnusedMutationLibrary {
 		}
 		
 		// MESSAGE debug degeneration mutation message
-		if (Settings.DEBUG) 
-			Streams.mutationOut.println("Degeneration "+factor+" mutation..");
+		Streams.mutationOut.println("Degeneration "+factor+" mutation..");
 		
 		int[][] newMatrix = p.matrix.clone();
 		
@@ -211,8 +206,7 @@ public class UnusedMutationLibrary {
 	public static void shuffleTicks(DrumPattern p) {
 		
 		// MESSAGE debug shuffleTicks mutation message
-		if (Settings.DEBUG) 
-			Streams.mutationOut.println("ShuffleTicks mutation..");
+		Streams.mutationOut.println("ShuffleTicks mutation..");
 					
 		int[][] newMatrix = new int[p.matrix.length][p.matrix[0].length];
 						
@@ -234,8 +228,7 @@ public class UnusedMutationLibrary {
 	public static void shuffleInstruments(DrumPattern p) {
 		
 		// MESSAGE debug shuffleInstruments mutation message
-		if (Settings.DEBUG) 
-			Streams.mutationOut.println("shuffleInstruments mutation..");
+		Streams.mutationOut.println("shuffleInstruments mutation..");
 		
 		int[][] newMatrix = new int[p.matrix.length][p.matrix[0].length];
 		ArrayList<ArrayList<Integer>> list = new ArrayList<ArrayList<Integer>>();

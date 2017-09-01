@@ -18,8 +18,7 @@ public class ShuffleTicksMutation extends Mutation {
 	public void mutate(DrumPattern p) {
 		
 		// MESSAGE debug shuffleTicks mutation message
-		if (Settings.DEBUG) 
-			Streams.mutationOut.println("ShuffleTicks mutation..");
+		Streams.mutationOut.println("ShuffleTicks mutation..");
 					
 		int[][] newMatrix = new int[p.matrix.length][p.matrix[0].length];
 						

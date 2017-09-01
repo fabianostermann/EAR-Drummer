@@ -21,8 +21,7 @@ public class DrumGenerator {
 	public void play(RhythmNote note) {
 		
 		// MESSAGE debug playing note message
-		if (Settings.DEBUG) 
-			Streams.midiOut.println("Playing note: "+note);
+		Streams.midiOut.println("Playing note: "+note);
 		
 		play(note.getMidi(), note.getVolume());
 	}

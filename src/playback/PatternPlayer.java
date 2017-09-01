@@ -26,8 +26,7 @@ public class PatternPlayer extends Observable implements MetronomeListener {
 			this.setPattern(Generation.getNextPattern());
 			
 			// MESSAGE debug patternPlayer nextPattern message
-			if (Settings.DEBUG) 
-				Streams.midiOut.println("Next Pattern Request at tick("+metronome.getTick()+")");
+			Streams.midiOut.println("Next Pattern Request at tick("+metronome.getTick()+")");
 		}
 		
 		if (pattern != null && drumGenerator != null) {

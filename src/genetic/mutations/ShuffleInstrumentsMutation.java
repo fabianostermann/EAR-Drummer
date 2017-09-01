@@ -18,8 +18,7 @@ public class ShuffleInstrumentsMutation extends Mutation {
 	public void mutate(DrumPattern p) {
 		
 		// MESSAGE debug shuffleInstruments mutation message
-		if (Settings.DEBUG) 
-			Streams.mutationOut.println("shuffleInstruments mutation..");
+		Streams.mutationOut.println("shuffleInstruments mutation..");
 		
 		int[][] newMatrix = new int[p.matrix.length][p.matrix[0].length];
 		ArrayList<ArrayList<Integer>> list = new ArrayList<ArrayList<Integer>>();

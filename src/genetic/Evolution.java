@@ -100,8 +100,7 @@ public class Evolution extends ProgressObservable implements Runnable {
 			
 			if (this.isPaused) {
 				//MESSAGE debug message evolution paused
-				if (Settings.DEBUG) 
-					Streams.evolutionOut.println("EVOLUTION: paused");
+				Streams.evolutionOut.println("EVOLUTION: paused");
 				
 				setProgress(0, "Paused.");
 				continue;
@@ -128,16 +127,14 @@ public class Evolution extends ProgressObservable implements Runnable {
 			this.inputWindow.clearOlder(System.currentTimeMillis(), INPUT_WINDOW_SIZE);
 			
 			//MESSAGE debug cleared old notes
-			if (Settings.DEBUG) 
-				Streams.evolutionOut.println("Removed notes older than "+INPUT_WINDOW_SIZE+"ms from input window.");
+			Streams.evolutionOut.println("Removed notes older than "+INPUT_WINDOW_SIZE+"ms from input window.");
 			
 			setProgress(45, "Analyze input..");
 			
 			this.inputAnalysis = new InputAnalysis(notes);
 			
 			//MESSAGE debug inputAnalysis message
-			if (Settings.DEBUG) 
-				Streams.inputAnalysisOut.println(this.inputAnalysis.toString());
+			Streams.inputAnalysisOut.println(this.inputAnalysis.toString());
 			
 			setProgress(60, "Evaluate..");
 			
@@ -168,20 +165,17 @@ public class Evolution extends ProgressObservable implements Runnable {
 			this.setStringList(stringList);
 			
 			//MESSAGE debug population written
-			if (Settings.DEBUG) 
-				Streams.evolutionOut.println("New population has "+newPopulation.size()+" indiviuals.");
+			Streams.evolutionOut.println("New population has "+newPopulation.size()+" indiviuals.");
 			
 			//MESSAGE debug message evolution done
-			if (Settings.DEBUG) 
-				Streams.evolutionOut.println("EVOLUTION: done in round "+round+", deltaTime:"+deltaTime+"ms/"+SLEEP_TIME+"ms");
+			Streams.evolutionOut.println("EVOLUTION: done in round "+round+", deltaTime:"+deltaTime+"ms/"+SLEEP_TIME+"ms");
 		
 			setProgress(100, "Finished round "+round+", sleeping for "+SLEEP_TIME+"ms");
 			
 		}
 		
 		//MESSAGE debug message evolution ended
-		if (Settings.DEBUG) 
-			Streams.evolutionOut.println("EVOLUTION: ended.");
+		Streams.evolutionOut.println("EVOLUTION: ended.");
 		
 		setProgress(100, "Evolution ended.");
 		
@@ -192,8 +186,7 @@ public class Evolution extends ProgressObservable implements Runnable {
 	private void initialize() {
 		
 		//MESSAGE debug init population started
-		if (Settings.DEBUG) 
-			Streams.evolutionOut.println("Initialize population..");
+		Streams.evolutionOut.println("Initialize population..");
 		
 		ArrayList<DrumPattern> initPopulation = new ArrayList<DrumPattern>();
 		for (int i = 0; i < POPULATION_SIZE; i++) {
@@ -208,8 +201,7 @@ public class Evolution extends ProgressObservable implements Runnable {
 	private void mutate() {
 		
 		//MESSAGE debug mutation started
-		if (Settings.DEBUG) 
-			Streams.evolutionOut.println("Mutation started..");
+		Streams.evolutionOut.println("Mutation started..");
 		
 		ArrayList<ArrayList<DrumPattern>> lists = new ArrayList<ArrayList<DrumPattern>>();
 		lists.add(new ArrayList<DrumPattern>());
@@ -254,15 +246,13 @@ public class Evolution extends ProgressObservable implements Runnable {
 		}
 		
 		//MESSAGE debug nextGeneration.size
-		if (Settings.DEBUG) 
-			Streams.evolutionOut.println("Expanded generation.size to "+nextGeneration.size());
+		Streams.evolutionOut.println("Expanded generation.size to "+nextGeneration.size());
 	}
 
 	private void evaluate() {
 		
 		//MESSAGE debug evaluation started
-		if (Settings.DEBUG) 
-			Streams.evolutionOut.println("Evaluation started..");
+		Streams.evolutionOut.println("Evaluation started..");
 		
 		for (Rule rule : ruleManager.getList()) {
 			for (DrumPattern pattern : nextGeneration) {

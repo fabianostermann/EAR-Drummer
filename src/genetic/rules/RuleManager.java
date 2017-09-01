@@ -56,8 +56,7 @@ public class RuleManager {
 		list.add(new PedalRule());
 		list.get(list.size()-1).weight = 1.f;
 		
-		if (Settings.DEBUG)
-			Streams.ruleOut.println("Rules initiated.");
+		Streams.ruleOut.println("Rules initiated.");
 	}
 	
 	public ArrayList<Rule> getList() {

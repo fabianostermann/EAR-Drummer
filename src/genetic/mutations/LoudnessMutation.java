@@ -20,8 +20,7 @@ public class LoudnessMutation extends Mutation {
 		target = Math.min(127, target);
 		
 		// MESSAGE debug loudness mutation message
-		if (Settings.DEBUG) 
-			Streams.mutationOut.println("Loudness "+target+" mutation..");
+		Streams.mutationOut.println("Loudness "+target+" mutation..");
 		
 		int[][] newMatrix = p.matrix.clone();
 			

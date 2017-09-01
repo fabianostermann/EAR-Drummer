@@ -17,8 +17,7 @@ public class RotateMutation extends Mutation {
 		int steps =  Random.rangeInt(1,p.matrix.length);
 			
 		// MESSAGE debug rotate mutation message
-		if (Settings.DEBUG) 
-			Streams.mutationOut.println("Rotate "+steps+" mutation..");
+		Streams.mutationOut.println("Rotate "+steps+" mutation..");
 		
 		if (steps < 0) {
 			steps = -steps;

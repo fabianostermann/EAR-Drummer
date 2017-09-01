@@ -14,8 +14,7 @@ public class ReverseMutation extends Mutation {
 	public void mutate(DrumPattern p) {
 
 		// MESSAGE debug reverse mutation message
-		if (Settings.DEBUG) 
-			Streams.mutationOut.println("Reverse mutation..");
+		Streams.mutationOut.println("Reverse mutation..");
 		
 		int[][] newMatrix = new int[p.matrix.length][p.matrix[0].length];
 		

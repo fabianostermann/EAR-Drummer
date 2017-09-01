@@ -64,9 +64,7 @@ public abstract class Rule extends Observable {
 			weightedRate = Math.max(0, weightedRate);
 		}
 		
-		if (Settings.DEBUG) {
-			Streams.ruleOut.println("Rule "+this.name+" rated pattern fitness "+(int)weightedRate);
-		}
+		Streams.ruleOut.println("Rule "+this.name+" rated pattern fitness "+(int)weightedRate);
 		
 		pattern.fitness += (int)(weightedRate);
 		

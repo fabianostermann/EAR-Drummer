@@ -33,8 +33,7 @@ public class RandomPointMutation extends Mutation {
 		}
 		
 		// MESSAGE debug simple mutation message
-		if (Settings.DEBUG)
-			Streams.mutationOut.println("Point ("+i+","+j+")="+p.matrix[i][j]+" mutation..");
+		Streams.mutationOut.println("Point ("+i+","+j+")="+p.matrix[i][j]+" mutation..");
 	}
 
 }

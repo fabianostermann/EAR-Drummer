@@ -50,8 +50,7 @@ public class Record implements LoadSaveable {
 	
 	private void addEvent(Event event) {
 		events.addLast(event);
-		if (Settings.DEBUG) 
-			Streams.recordOut.println("New event recorded: " + event);
+		Streams.recordOut.println("New event recorded: " + event);
 	}
 	
 	public boolean isRecording() {

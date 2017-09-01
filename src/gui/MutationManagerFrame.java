@@ -156,8 +156,7 @@ public class MutationManagerFrame extends ManagedFrame {
 		public void stateChanged(ChangeEvent ce) {
 			this.mutation.setWeight(slider.getValue());
 			
-			if (Settings.DEBUG)
-				Streams.mutationOut.println("Mutation "+mutation.getName()+" weight changed to "+mutation.getWeight());
+			Streams.mutationOut.println("Mutation "+mutation.getName()+" weight changed to "+mutation.getWeight());
 			
 			updateColor();
 		}

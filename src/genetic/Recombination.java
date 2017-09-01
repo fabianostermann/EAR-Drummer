@@ -13,8 +13,7 @@ public class Recombination {
 	public static void crossover(DrumPattern p1, DrumPattern p2, int point) {
 		
 		//MESSAGE debug crossover message
-		if (Settings.DEBUG) 
-			System.out.println("Crossover at point("+point+")..");
+		System.out.println("Crossover at point("+point+")..");
 		
 		if (point <= 0 || point >= p1.matrix.length)
 			return;

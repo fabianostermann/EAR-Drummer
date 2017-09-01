@@ -250,8 +250,7 @@ public class RuleManagerFrame extends ManagedFrame implements LoadSaveable {
 		public void stateChanged(ChangeEvent ce) {
 			this.rule.setWeight(((float)slider.getValue())/sliderFactor);
 			
-			if (Settings.DEBUG)
-				Streams.ruleOut.println("Rule "+rule.getName()+" weight changed to "+rule.getWeight());
+			Streams.ruleOut.println("Rule "+rule.getName()+" weight changed to "+rule.getWeight());
 			
 		}
 		
