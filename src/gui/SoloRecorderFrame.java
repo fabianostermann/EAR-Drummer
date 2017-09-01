@@ -62,6 +62,7 @@ public class SoloRecorderFrame extends ManagedFrame {
 				}
 			});
 			buttonPane.add(buttonStop);
+			buttonStop.setEnabled(false);
 			
 			buttonPlay.addActionListener(new ActionListener() {
 				@Override
@@ -69,10 +70,7 @@ public class SoloRecorderFrame extends ManagedFrame {
 					buttonPlayClicked();
 				}
 			});
-			buttonPane.add(buttonPlay);
-			
-			// TODO manage enabling of play button
-			buttonPlay.setEnabled(true);
+			buttonPane.add(buttonPlay);			
 		
 		this.getContentPane().add(buttonPane, BorderLayout.CENTER);
 		
@@ -84,6 +82,7 @@ public class SoloRecorderFrame extends ManagedFrame {
 		this.soloRecorder.stopPlayback();
 		loadSavePanel.setEnabled(true);
 		buttonRec.setEnabled(true);
+		buttonStop.setEnabled(false);
 		buttonPlay.setEnabled(true);
 	}
 	
@@ -92,6 +91,7 @@ public class SoloRecorderFrame extends ManagedFrame {
 		this.soloRecorder.startNewRecording();
 		loadSavePanel.setEnabled(false);
 		buttonRec.setEnabled(false);
+		buttonStop.setEnabled(true);
 		buttonPlay.setEnabled(false);
 	}	
 	
@@ -100,6 +100,7 @@ public class SoloRecorderFrame extends ManagedFrame {
 		this.soloRecorder.playbackRecord();
 		loadSavePanel.setEnabled(true);
 		buttonRec.setEnabled(false);
+		buttonStop.setEnabled(true);
 		buttonPlay.setEnabled(false);
 	}
 }
