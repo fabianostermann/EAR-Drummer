@@ -7,23 +7,29 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 
 import output.OutputManager;
+import playback.Metronome;
 import record.Record.MidiEvent;
 
 public class PlaybackThread extends Thread {
 
+	/* TODO event must be accelerated depending on current metronome settings */
+	
 	private LinkedList<Record.MidiEvent> midiEvents = new LinkedList<>();
 	private long metronomeTickTimestamp;
 	private long tickEventTimestamp;
 
 	private InputManager inputManager;
 	private OutputManager outputManager;
+	private Metronome.Settings timingInformation;
 	
 	public PlaybackThread(long metronomeTickTimestamp, long tickEventTimestamp,
-			InputManager inputManager, OutputManager outputManager) {
+			InputManager inputManager, OutputManager outputManager,
+			Metronome.Settings settings) {
 		this.metronomeTickTimestamp = metronomeTickTimestamp;
 		this.tickEventTimestamp = tickEventTimestamp;
 		this.inputManager = inputManager;
 		this.outputManager = outputManager;
+		this.timingInformation = settings;
 	}
 	
 	public void add(Record.MidiEvent event) {
