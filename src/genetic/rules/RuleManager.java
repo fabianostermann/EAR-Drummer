@@ -7,7 +7,8 @@ import java.util.ArrayList;
 
 public class RuleManager {
 
-	//TODO give rules detailed descriptions
+	// TODO give rules detailed descriptions
+	// TODO implement the rule factors combinator
 	
 	private ArrayList<Rule> list = new ArrayList<Rule>();
 	
