@@ -10,7 +10,6 @@ import java.util.Observable;
 public abstract class Rule extends Observable {
 
 	//TODO normalize all rules to (0,1000)
-	//TODO add description to all rules
 	
 	public static final int LIMIT = 1000;
 	
