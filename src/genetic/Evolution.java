@@ -29,8 +29,7 @@ public class Evolution extends ProgressObservable implements Runnable {
 	private boolean isPaused;
 
 	private InputWindow inputWindow;
-	// TODO watch out! made public for bassist!
-	public InputAnalysis inputAnalysis;
+	private InputAnalysis inputAnalysis;
 	
 	private RuleManager ruleManager;
 	private MutationManager mutationManager;
@@ -270,5 +269,9 @@ public class Evolution extends ProgressObservable implements Runnable {
 				rule.rate(pattern, inputAnalysis);
 			}
 		}
+	}
+	
+	public InputAnalysis getInputAnalysis() {
+		return this.inputAnalysis;
 	}
 }

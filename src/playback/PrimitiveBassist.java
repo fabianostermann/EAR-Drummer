@@ -88,8 +88,8 @@ public class PrimitiveBassist implements MetronomeListener {
 		
 		if (swing) {
 	//		int volumeAvg = 0;
-	//		if (evolution.inputAnalysis != null) {
-	//			volumeAvg = (int) evolution.inputAnalysis.volumeAverage;
+	//		if (evolution.getInputAnalysis() != null) {
+	//			volumeAvg = (int) evolution.getInputAnalysis().volumeAverage;
 	//		}
 	//		if (volumeAvg > 0)
 	//			volume = volumeAvg;
