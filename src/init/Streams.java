@@ -27,6 +27,7 @@ public class Streams {
 		}
 	}
 	
+	// change debugStream to System.out for debug without --debug mode
 	public static final PrintStream evolutionOut = debugStream;
 	public static final PrintStream inputAnalysisOut = debugStream;
 	public static final PrintStream mutationOut = debugStream;

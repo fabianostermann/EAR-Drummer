@@ -27,12 +27,18 @@ public class SimpleDebugFileStream extends PrintStream {
 	 */
 	@Override
 	public void println(String s) {
+		this.print(s);
+		super.println();
+	}
+	
+	@Override
+	public void print(String s) {
 		
 		if (maxSizeReached)
 			return;
 		
 //		super.println(System.currentTimeMillis() + " -- " + s);
-		super.println(Calendar.getInstance().get(Calendar.YEAR) + "-"
+		super.print(Calendar.getInstance().get(Calendar.YEAR) + "-"
 				+ calendar.get(Calendar.MONTH) + "-"
 				+ calendar.get(Calendar.DAY_OF_MONTH) + " "
 				+ calendar.get(Calendar.HOUR_OF_DAY) + ":"

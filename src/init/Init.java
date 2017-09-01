@@ -46,6 +46,7 @@ public class Init {
 			}
 			else {
 				Streams.debugStream.println("debug stream is disabled, use argument '--debug' to enable");
+				Streams.debugStream.close();
 				System.out.println("debug stream is disabled, use argument '--debug' to enable");
 			}
 			
