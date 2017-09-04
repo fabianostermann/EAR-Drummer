@@ -13,8 +13,7 @@ import javax.swing.SpinnerNumberModel;
 
 import record.SoloRecorder;
 
-/* TODO include this in metronome frame
- * and forbid changing metronome settings while recording */
+/* TODO maybe include this in metronome frame */
 
 @SuppressWarnings("serial")
 public class SoloRecorderFrame extends ManagedFrame {
