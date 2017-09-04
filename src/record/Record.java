@@ -20,6 +20,7 @@ public class Record implements LoadSaveable {
 	public long startTimestamp;
 
 	private LinkedList<Event> events = new LinkedList<>();
+	private LinkedList<Event> eventsLatencyCorrected = new LinkedList<>();
 	private ListIterator<Event> iterator;
 	
 	private boolean isRecording = false;
@@ -48,6 +49,20 @@ public class Record implements LoadSaveable {
 		}
 	}
 	
+	public void correctLatency(long latency) {
+		eventsLatencyCorrected.clear();
+		for (Event event : events) {
+			if (event.getClass() == MidiEvent.class) {
+				MidiEvent midiEvent = (MidiEvent) event;
+				long timestampLatencyCorrected = midiEvent.getTimestamp() + latency;
+				event = new MidiEvent(timestampLatencyCorrected, startTimestamp, midiEvent.getMidi());
+			}
+			eventsLatencyCorrected.add(event);
+		}
+		Collections.sort(eventsLatencyCorrected);
+		Streams.recordOut.println("Latency corrected by " + latency + "ms and then sorted: " + eventsLatencyCorrected);
+	}
+	
 	private void addEvent(Event event) {
 		events.addLast(event);
 		Streams.recordOut.println("New event recorded: " + event);
@@ -69,7 +84,7 @@ public class Record implements LoadSaveable {
 	}
 	
 	public void rewind() {
-		iterator = events.listIterator();
+		iterator = eventsLatencyCorrected.listIterator();
 	}
 	
 	public Event nextEvent() {

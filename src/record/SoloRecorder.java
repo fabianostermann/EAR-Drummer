@@ -25,12 +25,7 @@ public class SoloRecorder implements MetronomeListener, LoadSaveable {
 	private Record record;
 	
 	private boolean isPlaying = false;
-
-	public void addLatency(long latency) {
-		/* TODO implement latency add to record for latency adjusted playback */
-	}
-		
-	/** variables for playback in tick() */
+	
 	Event event; // memorize last event
 	PlaybackThread currentThread;
 	
@@ -146,6 +141,13 @@ public class SoloRecorder implements MetronomeListener, LoadSaveable {
 	
 	public void setRecord(Record record) {
 		this.record = record;
+	}
+
+	public void correctLatency(long latency) {
+		if (record != null)
+			record.correctLatency(latency);
+		else
+			Streams.recordOut.println("Cannot correct latency, there is no record.");
 	}
 
 	@Override

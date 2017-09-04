@@ -6,7 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 import record.SoloRecorder;
 
@@ -40,6 +43,8 @@ public class SoloRecorderFrame extends ManagedFrame {
 		private JButton buttonRec = new JButton("REC");
 		private JButton buttonStop = new JButton("STOP");
 		private JButton buttonPlay = new JButton("PLAY");
+		private JCheckBox latencyCheckBox = new JCheckBox("Latency:");
+		private JSpinner latencySpinner = new JSpinner(new SpinnerNumberModel(0, Integer.MIN_VALUE, Integer.MAX_VALUE, 1));
 		
 	private LoadSavePanel loadSavePanel;
 	
@@ -70,7 +75,10 @@ public class SoloRecorderFrame extends ManagedFrame {
 					buttonPlayClicked();
 				}
 			});
-			buttonPane.add(buttonPlay);			
+			buttonPane.add(buttonPlay);	
+			
+			buttonPane.add(latencyCheckBox);
+			buttonPane.add(latencySpinner);
 		
 		this.getContentPane().add(buttonPane, BorderLayout.CENTER);
 		
@@ -97,8 +105,12 @@ public class SoloRecorderFrame extends ManagedFrame {
 	
 	private void buttonPlayClicked() {
 		this.soloRecorder.stopRecording();
+		if (latencyCheckBox.isSelected())
+			this.soloRecorder.correctLatency(((SpinnerNumberModel)latencySpinner.getModel()).getNumber().longValue());
+		else
+			this.soloRecorder.correctLatency(0L);
 		this.soloRecorder.playbackRecord();
-		loadSavePanel.setEnabled(true);
+		loadSavePanel.setEnabled(false);
 		buttonRec.setEnabled(false);
 		buttonStop.setEnabled(true);
 		buttonPlay.setEnabled(false);
