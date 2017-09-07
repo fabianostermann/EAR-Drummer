@@ -31,6 +31,7 @@ public class Streams {
 	public static final PrintStream mutationOut = debugStream;
 	public static final PrintStream ruleOut = debugStream;
 	public static final PrintStream midiOut = debugStream;
-	public static final PrintStream recordOut = System.out;
+	public static final PrintStream recordOut = debugStream;
+	public static final PrintStream CombiOut = System.out;
 	
 }

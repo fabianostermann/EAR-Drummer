@@ -3,6 +3,7 @@ package init;
 import genetic.DrumPattern;
 import genetic.Evolution;
 import genetic.Generation;
+import genetic.combine.CombiManager;
 import genetic.mutations.MutationManager;
 import genetic.rules.RuleManager;
 import gui.DrumPatternFrame;
@@ -13,19 +14,16 @@ import gui.InputWindowFrame;
 import gui.MetronomeFrame;
 import gui.MidiKeyboardDummyFrame;
 import gui.OutputManagerFrame;
-import gui.PrimitiveBassistFrame;
 import gui.RuleManagerFrame;
 import gui.SoloRecorderFrame;
 import input.InputManager;
 import input.InputReceiver;
 import input.InputWindow;
-import output.BassGenerator;
 import output.DrumGenerator;
 import output.OutputGenerator;
 import output.OutputManager;
 import playback.Metronome;
 import playback.PatternPlayer;
-import playback.PrimitiveBassist;
 import record.SoloRecorder;
 
 public class Init {
@@ -101,6 +99,8 @@ public class Init {
 //			new MutationManagerFrame(mutationManager);
 			Evolution evolution = new Evolution(inputWindow, ruleManager, mutationManager);
 			new EvolutionFrame(evolution);
+			
+			CombiManager combiManager = new CombiManager();
 			
 			// TODO work on Bassist
 			//BassGenerator bassGenerator = new BassGenerator(outputGenerator);
