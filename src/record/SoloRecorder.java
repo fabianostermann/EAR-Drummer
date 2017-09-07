@@ -80,11 +80,8 @@ public class SoloRecorder implements MetronomeListener, LoadSaveable {
 			Metronome.Settings settings = ((Record.TickEvent) event).getSettings();
 			metronome.setSettings(settings);
 			
-			long metronomeTickTimestamp = System.currentTimeMillis();
-			long tickEventTimestamp = ((Record.TickEvent) event).getTimestamp();
+			currentThread = new PlaybackThread(((Record.TickEvent) event), inputManager, outputManager);
 			
-			currentThread = new PlaybackThread(metronomeTickTimestamp, tickEventTimestamp, inputManager, outputManager, settings);
-				
 			Streams.recordOut.println("Found suitable tick event " + event + ", metronome.tick=" + metronome.getTick());
 			
 			// playback of midi events

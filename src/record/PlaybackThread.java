@@ -9,27 +9,31 @@ import java.util.ListIterator;
 import output.OutputManager;
 import playback.Metronome;
 import record.Record.MidiEvent;
+import record.Record.TickEvent;
 
 public class PlaybackThread extends Thread {
 
 	/* TODO event must be accelerated depending on current metronome settings */
 	
 	private LinkedList<Record.MidiEvent> midiEvents = new LinkedList<>();
-	private long metronomeTickTimestamp;
-	private long tickEventTimestamp;
-
+	
+	private long initTimestamp = System.currentTimeMillis();
+	private TickEvent tickEvent;
+	
 	private InputManager inputManager;
 	private OutputManager outputManager;
-	private Metronome.Settings timingInformation;
 	
-	public PlaybackThread(long metronomeTickTimestamp, long tickEventTimestamp,
-			InputManager inputManager, OutputManager outputManager,
-			Metronome.Settings settings) {
-		this.metronomeTickTimestamp = metronomeTickTimestamp;
-		this.tickEventTimestamp = tickEventTimestamp;
+	/**
+	 * Creates a new Playback thread with following attributes
+	 * @param tickEvent : the event of the tick that this playback thread has to play back
+	 * @param inputManager
+	 * @param outputManager
+	 */
+	public PlaybackThread(TickEvent tickEvent,
+			InputManager inputManager, OutputManager outputManager) {
+		this.tickEvent = tickEvent;
 		this.inputManager = inputManager;
 		this.outputManager = outputManager;
-		this.timingInformation = settings;
 	}
 	
 	public void add(Record.MidiEvent event) {
@@ -50,8 +54,8 @@ public class PlaybackThread extends Thread {
 		while (true) {
 			
 			try {
-				long timeFromLastMetronomeTick = midiEvent.getTimestamp() - tickEventTimestamp;
-				long timeForPlayback = metronomeTickTimestamp + timeFromLastMetronomeTick;
+				long timeFromLastMetronomeTick = midiEvent.getTimestamp() - tickEvent.getTimestamp();
+				long timeForPlayback = initTimestamp + timeFromLastMetronomeTick;
 				Thread.sleep(Math.max(0L, timeForPlayback -  System.currentTimeMillis() ));
 			} catch (InterruptedException e) { e.printStackTrace(); }
 			
