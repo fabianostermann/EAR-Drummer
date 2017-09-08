@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public class RuleManager implements FitnessEvaluator {
 
 	// TODO give rules detailed descriptions
-	// TODO implement the rule factors combinator
 	
 	private ArrayList<Rule> list = new ArrayList<Rule>();
 	

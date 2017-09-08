@@ -26,8 +26,6 @@ import javax.swing.event.ChangeListener;
 @SuppressWarnings("serial")
 public class EvolutionFrame extends ManagedFrame implements Observer, ChangeListener {
 	
-	//TODO make evolution progress strings visible
-
 	private Evolution evolution;
 
 	public EvolutionFrame(Evolution evolution) {
