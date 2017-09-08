@@ -1,5 +1,7 @@
 package init;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintStream;
 
 public class Streams {
@@ -8,7 +10,10 @@ public class Streams {
 	
 	//streams settings
 	public static PrintStream debugStream = null;
-	public static PrintStream errorStream = null;
+	private static PrintStream errorStream = null;
+	private static PrintStream nullStream = new PrintStream(new OutputStream()
+	{ @Override public void write(int b) throws IOException {} });
+	
 	static {
 		try {
 			errorStream = new SimpleDebugFileStream("error", System.err);
@@ -26,12 +31,12 @@ public class Streams {
 	}
 	
 	// change debugStream to System.out for debug without --debug mode
-	public static final PrintStream evolutionOut = debugStream;
-	public static final PrintStream inputAnalysisOut = debugStream;
-	public static final PrintStream mutationOut = debugStream;
+	public static final PrintStream evolutionOut = nullStream;
+	public static final PrintStream inputAnalysisOut = nullStream;
+	public static final PrintStream mutationOut = nullStream;
 	public static final PrintStream ruleOut = debugStream;
-	public static final PrintStream midiOut = debugStream;
-	public static final PrintStream recordOut = debugStream;
-	public static final PrintStream CombiOut = System.out;
+	public static final PrintStream midiOut = nullStream;
+	public static final PrintStream recordOut = nullStream;
+	public static final PrintStream CombiOut = debugStream;
 	
 }
