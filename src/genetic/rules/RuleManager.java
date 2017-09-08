@@ -1,11 +1,13 @@
 package genetic.rules;
 
-import init.Settings;
+import genetic.DrumPattern;
+import genetic.FitnessEvaluator;
 import init.Streams;
+import input.InputAnalysis;
 
 import java.util.ArrayList;
 
-public class RuleManager {
+public class RuleManager implements FitnessEvaluator {
 
 	// TODO give rules detailed descriptions
 	// TODO implement the rule factors combinator
@@ -61,6 +63,18 @@ public class RuleManager {
 	
 	public ArrayList<Rule> getList() {
 		return this.list;
+	}
+
+	@Override
+	public float getFitness(DrumPattern pattern, InputAnalysis analysis) {
+		
+		float fitness = 0.f;
+		
+		for (Rule rule : list) {
+			fitness += rule.getWeightedRating(pattern, analysis);
+		}
+		
+		return fitness;
 	}
 	
 }

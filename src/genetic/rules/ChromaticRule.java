@@ -11,13 +11,13 @@ public class ChromaticRule extends Rule {
 
 	
 	@Override
-	public void rate(DrumPattern pattern, InputAnalysis analysis) {
+	public float rate(DrumPattern pattern, InputAnalysis analysis) {
 		
 		//Belohnt hoch, wenn pattern lückenlos und solo sehr chromatisch
 		
 		if (analysis.numberOfNotes <= 1 ||
 				analysis.intervalMin > 1) {
-			return;
+			return 0f;
 		}
 		
 		float chromaticFactor = 1 / Math.max(1f, analysis.intervalAverage);
@@ -41,9 +41,7 @@ public class ChromaticRule extends Rule {
 				
 		float average = (silenceFactor + chromaticFactor) / 2;
 		
-		float rate = average * LIMIT;
-		
-		rateWeighted(pattern, rate);
+		return average;
 	}
 	
 }

@@ -31,13 +31,13 @@ public class Evolution extends ProgressObservable implements Runnable {
 	private InputWindow inputWindow;
 	private InputAnalysis inputAnalysis;
 	
-	private RuleManager ruleManager;
+	private FitnessEvaluator fitnessEvaluator;
 	private MutationManager mutationManager;
 	
-	public Evolution(InputWindow inputWindow, RuleManager ruleManager, MutationManager mutationManager) {
+	public Evolution(InputWindow inputWindow, FitnessEvaluator fitnessEvaluator, MutationManager mutationManager) {
 		
 		this.inputWindow = inputWindow;
-		this.ruleManager = ruleManager;
+		this.fitnessEvaluator = fitnessEvaluator;
 		this.mutationManager = mutationManager;
 	}
 	
@@ -254,10 +254,14 @@ public class Evolution extends ProgressObservable implements Runnable {
 		//MESSAGE debug evaluation started
 		Streams.evolutionOut.println("Evaluation started..");
 		
-		for (Rule rule : ruleManager.getList()) {
-			for (DrumPattern pattern : nextGeneration) {
-				rule.rate(pattern, inputAnalysis);
-			}
+//		for (Rule rule : ruleManager.getList()) {
+//			for (DrumPattern pattern : nextGeneration) {
+//				rule.rate(pattern, inputAnalysis);
+//			}
+//		}
+		
+		for (DrumPattern pattern : nextGeneration) {
+			pattern.fitness = fitnessEvaluator.getFitness(pattern, inputAnalysis);
 		}
 	}
 	

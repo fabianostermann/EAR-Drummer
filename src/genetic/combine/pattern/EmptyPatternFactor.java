@@ -4,14 +4,14 @@ import genetic.DrumPattern;
 
 public class EmptyPatternFactor extends PatternFactor {
 
-	public EmptyPatternFactor() {
-		super("Empty");
+	@Override
+	public String getName() {
+		return "empty";
 	}
 
 	@Override
 	public float rate(DrumPattern pattern) {
-		// TODO Empty debug pattern
-		return 0;
+		return Float.NaN;
 	}
 
 }

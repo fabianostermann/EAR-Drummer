@@ -34,9 +34,9 @@ public class Streams {
 	public static final PrintStream evolutionOut = nullStream;
 	public static final PrintStream inputAnalysisOut = nullStream;
 	public static final PrintStream mutationOut = nullStream;
-	public static final PrintStream ruleOut = debugStream;
+	public static final PrintStream ruleOut = nullStream;
 	public static final PrintStream midiOut = nullStream;
 	public static final PrintStream recordOut = nullStream;
-	public static final PrintStream CombiOut = debugStream;
+	public static final PrintStream combiOut = debugStream;
 	
 }

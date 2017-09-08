@@ -10,12 +10,12 @@ public class LegatoRule extends Rule {
 	}
 
 	@Override
-	public void rate(DrumPattern pattern, InputAnalysis analysis) {
+	public float rate(DrumPattern pattern, InputAnalysis analysis) {
 		
 		//belohnt legato spielen mit lückenlosen pattern
 		
 		if (analysis.numberOfNotes <= 1) {
-			return;
+			return 0f;
 		}
 		
 		float gapAverage = (float) Math.max(1f, analysis.gapAverage);
@@ -37,10 +37,8 @@ public class LegatoRule extends Rule {
 		}
 		
 		float average = (((float)unsilentTicks / pattern.getTicks()) + legatoFactor) / 2;
-		
-		float rate = LIMIT * average;
-		
-		rateWeighted(pattern, rate);
+
+		return average;
 	}
 	
 }

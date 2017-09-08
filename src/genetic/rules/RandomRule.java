@@ -11,12 +11,12 @@ public class RandomRule extends Rule {
 	}
 
 	@Override
-	public void rate(DrumPattern pattern, InputAnalysis analysis) {
+	public float rate(DrumPattern pattern, InputAnalysis analysis) {
 		
 		//bewertet zufällig, simuliert eigenständigen drummer
 		
-		float randomRate = (float) Random.nextFloat() * LIMIT;
-			
-		rateWeighted(pattern, randomRate);
+		float randomRate = Random.nextFloat();
+		
+		return randomRate;
 	}
 }

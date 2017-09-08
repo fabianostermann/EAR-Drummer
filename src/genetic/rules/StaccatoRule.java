@@ -10,14 +10,14 @@ public class StaccatoRule extends Rule {
 	}
 
 	@Override
-	public void rate(DrumPattern pattern, InputAnalysis analysis) {
+	public float rate(DrumPattern pattern, InputAnalysis analysis) {
 		
 		//belohnt staccato spielen mit akzenten
 		
 		if (analysis.numberOfNotes <= 0 ||
 				2*analysis.lengthAverage > analysis.distanceAverage  ||
 				analysis.lengthAverage > 380d) {
-			return;
+			return 0f;
 		}
 		
 		float lengthAverage =  Math.max(80f, (float)analysis.lengthAverage) - 80f;
@@ -39,9 +39,7 @@ public class StaccatoRule extends Rule {
 		
 		float average = (accentFactor + staccatoFactor) / 2;
 		
-		float rate = LIMIT * average;
-		
-		rateWeighted(pattern, rate);
+		return average;
 	}
 	
 }

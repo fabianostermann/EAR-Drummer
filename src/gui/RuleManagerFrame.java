@@ -269,7 +269,7 @@ public class RuleManagerFrame extends ManagedFrame implements LoadSaveable {
 		@Override
 		public void update(Observable rule, Object weightedRate) {
 			
-			float rate = Math.abs((float)weightedRate) / Rule.LIMIT;
+			float rate = (float)weightedRate;
 			
 			if (rule == this.rule) {
 				if (rate > this.getColor())

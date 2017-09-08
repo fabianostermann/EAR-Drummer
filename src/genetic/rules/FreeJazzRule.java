@@ -12,12 +12,12 @@ public class FreeJazzRule extends Rule {
 	}
 
 	@Override
-	public void rate(DrumPattern pattern, InputAnalysis analysis) {
+	public float rate(DrumPattern pattern, InputAnalysis analysis) {
 
 		//belohnt das benutzen von mehr als 7 noten mit zufälligem pattern
 
 		if (analysis.numberOfDifferentNotesOctave <= 7) {
-			return;
+			return 0f;
 		}
 
 		float freeJazzFactor = 1f - (1f / analysis.numberOfDifferentNotesOctave) + 0.08f;
@@ -27,9 +27,7 @@ public class FreeJazzRule extends Rule {
 
 		float average = (freeJazzFactor + random) / 2;
 
-		float rate = LIMIT * average;
-
-		rateWeighted(pattern, rate);
+		return average;
 	}
 
 }

@@ -11,12 +11,12 @@ public class VirtuosoRule extends Rule {
 	}
 
 	@Override
-	public void rate(DrumPattern pattern, InputAnalysis analysis) {
+	public float rate(DrumPattern pattern, InputAnalysis analysis) {
 
 		//belohnt viele noten mit pattern die auch andere instrumente als init pattern haben
 
 		if (analysis.numberOfNotes <= 0) {
-			return;
+			return 0f;
 		}
 
 		float virtuosoFactor = 1f - (1f / analysis.numberOfNotes);
@@ -62,9 +62,7 @@ public class VirtuosoRule extends Rule {
 
 		float average = (virtuosoFactor + drumFactor) / 2;
 
-		float rate = LIMIT * average;
-
-		rateWeighted(pattern, rate);
+		return average;
 	}
 
 }

@@ -12,12 +12,12 @@ public class PedalRule extends Rule {
 	}
 
 	@Override
-	public void rate(DrumPattern pattern, InputAnalysis analysis) {
+	public float rate(DrumPattern pattern, InputAnalysis analysis) {
 
 		//belohnt lange noten mit pattern, die mindestens 2/3 pause haben
 
 		if (analysis.numberOfNotes <= 0) {
-			return;
+			return 0f;
 		}
 		
 		
@@ -44,9 +44,7 @@ public class PedalRule extends Rule {
 		
 		float average = (pedalFactor + silenceFactor) / 2;
 		
-		float rate = LIMIT * average;
-
-		rateWeighted(pattern, rate);
+		return average;
 	}
 
 }

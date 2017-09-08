@@ -11,7 +11,7 @@ public class OriginalRule extends Rule {
 	}
 
 	@Override
-	public void rate(DrumPattern pattern, InputAnalysis analysis) {
+	public float rate(DrumPattern pattern, InputAnalysis analysis) {
 		
 		//bewertet pattern hoch, die geringe distanz zum init pattern haben
 		
@@ -33,8 +33,8 @@ public class OriginalRule extends Rule {
 				}
 			}
 		
-		float rate = LIMIT - (LIMIT * sum / max);
+		float rate = 1f - (sum / max);
 		
-		rateWeighted(pattern, rate);
+		return rate;
 	}
 }

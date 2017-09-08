@@ -1,7 +1,9 @@
 package genetic.combine;
 
 import genetic.DrumPattern;
+import genetic.combine.pattern.EmptyPatternFactor;
 import genetic.combine.pattern.PatternFactor;
+import genetic.combine.solo.EmptySoloFactor;
 import genetic.combine.solo.SoloFactor;
 import input.InputAnalysis;
 
@@ -39,16 +41,16 @@ public class Combi extends Observable {
 		float rating = 0;
 		int numOfFactors = 0;
 		
-		if (patternFactor != null) {
+		if (patternFactor != null && patternFactor.getClass() != EmptyPatternFactor.class) {
 			rating += patternFactor.rate(pattern);
 			numOfFactors++;
 		}
-		if (soloFactor != null) {
+		if (soloFactor != null && soloFactor.getClass() != EmptySoloFactor.class) {
 			rating += soloFactor.rate(analysis);
 			numOfFactors++;
 		}
 		
-		int fitness = (numOfFactors == 0) ? 0 : (int)((rating / numOfFactors) * LIMIT);
+		int fitness = (numOfFactors <= 0) ? 0 : (int)((rating / numOfFactors) * LIMIT);
 		
 		setChanged();
 		notifyObservers(fitness);

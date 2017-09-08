@@ -4,14 +4,14 @@ import input.InputAnalysis;
 
 public class EmptySoloFactor extends SoloFactor {
 
-	public EmptySoloFactor() {
-		super("Empty");
+	@Override
+	public String getName() {
+		return "empty";
 	}
-
+	
 	@Override
 	public float rate(InputAnalysis analysis) {
-		// TODO Empty debug pattern
-		return 0;
+		return Float.NaN;
 	}
 
 }

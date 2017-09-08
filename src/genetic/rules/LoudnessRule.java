@@ -10,12 +10,12 @@ public class LoudnessRule extends Rule {
 	}
 
 	@Override
-	public void rate(DrumPattern pattern, InputAnalysis analysis) {
+	public float rate(DrumPattern pattern, InputAnalysis analysis) {
 			
 		//bewertet pattern hoch, die den gleichen lautstärke durchschnitt wie das solo haben
 		
 		if (analysis.numberOfNotes <= 0) {
-			return;
+			return 0f;
 		}
 		
 		int count = 0;
@@ -37,9 +37,9 @@ public class LoudnessRule extends Rule {
 		
 		float distance = Math.abs(analysis.volumeAverage - average);
 		
-		float rate = LIMIT - (LIMIT * distance / 127);
+		float rate = 1f - (distance / 127);
 		
-		rateWeighted(pattern, rate);
+		return rate;
 	}
 	
 }

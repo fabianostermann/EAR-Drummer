@@ -11,13 +11,13 @@ public class HoldsworthRule extends Rule {
 
 	
 	@Override
-	public void rate(DrumPattern pattern, InputAnalysis analysis) {
+	public float rate(DrumPattern pattern, InputAnalysis analysis) {
 
 		//Belohnt hoch, wenn pattern instrumentensprünge und solo große intervalle
 		
 		if (analysis.numberOfNotes <= 1 ||
 				analysis.intervalAverage < 5) {
-			return;
+			return 0f;
 		}
 		
 		float averageDistance = analysis.intervalAverage / 12;
@@ -46,9 +46,7 @@ public class HoldsworthRule extends Rule {
 				
 		float average = (((float)instrumentJumps / pattern.getTicks()) + averageDistance) / 2;
 		
-		float rate = average * LIMIT;
-		
-		rateWeighted(pattern, rate);
+		return average;
 	}
 	
 }

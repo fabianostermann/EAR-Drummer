@@ -11,7 +11,7 @@ public class InstrumentsRule extends Rule {
 	}
 
 	@Override
-	public void rate(DrumPattern pattern, InputAnalysis analysis) {
+	public float rate(DrumPattern pattern, InputAnalysis analysis) {
 		
 		//bewertet pattern mit gleichen instrumenten wie das init pattern hoch
 		
@@ -41,8 +41,8 @@ public class InstrumentsRule extends Rule {
 			
 		}
 		
-		float rate = LIMIT - (LIMIT * (float)sum / (pattern.getInstruments()));
+		float rate = 1f - ((float)sum / (pattern.getInstruments()));
 		
-		rateWeighted(pattern, rate);
+		return rate;
 	}
 }

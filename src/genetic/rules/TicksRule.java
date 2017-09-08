@@ -11,7 +11,7 @@ public class TicksRule extends Rule {
 	}
 
 	@Override
-	public void rate(DrumPattern pattern, InputAnalysis analysis) {
+	public float rate(DrumPattern pattern, InputAnalysis analysis) {
 		
 		//bewertet pattern hoch, die auf den gleichen ticks auch schläge bzw. auch pausen haben
 		
@@ -41,8 +41,8 @@ public class TicksRule extends Rule {
 			
 		}
 		
-		float rate = LIMIT - (LIMIT * sum / (pattern.getTicks()));
+		float rate = 1f - (sum / (pattern.getTicks()));
 		
-		rateWeighted(pattern, rate);
+		return rate;
 	}
 }

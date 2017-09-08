@@ -33,16 +33,7 @@ public class SimpleDebugFileStream extends PrintStream {
 	 */
 	@Override
 	public void println(String s) {
-		
-		if (isClosed)
-			return;
-		
-		this.print(s);
-		
-		for (PrintStream stream : additionalStreams) {
-			stream.println();
-		}
-		super.println();
+		this.print(s+"\n");
 	}
 	
 	@Override

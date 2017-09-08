@@ -5,8 +5,9 @@ import input.InputAnalysis;
 
 public class RandomSoloFactor extends SoloFactor {
 
-	public RandomSoloFactor() {
-		super("Random");
+	@Override
+	public String getName() {
+		return "random";
 	}
 
 	@Override

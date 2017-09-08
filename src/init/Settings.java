@@ -30,9 +30,4 @@ public class Settings {
 		return MidiSystem.getMidiDeviceInfo()[DEFAULT_OUTPUT_DEVICE_NUMBER];
 	}
 	
-	
-
-	
-
-	
 }

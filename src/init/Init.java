@@ -2,6 +2,7 @@ package init;
 
 import genetic.DrumPattern;
 import genetic.Evolution;
+import genetic.FitnessEvaluator;
 import genetic.Generation;
 import genetic.combine.CombiManager;
 import genetic.mutations.MutationManager;
@@ -92,15 +93,26 @@ public class Init {
 			
 			Generation.setInitPattern(pattern);
 			
-			RuleManager ruleManager = new RuleManager();
-			new RuleManagerFrame(ruleManager);
 			MutationManager mutationManager = new MutationManager();
+			// mutation manager currently just uses one mutation so frame is unnecessary
 //			new MutationManagerFrame(mutationManager);
 			
-			CombiManager combiManager = new CombiManager();
-			new CombiManagerFrame(combiManager);
+			FitnessEvaluator fitnessEvaluator = null;
+			RuleManager ruleManager = null;
+			CombiManager combiManager = null;
 			
-			Evolution evolution = new Evolution(inputWindow, ruleManager, mutationManager);
+			if (Settings.FITNESS_VERSION == Settings.FitnessVersion.RuleBased) {
+				fitnessEvaluator = ruleManager = new RuleManager();
+				new RuleManagerFrame(ruleManager);
+			}
+			else if (Settings.FITNESS_VERSION == Settings.FitnessVersion.CombinationBased) {
+				fitnessEvaluator = combiManager = new CombiManager();
+				new CombiManagerFrame(combiManager);
+			} else {
+				throw new IllegalStateException("Unknown fitness version: " + Settings.FITNESS_VERSION);
+			}
+			
+			Evolution evolution = new Evolution(inputWindow, fitnessEvaluator, mutationManager);
 			new EvolutionFrame(evolution);
 
 			// TODO work on Bassist

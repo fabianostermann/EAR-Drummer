@@ -5,8 +5,9 @@ import genetic.Random;
 
 public class RandomPatternFactor extends PatternFactor {
 
-	public RandomPatternFactor() {
-		super("Random");
+	@Override
+	public String getName() {
+		return "random";
 	}
 
 	@Override

@@ -12,13 +12,13 @@ public class OstinatoRule extends Rule {
 	}
 
 	@Override
-	public void rate(DrumPattern pattern, InputAnalysis analysis) {
+	public float rate(DrumPattern pattern, InputAnalysis analysis) {
 
 		//belohnt ostinato (repeating pattern) mit pattern, die zwei akzente pro schlag besitzen
 
 		if (analysis.numberOfNotes <= 0 ||
 				analysis.numberOfNotes * 3 < analysis.numberOfDifferentNotes) {
-			return;
+			return 0f;
 		}
 		
 		int numberOfDifferentNotes = Math.max(1, analysis.numberOfDifferentNotes - 3);
@@ -46,9 +46,7 @@ public class OstinatoRule extends Rule {
 
 		float average = (ostinatoFactor + accentFactor) / 2;
 		
-		float rate = LIMIT * average;
-
-		rateWeighted(pattern, rate);
+		return average;
 	}
 
 }

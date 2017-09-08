@@ -8,10 +8,6 @@ import input.InputAnalysis;
 import java.util.Observable;
 
 public abstract class Rule extends Observable {
-
-	//TODO normalize all rules to (0,1000)
-	
-	public static final int LIMIT = 1000;
 	
 	protected String name = this.toString();
 	protected String description = "No description available";
@@ -38,7 +34,7 @@ public abstract class Rule extends Observable {
 	protected float weight = 1f;
 	
 	public void setWeight(float weight) {
-		weight = Math.max(-1f, weight);
+		weight = Math.max(0f, weight);
 		weight = Math.min(1f, weight);
 		
 		this.weight = weight;
@@ -49,28 +45,28 @@ public abstract class Rule extends Observable {
 	}
 
 	
-	public abstract void rate(DrumPattern pattern, InputAnalysis analysis);
+	public abstract float rate(DrumPattern pattern, InputAnalysis analysis);
 	
-	protected void rateWeighted(DrumPattern pattern, float rate) {
+	protected float getWeightedRating(DrumPattern pattern, InputAnalysis analysis) {
 		
-		float weightedRate = this.weight * rate;
+		float rating = rate(pattern, analysis);
 		
 		//TODO range check for weights < 0
-		if (this.weight > 0 && (weightedRate > LIMIT || weightedRate < 0)) {
+		if (rating > 1f || rating < 0f) {
 			
-			System.err.println("Rule.rateWeighted(): Rate value of rule "+this.name+" not in bounds: "+weightedRate);
+			System.err.println("Rule.rateWeighted(): Rate value of rule "+this.name+" not in bounds: "+rating);
 			
-			weightedRate = Math.min(LIMIT, weightedRate);
-			weightedRate = Math.max(0, weightedRate);
+			rating = Math.min(1f, rating);
+			rating = Math.max(0f, rating);
 		}
 		
-		Streams.ruleOut.println("Rule "+this.name+" rated pattern fitness "+(int)weightedRate);
-		
-		pattern.fitness += (int)(weightedRate);
+		float weightedRate = this.weight * rating;
+		Streams.ruleOut.println("Rule "+this.name+" rated pattern fitness "+weightedRate);
 		
 		setChanged();
 		notifyObservers(weightedRate);
-		
+
+		return weightedRate;
 	}
 
 }

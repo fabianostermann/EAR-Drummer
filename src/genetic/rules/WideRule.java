@@ -12,14 +12,13 @@ public class WideRule extends Rule {
 	}
 
 	@Override
-	public void rate(DrumPattern pattern, InputAnalysis analysis) {
+	public float rate(DrumPattern pattern, InputAnalysis analysis) {
 
 		//belohnt weite linien mit pattern, die alle instrumente einmal benutzen
 
 		if (analysis.numberOfNotes <= 0) {
-			return;
+			return 0f;
 		}
-		
 		
 		float rangeFactor = (float) Math.min(analysis.keyRange, 36) / 36;
 		
@@ -39,9 +38,7 @@ public class WideRule extends Rule {
 		
 		float average = (rangeFactor + drumFactor) / 2;
 		
-		float rate = LIMIT * average;
-
-		rateWeighted(pattern, rate);
+		return average;
 	}
 
 }
