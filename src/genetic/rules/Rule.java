@@ -51,7 +51,6 @@ public abstract class Rule extends Observable {
 		
 		float rating = rate(pattern, analysis);
 		
-		//TODO range check for weights < 0
 		if (rating > 1f || rating < 0f) {
 			
 			System.err.println("Rule.rateWeighted(): Rate value of rule "+this.name+" not in bounds: "+rating);
