@@ -11,14 +11,14 @@ public class Streams {
 	public static PrintStream errorStream = null;
 	static {
 		try {
-			errorStream = new SimpleDebugFileStream("error");
-//			System.setErr(errorStream);
+			errorStream = new SimpleDebugFileStream("error", System.err);
+			System.setErr(errorStream);
 		} catch (Exception e) {
 			errorStream = System.err;
 			e.printStackTrace();
 		}
 		try {
-			debugStream = new SimpleDebugFileStream("debug");
+			debugStream = new SimpleDebugFileStream("debug", System.out);
 		} catch (Exception e) {
 			debugStream = System.out;
 			e.printStackTrace();

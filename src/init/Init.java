@@ -40,12 +40,10 @@ public class Init {
 			}
 			if (Settings.DEBUG) {
 				Streams.debugStream.println("debug stream enabled");
-				System.out.println("debug stream enabled");
 			}
 			else {
 				Streams.debugStream.println("debug stream is disabled, use argument '--debug' to enable");
 				Streams.debugStream.close();
-				System.out.println("debug stream is disabled, use argument '--debug' to enable");
 			}
 			
 			

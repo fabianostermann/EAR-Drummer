@@ -14,10 +14,16 @@ public class SimpleDebugFileStream extends PrintStream {
 	
 	private Calendar calendar = Calendar.getInstance();
 	
-	public SimpleDebugFileStream(String name) throws FileNotFoundException {
+	private PrintStream[] additionalStreams;
+	
+	private boolean isClosed = false;
+	
+	public SimpleDebugFileStream(String name, PrintStream...streams ) throws FileNotFoundException {
 		super(name+".txt");
 		
 		this.file = new File(name+".txt");
+		
+		this.additionalStreams = streams;
 		
 		this.println(name+" stream initialized");
 	}
@@ -27,12 +33,27 @@ public class SimpleDebugFileStream extends PrintStream {
 	 */
 	@Override
 	public void println(String s) {
+		
+		if (isClosed)
+			return;
+		
 		this.print(s);
+		
+		for (PrintStream stream : additionalStreams) {
+			stream.println();
+		}
 		super.println();
 	}
 	
 	@Override
 	public void print(String s) {
+		
+		if (isClosed)
+			return;
+		
+		for (PrintStream stream : additionalStreams) {
+			stream.print(s);
+		}
 		
 		if (maxSizeReached)
 			return;
@@ -54,6 +75,10 @@ public class SimpleDebugFileStream extends PrintStream {
 		
 	}
 	
-	
+	@Override
+	public void close() {
+		isClosed = true;
+		super.close();
+	}
 	
 }
