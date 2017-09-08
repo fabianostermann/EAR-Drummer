@@ -5,13 +5,12 @@ import genetic.combine.pattern.EmptyPatternFactor;
 import genetic.combine.pattern.PatternFactor;
 import genetic.combine.solo.EmptySoloFactor;
 import genetic.combine.solo.SoloFactor;
+import init.Streams;
 import input.InputAnalysis;
 
 import java.util.Observable;
 
 public class Combi extends Observable {
-
-	public static final int LIMIT = 1000;
 
 	public PatternFactor patternFactor = null;
 	public SoloFactor soloFactor = null;
@@ -36,24 +35,31 @@ public class Combi extends Observable {
 		return this.weight;
 	}
 	
-	public int getWeightedFitness(DrumPattern pattern, InputAnalysis analysis) {
+	public float getWeightedFitness(DrumPattern pattern, InputAnalysis analysis) {
 		
 		float rating = 0;
 		int numOfFactors = 0;
+		float patternRating = Float.NaN, soloRating = Float.NaN;
 		
 		if (patternFactor != null && patternFactor.getClass() != EmptyPatternFactor.class) {
-			rating += patternFactor.rate(pattern);
+			patternRating = patternFactor.rate(pattern);
+			rating += patternRating;
 			numOfFactors++;
 		}
 		if (soloFactor != null && soloFactor.getClass() != EmptySoloFactor.class) {
-			rating += soloFactor.rate(analysis);
+			soloRating = soloFactor.rate(analysis);
+			rating += soloRating;
 			numOfFactors++;
 		}
 		
-		int fitness = (numOfFactors <= 0) ? 0 : (int)((rating / numOfFactors) * LIMIT);
+		float fitness = (numOfFactors <= 0) ? 0 : (rating / numOfFactors);
 		
 		setChanged();
 		notifyObservers(fitness);
+		
+		Streams.combiOut.println("Combi - SoloFactor(" + soloFactor.getName() + ")=" + soloRating + ", " + 
+				"PatternFactor(" + patternFactor.getName() + ")=" + patternRating + 
+				", fitness=" + fitness);
 		
 		return fitness;
 	}
