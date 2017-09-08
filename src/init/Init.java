@@ -6,6 +6,7 @@ import genetic.Generation;
 import genetic.combine.CombiManager;
 import genetic.mutations.MutationManager;
 import genetic.rules.RuleManager;
+import gui.CombiManagerFrame;
 import gui.DrumPatternFrame;
 import gui.EvolutionFrame;
 import gui.FrameManager;
@@ -95,11 +96,13 @@ public class Init {
 			new RuleManagerFrame(ruleManager);
 			MutationManager mutationManager = new MutationManager();
 //			new MutationManagerFrame(mutationManager);
-			Evolution evolution = new Evolution(inputWindow, ruleManager, mutationManager);
-			new EvolutionFrame(evolution);
 			
 			CombiManager combiManager = new CombiManager();
+			new CombiManagerFrame(combiManager);
 			
+			Evolution evolution = new Evolution(inputWindow, ruleManager, mutationManager);
+			new EvolutionFrame(evolution);
+
 			// TODO work on Bassist
 			//BassGenerator bassGenerator = new BassGenerator(outputGenerator);
 			//PrimitiveBassist bassist = new PrimitiveBassist(bassGenerator, evolution);

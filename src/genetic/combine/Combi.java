@@ -11,8 +11,15 @@ public class Combi extends Observable {
 
 	public static final int LIMIT = 1000;
 
-	public PatternFactor patternFactor;
-	public SoloFactor soloFactor;
+	public PatternFactor patternFactor = null;
+	public SoloFactor soloFactor = null;
+	
+	public Combi() {}
+	
+	public Combi(PatternFactor patternFactor, SoloFactor soloFactor) {
+		this.patternFactor = patternFactor;
+		this.soloFactor = soloFactor;
+	}
 	
 	private float weight = 1f;
 	
@@ -27,7 +34,7 @@ public class Combi extends Observable {
 		return this.weight;
 	}
 	
-	public int rateWeighted(DrumPattern pattern, InputAnalysis analysis) {
+	public int getWeightedFitness(DrumPattern pattern, InputAnalysis analysis) {
 		
 		float rating = 0;
 		int numOfFactors = 0;

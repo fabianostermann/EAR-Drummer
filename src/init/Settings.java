@@ -6,6 +6,11 @@ import javax.sound.midi.MidiSystem;
 public class Settings {
 	
 	public static boolean DEBUG = false;
+	
+	public enum FitnessVersion {
+	    RuleBased, CombinationBased
+	}
+	public static FitnessVersion FITNESS_VERSION = FitnessVersion.RuleBased;
 
 	//Metronome default settings
 	public static int TICKS = 8;
