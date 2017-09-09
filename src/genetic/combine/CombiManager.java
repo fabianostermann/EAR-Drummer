@@ -32,8 +32,7 @@ public class CombiManager implements FitnessEvaluator {
 
 	private void initCombinations() {
 		
-		combis.add(new Combi(patternFactors[0], soloFactors[0]));
-		combis.add(new Combi(patternFactors[1], soloFactors[1]));
+		combis.add(new Combi());
 		
 		Streams.combiOut.println("Initiated combis with " + combis);
 	}
@@ -60,5 +59,17 @@ public class CombiManager implements FitnessEvaluator {
 		}
 		
 		return fitness;
+	}
+
+	public void addEmptyCombi() {
+		combis.add(new Combi());
+		
+		Streams.combiOut.println("Added new combi: " + combis);
+	}
+
+	public void removeCombi(Combi combi) {
+		combis.remove(combi);
+		
+		Streams.combiOut.println("Removed a combi: " + combis);
 	}
 }

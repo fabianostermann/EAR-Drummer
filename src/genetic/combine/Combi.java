@@ -15,7 +15,9 @@ public class Combi extends Observable {
 	public PatternFactor patternFactor = null;
 	public SoloFactor soloFactor = null;
 	
-	public Combi() {}
+	public Combi() {
+		this(new EmptyPatternFactor(), new EmptySoloFactor());
+	}
 	
 	public Combi(PatternFactor patternFactor, SoloFactor soloFactor) {
 		this.patternFactor = patternFactor;
@@ -25,7 +27,9 @@ public class Combi extends Observable {
 	private float weight = 1f;
 	
 	public void setWeight(float weight) {
-		weight = Math.max(-1f, weight);
+		if (weight > 1f || weight < 0f)
+			System.err.println(this + " clips weight " + weight + " to [0,1]");
+		weight = Math.max(0f, weight);
 		weight = Math.min(1f, weight);
 		
 		this.weight = weight;
@@ -66,6 +70,6 @@ public class Combi extends Observable {
 	
 	@Override
 	public String toString() {
-		return super.toString() + "(patternFactor=" + patternFactor + "," + "soloFactor=" + soloFactor + ")";
+		return super.toString() + "(" + "soloFactor=" + soloFactor + "," + "patternFactor=" + patternFactor + ")";
 	}
 }
