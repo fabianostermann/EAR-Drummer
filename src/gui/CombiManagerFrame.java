@@ -4,12 +4,10 @@ import genetic.combine.Combi;
 import genetic.combine.CombiManager;
 import genetic.combine.pattern.PatternFactor;
 import genetic.combine.solo.SoloFactor;
-
 import init.Streams;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,6 +15,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -45,7 +45,7 @@ public class CombiManagerFrame extends ManagedFrame {
 		this.setLocationByPlatform(true);
 		this.setVisible(true);
 		
-		// TODO startSliderColorThread();
+		startSliderColorThread();
 	}
 
 	private JPanel combiPane = new JPanel(new GridLayout(1,0));
@@ -67,9 +67,17 @@ public class CombiManagerFrame extends ManagedFrame {
 		combiPanelList.clear();
 		for (Combi combi : combiManager.getList()) {
 			CombiPanel combiPanel = new CombiPanel(combi, combiManager.getPatternFactors(), combiManager.getSoloFactors());
-			combiPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 			combiPanelList.add(combiPanel);
 			combiPane.add(combiPanel);
+		}
+		if (combiPanelList.size() == 1) {
+			combiPanelList.get(0).setRemoveButtonEnabled(false);
+		}
+		int numOfSlots = combiPanelList.size();
+		while (numOfSlots < 5) {
+			Slot dummy = new Slot();
+			combiPane.add(dummy);
+			numOfSlots++;
 		}
 		combiPane.add(addCombiButton);
 		this.revalidate();
@@ -82,25 +90,63 @@ public class CombiManagerFrame extends ManagedFrame {
 	}
 	
 	private void removeCombi(Combi combi) {
-		combiManager.removeCombi(combi);
-		updateCombis();
+		if (combiPanelList.size() > 1) {
+			combiManager.removeCombi(combi);
+			updateCombis();
+		} else
+			Streams.combiOut.println("CombiManagerFrame will not remove last combiPanel");
 	}
 	
-	private class CombiPanel extends JPanel implements ChangeListener, ItemListener {
+	private void startSliderColorThread() {
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				
+				boolean running = true;
+				while (running) {
+					
+					for (CombiPanel combiPanel : combiPanelList) {
+					
+						float color = combiPanel.getColor();
+						if (color > 0) {
+							color -= 0.02f;
+							color = Math.max(0, color);
+							combiPanel.setColor(color);
+						}
+						
+						
+					}
+					
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			
+		}).start();
+	}
+	
+	private class CombiPanel extends Slot implements ChangeListener, ItemListener, Observer {
 		
 		private Combi combi;
 		
 		private JComboBox<PatternFactor> patternComboBox;
 		private JComboBox<SoloFactor> soloComboBox;
 		private JSlider slider;
-		private JButton button;
+		private JButton removeButton;
+		
+		private Color hueColor;
 		
 		public static final int SLIDER_FACTOR = 1000;
 		
 		private CombiPanel(final Combi combi, PatternFactor[] patternFactors, SoloFactor[] soloFactors) {
 			
 			this.combi = combi;
-
+			combi.addObserver(this);
+			
 			patternComboBox = new JComboBox<>(patternFactors);
 			patternComboBox.getModel().setSelectedItem(combi.patternFactor);
 			patternComboBox.addItemListener(this);
@@ -121,8 +167,9 @@ public class CombiManagerFrame extends ManagedFrame {
 			slider.setLabelTable( labelTable );
 			slider.addChangeListener(this);
 			
-			button = new JButton("-");
-			button.addActionListener(new ActionListener() {
+			removeButton = new JButton();
+			setRemoveButtonEnabled(true);
+			removeButton.addActionListener(new ActionListener() {
 				@Override public void actionPerformed(ActionEvent e) { removeCombi(combi); }
 			});
 			
@@ -130,16 +177,52 @@ public class CombiManagerFrame extends ManagedFrame {
 			this.add(soloComboBox);
 			this.add(patternComboBox);
 			this.add(slider);
-			this.add(button);
+			this.add(removeButton);
 			
-			this.setBackground(Color.RED);
-			this.slider.setBackground(Color.RED);
+			this.setColor(0f);
+		}
+
+		public void setRemoveButtonEnabled(boolean enabled) {
+			this.removeButton.setEnabled(enabled);
+			if (enabled)
+				this.removeButton.setText("-");
+			else
+				this.removeButton.setText(" ");
+		}
+		
+		//0f = green, 1f = red;
+		public void setColor(float hue) {
+			
+			float correctedHue = (1 - hue) * 0.333f;
+			
+			hueColor = new Color(Color.HSBtoRGB(correctedHue, 1f, 1f));
+			
+			if (hue != 0f) {
+				slider.setBackground(hueColor);
+//				this.setBackground(hueColor);
+			} else {
+				slider.setBackground(Color.BLACK);
+//				this.setBackground(Color.BLACK);
+			}
 		}
 		
 		@Override
-		public void paint(Graphics g) {
-			/* TODO draw heat or height that indicates the average fitness */
-			super.paint(g);
+		public void update(Observable combi, Object weightedRate) {
+			
+			float rate = (float)weightedRate;
+			
+			if (combi == this.combi) {
+				if (rate > this.getColor())
+					this.setColor(rate);
+			}
+			
+		}
+		
+		public float getColor() {
+			Color col = hueColor;
+			float hue = Color.RGBtoHSB(col.getRed(), col.getGreen(), col.getBlue(), null)[0];
+			float color = 1 - (hue / 0.333f);
+			return color;
 		}
 
 		@Override
@@ -159,6 +242,22 @@ public class CombiManagerFrame extends ManagedFrame {
 				combi.setWeight((float)this.slider.getValue() / SLIDER_FACTOR);
 			}
 			Streams.combiOut.println("Weight changed by slider: " + this.combi + "=" + this.combi.getWeight());
+		}
+		
+		@Override
+		public void setEnabled(boolean enabled) {
+			super.setEnabled(enabled);
+			this.soloComboBox.setEnabled(enabled);
+			this.patternComboBox.setEnabled(enabled);
+			this.slider.setEnabled(enabled);
+			setRemoveButtonEnabled(enabled);
+		}
+	}
+	
+	private class Slot extends JPanel {
+		
+		private Slot() {
+			this.setBorder(BorderFactory.createMatteBorder(10, 10, 10, 10, Color.WHITE));
 		}
 	}
 }

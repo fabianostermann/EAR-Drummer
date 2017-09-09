@@ -57,15 +57,16 @@ public class Combi extends Observable {
 		}
 		
 		float fitness = (numOfFactors <= 0) ? 0 : (rating / numOfFactors);
+		float weightedFitness = fitness * this.weight;
 		
 		setChanged();
-		notifyObservers(fitness);
+		notifyObservers(weightedFitness);
 		
-		Streams.combiOut.println("Combi - SoloFactor(" + soloFactor.getName() + ")=" + soloRating + ", " + 
+		Streams.combiOut.println(super.toString() + "->SoloFactor(" + soloFactor.getName() + ")=" + soloRating + ", " + 
 				"PatternFactor(" + patternFactor.getName() + ")=" + patternRating + 
-				", fitness=" + fitness);
+				", weight=" + weight + ", fitness=" + fitness + ", weightedFitness=" + weightedFitness);
 		
-		return fitness;
+		return weightedFitness;
 	}
 	
 	@Override
