@@ -158,7 +158,7 @@ public class Evolution extends ProgressObservable implements Runnable {
 				
 				newPopulation.add(p.copy());
 				
-				stringList.add(p.toString()+" fitness:"+p.fitness);
+				stringList.add(p+" fitness="+p.fitness);
 			}
 			Generation.writePopulation(newPopulation);
 			

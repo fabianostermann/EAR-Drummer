@@ -42,14 +42,18 @@ public class DrumPattern extends Rateable {
 		return clone;
 	}
 	
-	@Override
-	public String toString() {
-		int id = 0;
+	public int getActivation() {
+		int activation = 0;
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[i].length; j++) {
-				id += matrix[i][j];
+				activation += matrix[i][j];
 			}
 		}
-		return "patternSum=["+new Integer(id).toString()+"]";
+		return activation;
+	}
+	
+	@Override
+	public String toString() {
+		return super.toString()+"[activation="+this.getActivation()+"]";
 	}
 }
