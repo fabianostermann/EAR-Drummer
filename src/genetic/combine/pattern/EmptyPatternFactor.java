@@ -1,5 +1,6 @@
 package genetic.combine.pattern;
 
+import input.InputAnalysis;
 import genetic.DrumPattern;
 
 public class EmptyPatternFactor extends PatternFactor {
@@ -10,7 +11,7 @@ public class EmptyPatternFactor extends PatternFactor {
 	}
 
 	@Override
-	public float rate(DrumPattern pattern) {
+	public float rate(DrumPattern pattern, InputAnalysis analysis) {
 		return Float.NaN;
 	}
 

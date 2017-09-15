@@ -46,7 +46,7 @@ public class Combi extends Observable {
 		float patternRating = Float.NaN, soloRating = Float.NaN;
 		
 		if (patternFactor != null && patternFactor.getClass() != EmptyPatternFactor.class) {
-			patternRating = patternFactor.rate(pattern);
+			patternRating = patternFactor.rate(pattern, analysis);
 			rating += patternRating;
 			numOfFactors++;
 		}
