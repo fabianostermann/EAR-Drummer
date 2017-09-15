@@ -13,6 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Observable;
@@ -29,7 +31,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 @SuppressWarnings("serial")
-public class CombiManagerFrame extends ManagedFrame {
+public class CombiManagerFrame extends ManagedFrame implements LoadSaveable {
 
 	private CombiManager combiManager;
 	
@@ -51,6 +53,8 @@ public class CombiManagerFrame extends ManagedFrame {
 	private JPanel combiPane = new JPanel(new GridLayout(1,0));
 		private ArrayList<CombiPanel> combiPanelList = new ArrayList<CombiPanel>();
 		private JButton addCombiButton = new JButton("+");
+	
+	private LoadSavePanel loadSavePanel = new LoadSavePanel(this, "combis");
 		
 	private void initGUI() {
 		
@@ -60,6 +64,7 @@ public class CombiManagerFrame extends ManagedFrame {
 		updateCombis();
 		
 		this.getContentPane().add(combiPane, BorderLayout.CENTER);
+		this.getContentPane().add(loadSavePanel, BorderLayout.NORTH);
 	}
 	
 	private void updateCombis() {
@@ -258,6 +263,36 @@ public class CombiManagerFrame extends ManagedFrame {
 		
 		private Slot() {
 			this.setBorder(BorderFactory.createMatteBorder(10, 10, 10, 10, Color.WHITE));
+		}
+	}
+
+	@Override
+	public void loadFromFile(RandomAccessFile raf) throws IOException {
+		String line = "";
+		ArrayList<Combi> combis = new ArrayList<>();
+		while ((line = raf.readLine()) != null) {
+			String[] combiSpec = line.split(":");
+			if (combiSpec.length == 3) {
+				SoloFactor soloFactor = combiManager.getSoloFactor(combiSpec[0]);
+				PatternFactor patternFactor = combiManager.getPatternFactor(combiSpec[1]);
+				Combi combi = new Combi(patternFactor, soloFactor);
+				try { combi.setWeight(Float.parseFloat(combiSpec[2])); }
+				catch (NumberFormatException e)
+				{ System.err.println("Bad float ("+combiSpec[2]+") in line " + line + " while parsing "+raf.getFD()); }
+				combis.add(combi);
+			}
+		}
+		this.combiManager.getList().clear();
+		this.combiManager.getList().addAll(combis);
+		this.updateCombis();
+	}
+
+	@Override
+	public void saveToFile(RandomAccessFile raf) throws IOException {
+		for (CombiPanel combiPanel : this.combiPanelList) {
+			raf.writeBytes(combiPanel.combi.soloFactor.getName()+":"
+					+ combiPanel.combi.patternFactor.getName()+":"
+					+ combiPanel.combi.getWeight()+"\n");
 		}
 	}
 }
