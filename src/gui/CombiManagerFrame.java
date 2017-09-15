@@ -33,6 +33,7 @@ import javax.swing.event.ChangeListener;
 @SuppressWarnings("serial")
 public class CombiManagerFrame extends ManagedFrame implements LoadSaveable {
 
+	private static final int MAX_NUMBER_OF_SLOTS = 5;
 	private CombiManager combiManager;
 	
 	public CombiManagerFrame(CombiManager combiManager) {
@@ -79,12 +80,15 @@ public class CombiManagerFrame extends ManagedFrame implements LoadSaveable {
 			combiPanelList.get(0).setRemoveButtonEnabled(false);
 		}
 		int numOfSlots = combiPanelList.size();
-		while (numOfSlots < 5) {
+		do {
 			Slot dummy = new Slot();
+			if (numOfSlots == combiPanelList.size()) {
+				dummy.setLayout(new BorderLayout());
+				dummy.add(addCombiButton, BorderLayout.CENTER);
+			}
 			combiPane.add(dummy);
 			numOfSlots++;
-		}
-		combiPane.add(addCombiButton);
+		} while (numOfSlots < MAX_NUMBER_OF_SLOTS);
 		this.revalidate();
 		this.pack();
 	}
