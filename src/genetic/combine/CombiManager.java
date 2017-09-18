@@ -36,6 +36,8 @@ public class CombiManager implements FitnessEvaluator {
 
 	private ArrayList<Combi> combis = new ArrayList<Combi>();
 	
+	// TODO introduce loudness as special factor
+	
 	private final PatternFactor[] patternFactors = {
 			new EmptyPatternFactor(),
 			new AccentPatternFactor(),
