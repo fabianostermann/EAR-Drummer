@@ -9,7 +9,7 @@ import javax.swing.JButton;
 
 public class ImageLoader {
 	
-	private static final String IMAGE_FOLDER = "./img/"; 
+	private static final String IMAGE_FOLDER = "./svg/"; 
 	public static Map<String, ImageIcon> image = new HashMap<>(); 
 	
 	private static final String[] labels = {
@@ -18,7 +18,7 @@ public class ImageLoader {
 		"pause=pause.png",
 		"start=play.png",
 		"play=play.png",
-		"stop=cancel.png"
+		"stop=stop.png"
 	};
 	
 	static {
