@@ -4,6 +4,7 @@ import genetic.combine.Combi;
 import genetic.combine.CombiManager;
 import genetic.combine.pattern.PatternFactor;
 import genetic.combine.solo.SoloFactor;
+import init.ImageLoader;
 import init.Streams;
 
 import java.awt.BorderLayout;
@@ -53,7 +54,7 @@ public class CombiManagerFrame extends ManagedFrame implements LoadSaveable {
 
 	private JPanel combiPane = new JPanel(new GridLayout(1,0));
 		private ArrayList<CombiPanel> combiPanelList = new ArrayList<CombiPanel>();
-		private JButton addCombiButton = new JButton("+");
+		private JButton addCombiButton = ImageLoader.createButton("+");
 	
 	private LoadSavePanel loadSavePanel = new LoadSavePanel(this, "combis", "combi1");
 		
