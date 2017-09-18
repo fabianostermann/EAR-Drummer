@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.RandomAccessFile;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -26,7 +25,7 @@ public class LoadSavePanel extends JPanel {
 	private JMenuBar menuBar;
 	private JMenu loadMenu;
 	private JTextField saveTagField;
-	private JButton saveButton = new JButton("Save");
+	private JButton saveButton = ImageLoader.createButton("Save");
 	private JButton deleteButton = ImageLoader.createButton("Delete");
 	private JTextField infoLabel = new JTextField(30);
 	

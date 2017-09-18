@@ -1,11 +1,11 @@
 package gui;
 
-import java.awt.BorderLayout;
+import init.ImageLoader;
+
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 
 import playback.PrimitiveBassist;
@@ -38,7 +38,7 @@ public class PrimitiveBassistFrame extends ManagedFrame {
 
 	private void initGUI() {
 
-		resetButton = new JButton("Reset");
+		resetButton = ImageLoader.createButton("Reset");
 		resetButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -46,7 +46,7 @@ public class PrimitiveBassistFrame extends ManagedFrame {
 			}
 		});
 		
-		enableButton = new JButton();
+		enableButton = ImageLoader.createButton("");
 		if (bassist.isEnabled()) {
 			enableButton.setText("Disable");
 		} else {

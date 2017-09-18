@@ -177,7 +177,7 @@ public class CombiManagerFrame extends ManagedFrame implements LoadSaveable {
 			slider.setLabelTable( labelTable );
 			slider.addChangeListener(this);
 			
-			removeButton = new JButton();
+			removeButton = ImageLoader.createButton("");
 			setRemoveButtonEnabled(true);
 			removeButton.addActionListener(new ActionListener() {
 				@Override public void actionPerformed(ActionEvent e) { removeCombi(combi); }

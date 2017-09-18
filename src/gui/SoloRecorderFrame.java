@@ -1,5 +1,7 @@
 package gui;
 
+import init.ImageLoader;
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -39,9 +41,9 @@ public class SoloRecorderFrame extends ManagedFrame {
 
 	//Window components
 	private JPanel buttonPane = new JPanel();
-		private JButton buttonRec = new JButton("REC");
-		private JButton buttonStop = new JButton("STOP");
-		private JButton buttonPlay = new JButton("PLAY");
+		private JButton buttonRec = ImageLoader.createButton("REC");
+		private JButton buttonStop = ImageLoader.createButton("STOP");
+		private JButton buttonPlay = ImageLoader.createButton("PLAY");
 		private JCheckBox latencyCheckBox = new JCheckBox("Latency:");
 		private JSpinner latencySpinner = new JSpinner(new SpinnerNumberModel(0, Integer.MIN_VALUE, Integer.MAX_VALUE, 1));
 		

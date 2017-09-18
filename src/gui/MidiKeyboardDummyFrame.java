@@ -1,5 +1,6 @@
 package gui;
 
+import init.ImageLoader;
 import input.InputManager;
 
 import java.awt.event.ActionEvent;
@@ -50,7 +51,7 @@ public class MidiKeyboardDummyFrame extends ManagedFrame implements KeyListener 
 	
 	private void initGUI() {
 		
-		useDummyButton = new JButton("USE DUMMY");
+		useDummyButton = ImageLoader.createButton("USE DUMMY");
 		useDummyButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

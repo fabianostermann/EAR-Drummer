@@ -3,7 +3,7 @@ package gui;
 import genetic.Random;
 import genetic.mutations.Mutation;
 import genetic.mutations.MutationManager;
-import init.Settings;
+import init.ImageLoader;
 import init.Streams;
 
 import java.awt.BorderLayout;
@@ -46,9 +46,9 @@ public class MutationManagerFrame extends ManagedFrame {
 	private JPanel mutationsPane = new JPanel(new GridLayout(1,0));
 		private ArrayList<MutationSlider> sliderList = new ArrayList<MutationSlider>();
 	private JPanel buttonsPane = new JPanel(new GridLayout(0,1));
-		private JButton randomAllButton = new JButton("R A N D O M   A L L");
-		private JButton randomOneButton = new JButton("R A N D O M   O N E");
-		private JButton zeroButton = new JButton("Z E R O");
+		private JButton randomAllButton = ImageLoader.createButton("R A N D O M   A L L");
+		private JButton randomOneButton = ImageLoader.createButton("R A N D O M   O N E");
+		private JButton zeroButton = ImageLoader.createButton("Z E R O");
 	
 	private void initGUI() {
 		

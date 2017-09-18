@@ -1,5 +1,6 @@
 package gui;
 
+import init.ImageLoader;
 import init.Settings;
 
 import java.awt.BorderLayout;
@@ -11,7 +12,6 @@ import java.awt.event.ActionListener;
 import java.util.Hashtable;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -47,8 +47,8 @@ public class MetronomeFrame extends ManagedFrame implements MetronomeListener, C
 
 	//Window components
 	private JPanel buttonPane = new JPanel();
-		private JButton buttonStart = new JButton("START");
-		private JButton buttonStop = new JButton("STOP");
+		private JButton buttonStart = ImageLoader.createButton("START");
+		private JButton buttonStop = ImageLoader.createButton("STOP");
 	
 	private JPanel sliderPane = new JPanel(new GridLayout(0, 1, 10, 10));
 		private JSlider sliderTpm;

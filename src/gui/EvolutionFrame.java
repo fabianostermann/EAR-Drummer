@@ -2,6 +2,7 @@ package gui;
 
 import genetic.Evolution;
 import genetic.ProgressObservable;
+import init.ImageLoader;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -46,10 +47,10 @@ public class EvolutionFrame extends ManagedFrame implements Observer, ChangeList
 
 	//Window components
 	private JPanel buttonPane = new JPanel(new BorderLayout());
-		private JButton buttonStart = new JButton("START");
-		private JButton buttonPause = new JButton("PAUSE");
-		private JButton buttonResume = new JButton("RESUME");
-		private JButton buttonStop = new JButton("STOP");
+		private JButton buttonStart = ImageLoader.createButton("START");
+		private JButton buttonPause = ImageLoader.createButton("PAUSE");
+		private JButton buttonResume = ImageLoader.createButton("RESUME");
+		private JButton buttonStop = ImageLoader.createButton("STOP");
 		
 	private JScrollPane patternScrollPane;
 		private JTextArea patternArea = new JTextArea(0,10);

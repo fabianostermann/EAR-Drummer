@@ -3,16 +3,14 @@ package gui;
 import genetic.Random;
 import genetic.rules.Rule;
 import genetic.rules.RuleManager;
-import init.Settings;
+import init.ImageLoader;
 import init.Streams;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
@@ -23,14 +21,9 @@ import java.util.Observer;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
-import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -61,9 +54,9 @@ public class RuleManagerFrame extends ManagedFrame implements LoadSaveable {
 	private JPanel rulesPane = new JPanel(new GridLayout(1,0));
 		private ArrayList<RuleSlider> sliderList = new ArrayList<RuleSlider>();
 	private JPanel buttonsPane = new JPanel(new GridLayout(0,1));
-		private JButton randomAllButton = new JButton("R A N D O M   A L L");
-		private JButton randomOneButton = new JButton("R A N D O M   O N E");
-		private JButton zeroButton = new JButton("Z E R O");
+		private JButton randomAllButton = ImageLoader.createButton("R A N D O M   A L L");
+		private JButton randomOneButton = ImageLoader.createButton("R A N D O M   O N E");
+		private JButton zeroButton = ImageLoader.createButton("Z E R O");
 	private LoadSavePanel loadSavePanel = new LoadSavePanel(this, "weightings", "weighting1");
 
 	private void initGUI() {
