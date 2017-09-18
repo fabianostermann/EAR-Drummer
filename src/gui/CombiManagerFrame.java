@@ -55,7 +55,7 @@ public class CombiManagerFrame extends ManagedFrame implements LoadSaveable {
 		private ArrayList<CombiPanel> combiPanelList = new ArrayList<CombiPanel>();
 		private JButton addCombiButton = new JButton("+");
 	
-	private LoadSavePanel loadSavePanel = new LoadSavePanel(this, "combis");
+	private LoadSavePanel loadSavePanel = new LoadSavePanel(this, "combis", "combi1");
 		
 	private void initGUI() {
 		

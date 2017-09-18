@@ -23,7 +23,7 @@ public class LoadSavePanel extends JPanel {
 	
 	private JMenuBar menuBar;
 	private JMenu loadMenu;
-	private JTextField saveTagField = new JTextField("MyDrummer", 15);
+	private JTextField saveTagField;
 	private JButton saveButton = new JButton("Save");
 	private JButton deleteButton = new JButton("Delete");
 	private JTextField infoLabel = new JTextField(30);
@@ -39,11 +39,14 @@ public class LoadSavePanel extends JPanel {
 		this.deleteButton.setEnabled(enabled);
 	}
 	
-	public LoadSavePanel(LoadSaveable loadSaveable, String saveFolder) {
+	public LoadSavePanel(LoadSaveable loadSaveable, String saveFolder, String defaultName) {
 		super(new FlowLayout(FlowLayout.LEFT));
 		
 		this.parent = loadSaveable;
 		this.SAVE_FOLDER = "./"+saveFolder+"/";
+		
+		// TODO generate an unused defaultname number
+		saveTagField = new JTextField(defaultName, 15);
 		
 		menuBar = new JMenuBar();
 		loadMenu = new JMenu("Load");

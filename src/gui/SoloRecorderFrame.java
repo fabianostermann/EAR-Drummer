@@ -23,7 +23,7 @@ public class SoloRecorderFrame extends ManagedFrame {
 	public SoloRecorderFrame(SoloRecorder soloRecorder) {
 		
 		this.soloRecorder = soloRecorder;
-		loadSavePanel = new LoadSavePanel(soloRecorder, "records");
+		loadSavePanel = new LoadSavePanel(soloRecorder, "records", "record1");
 		
 		this.setTitle("Solo Recorder");
 		
@@ -76,8 +76,14 @@ public class SoloRecorderFrame extends ManagedFrame {
 			});
 			buttonPane.add(buttonPlay);	
 			
+			latencyCheckBox.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					latencySpinner.setEnabled(latencyCheckBox.isSelected());
+			}});
 			buttonPane.add(latencyCheckBox);
+			latencyCheckBox.setSelected(false);
 			buttonPane.add(latencySpinner);
+			latencySpinner.setEnabled(false);
 		
 		this.getContentPane().add(buttonPane, BorderLayout.CENTER);
 		

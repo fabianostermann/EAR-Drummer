@@ -64,7 +64,7 @@ public class RuleManagerFrame extends ManagedFrame implements LoadSaveable {
 		private JButton randomAllButton = new JButton("R A N D O M   A L L");
 		private JButton randomOneButton = new JButton("R A N D O M   O N E");
 		private JButton zeroButton = new JButton("Z E R O");
-	private LoadSavePanel loadSavePanel = new LoadSavePanel(this, "weightings");
+	private LoadSavePanel loadSavePanel = new LoadSavePanel(this, "weightings", "weighting1");
 
 	private void initGUI() {
 		

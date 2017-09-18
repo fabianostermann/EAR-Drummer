@@ -53,7 +53,7 @@ public class DrumPatternFrame extends ManagedFrame implements MetronomeListener,
 		this.getContentPane().add(patternPane);
 		
 		if (this.isEditable()) {
-			this.loadSavePanel = new LoadSavePanel(this, "patterns");
+			this.loadSavePanel = new LoadSavePanel(this, "patterns", "pattern1");
 			this.getContentPane().add(loadSavePanel, BorderLayout.NORTH);
 		}
 	}
