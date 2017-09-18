@@ -12,17 +12,23 @@ public class ImageLoader {
 	private static final String IMAGE_FOLDER = "./img/"; 
 	public static Map<String, ImageIcon> image = new HashMap<>(); 
 	
-	private static final String[] tags = {
-		"delete", "save", "pause", "start", "play"
+	private static final String[] labels = {
+		"delete=delete.png",
+		"save=save.png",
+		"pause=pause.png",
+		"start=play.png",
+		"play=play.png",
+		"stop=cancel.png"
 	};
 	
 	static {
 		// write camel case, other cases will be tested (e.g. Delete instead of delete or DELETE)
 		File file;
-		for (String tag : tags) {
-			file = new File(IMAGE_FOLDER+tag+".png");
+		for (String label : labels) {
+			String[] labelArray = label.split("=");
+			file = new File(IMAGE_FOLDER+labelArray[1]);
 			if (file.exists())
-				image.put(tag, new ImageIcon(file.getPath()));
+				image.put(labelArray[0], new ImageIcon(file.getPath()));
 			else
 				System.err.println("ImageLoader: " + file.getPath() + " does not exist and is not loaded.");
 		}
