@@ -14,4 +14,8 @@ public class EmptySoloFactor extends SoloFactor {
 		return Float.NaN;
 	}
 
+	@Override
+	public String toString() {
+		return "";
+	}
 }

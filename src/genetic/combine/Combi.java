@@ -71,6 +71,6 @@ public class Combi extends Observable {
 	
 	@Override
 	public String toString() {
-		return super.toString() + "(" + "soloFactor=" + soloFactor + "," + "patternFactor=" + patternFactor + ")";
+		return super.toString() + "(" + "soloFactor=" + soloFactor.getName() + "," + "patternFactor=" + patternFactor.getName() + ")";
 	}
 }

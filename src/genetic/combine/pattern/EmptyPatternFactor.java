@@ -14,5 +14,9 @@ public class EmptyPatternFactor extends PatternFactor {
 	public float rate(DrumPattern pattern, InputAnalysis analysis) {
 		return Float.NaN;
 	}
-
+	
+	@Override
+	public String toString() {
+		return "";
+	}
 }
