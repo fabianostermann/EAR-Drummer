@@ -9,7 +9,7 @@ import javax.swing.JButton;
 
 public class ImageLoader {
 	
-	private static final String IMAGE_FOLDER = "./svg/"; 
+	private static final String IMAGE_FOLDER = "./img/"; 
 	public static Map<String, ImageIcon> image = new HashMap<>(); 
 	
 	private static final String[] labels = {
