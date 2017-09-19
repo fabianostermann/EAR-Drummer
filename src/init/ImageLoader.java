@@ -18,7 +18,9 @@ public class ImageLoader {
 		"pause=pause.png",
 		"start=play.png",
 		"play=play.png",
-		"stop=stop.png"
+		"stop=stop.png",
+		"record=record.png",
+		"rec=record.png"
 	};
 	
 	static {
