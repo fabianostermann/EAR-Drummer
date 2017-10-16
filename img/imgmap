@@ -1,0 +1,11 @@
+# Map button text to icon image file
+
+delete = delete.png
+save = save.png
+pause = pause.png
+start = play.png
+play = play.png
+stop = stop.png
+record = record.png
+rec = record.png
+resume = resume.png
