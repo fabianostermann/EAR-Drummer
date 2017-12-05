@@ -10,7 +10,7 @@ public class Settings {
 	public enum FitnessVersion {
 	    RuleBased, CombinationBased
 	}
-	public static FitnessVersion FITNESS_VERSION = FitnessVersion.CombinationBased;
+	public static FitnessVersion FITNESS_VERSION = FitnessVersion.RuleBased;
 
 	//Metronome default settings
 	public static int TICKS = 8;
