@@ -7,6 +7,7 @@ import genetic.Generation;
 import genetic.combine.CombiManager;
 import genetic.mutations.MutationManager;
 import genetic.rules.RuleManager;
+import gui.ChordSheetFrame;
 import gui.CombiManagerFrame;
 import gui.DrumPatternFrame;
 import gui.EvolutionFrame;
@@ -24,6 +25,7 @@ import input.InputWindow;
 import output.DrumGenerator;
 import output.OutputGenerator;
 import output.OutputManager;
+import playback.ChordSheetManager;
 import playback.Metronome;
 import playback.PatternPlayer;
 import record.SoloRecorder;
@@ -114,12 +116,15 @@ public class Init {
 			
 			Evolution evolution = new Evolution(inputWindow, fitnessEvaluator, mutationManager);
 			new EvolutionFrame(evolution);
-
+			
+			ChordSheetManager chordSheetManager = new ChordSheetManager();
+			ChordSheetFrame chordSheetFrame = new ChordSheetFrame(chordSheetManager);
+			
 			// TODO work on Bassist
-			//BassGenerator bassGenerator = new BassGenerator(outputGenerator);
-			//PrimitiveBassist bassist = new PrimitiveBassist(bassGenerator, evolution);
-			//metronome.addMetronomeListener(bassist);
-			//new PrimitiveBassistFrame(bassist);
+//			BassGenerator bassGenerator = new BassGenerator(outputGenerator);
+//			PrimitiveBassist bassist = new PrimitiveBassist(bassGenerator, evolution);
+//			metronome.addMetronomeListener(bassist);
+//			new PrimitiveBassistFrame(bassist);
 			
 			new MidiKeyboardDummyFrame(outputManager, inputManager);
 			

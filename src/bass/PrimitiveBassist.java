@@ -1,8 +1,10 @@
-package playback;
+package bass;
 
 import genetic.Evolution;
 import genetic.Random;
 import output.BassGenerator;
+import playback.Metronome;
+import playback.MetronomeListener;
 
 public class PrimitiveBassist implements MetronomeListener {
 
@@ -55,7 +57,7 @@ public class PrimitiveBassist implements MetronomeListener {
 	
 	public int volume = 90;
 	
-	boolean swing = false;
+	boolean swing = true;
 	boolean bossa = true;
 	
 	private BassGenerator bassGenerator;

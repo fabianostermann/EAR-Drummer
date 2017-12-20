@@ -8,7 +8,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import playback.PrimitiveBassist;
+import bass.PrimitiveBassist;
+
 
 @SuppressWarnings("serial")
 public class PrimitiveBassistFrame extends ManagedFrame {
