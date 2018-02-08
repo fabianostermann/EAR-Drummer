@@ -1,0 +1,20 @@
+#!/bin/sh
+
+SRCPATH=src
+BINPATH=bin
+
+if [ -e $BINPATH ]
+then echo "Folder '$BINPATH' exists."
+else echo "making folder '$BINPATH'"; mkdir $BINPATH
+fi
+echo -n "Compiling EARDrum project.. "
+javac -g -sourcepath $SRCPATH -d $BINPATH $SRCPATH/init/Init.java
+echo "done."
+
+cd img
+./create_images.sh
+cd ..
+
+if [ -e $BINPATH ]
+then echo "Execute './run' now to start EARDrum program."
+fi
