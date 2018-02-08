@@ -22,7 +22,7 @@ public class LoadSavePanel extends JPanel {
 
 	private static final long serialVersionUID = 1985141919514178009L;
 
-	private final String TOP_FOLDER = "CONFIG";
+	private final String TOP_FOLDER = "config";
 	private final String SAVE_FOLDER;
 	private final String DEFAULT_FILENAME = "default";
 	
@@ -59,9 +59,12 @@ public class LoadSavePanel extends JPanel {
 		super(new FlowLayout(FlowLayout.LEFT));
 		
 		memento.add(this);
-		
 		this.parent = loadSaveable;
-		this.SAVE_FOLDER = "./"+saveFolder+"/";
+		
+		File topFolder = new File(TOP_FOLDER);
+		if (!topFolder.exists())
+			topFolder.mkdir();
+		this.SAVE_FOLDER = "./"+TOP_FOLDER+"/"+saveFolder+"/";
 		
 		// TODO generate an unused defaultname number
 		saveTagField = new JTextField(defaultSaveName, 15);
