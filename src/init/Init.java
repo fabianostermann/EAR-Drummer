@@ -1,7 +1,5 @@
 package init;
 
-import javax.swing.JOptionPane;
-
 import genetic.DrumPattern;
 import genetic.Evolution;
 import genetic.FitnessEvaluator;
@@ -22,9 +20,13 @@ import gui.OutputManagerFrame;
 import gui.RuleManagerFrame;
 import gui.SimpleBassistFrame;
 import gui.SoloRecorderFrame;
+import gui.StartupDialog;
 import input.InputManager;
 import input.InputReceiver;
 import input.InputWindow;
+
+import javax.swing.JOptionPane;
+
 import output.DrumGenerator;
 import output.OutputGenerator;
 import output.OutputManager;
@@ -61,39 +63,47 @@ public class Init {
 			// initiate all frames and components
 			//*************************************
 			
+			StartupDialog startupDialog = new StartupDialog();
+			
+			startupDialog.incProgress("Setup Input Modules");
 			InputWindow inputWindow = new InputWindow();
 			InputReceiver inputReceiver = new InputReceiver(inputWindow);
 			InputManager inputManager = new InputManager(inputReceiver);
 			new InputManagerFrame(inputManager);
 			new InputWindowFrame(inputWindow);
-			
+
+			startupDialog.incProgress("Setup Output Modules");
 			OutputGenerator outputGenerator = new OutputGenerator();
 			OutputManager outputManager = new OutputManager(outputGenerator);
 			new OutputManagerFrame(outputManager);
 			
+			startupDialog.incProgress("Setup Metronome");
 			Metronome metronome = new Metronome(Settings.TICKS, Settings.TPM, Settings.SWING);
 			new MetronomeFrame(metronome);
+			
+			startupDialog.incProgress("Setup Generators");
 			DrumGenerator drumGenerator = new DrumGenerator(outputGenerator);
 			PatternPlayer patternPlayer = new PatternPlayer(drumGenerator);
 			metronome.addMetronomeListener(patternPlayer);
-			
+
+			startupDialog.incProgress("Setup Recorder");
 			SoloRecorder soloRecorder = new SoloRecorder(inputManager, outputManager, metronome);
 			inputReceiver.setRecorder(soloRecorder);
 			new SoloRecorderFrame(soloRecorder);
 			
+			startupDialog.incProgress("Setup Drum Pattern");
 			DrumPattern pattern = new DrumPattern(Settings.TICKS);
-			
 			new DrumPatternFrame(pattern, metronome, true);
-			
 			DrumPatternFrame currentPatternFrame = new DrumPatternFrame(pattern, metronome, false);
 			patternPlayer.addObserver(currentPatternFrame);
-			
 			Generation.setInitPattern(pattern);
 			
+			startupDialog.incProgress("Setup Mutation Manager");
 			MutationManager mutationManager = new MutationManager();
 			// mutation manager currently just uses one mutation so frame is unnecessary
 //			new MutationManagerFrame(mutationManager);
 			
+			startupDialog.incProgress("Setup Finess Evaluator");
 			FitnessEvaluator fitnessEvaluator = null;
 			RuleManager ruleManager = null;
 			CombiManager combiManager = null;
@@ -109,12 +119,14 @@ public class Init {
 				throw new IllegalStateException("Unknown fitness version: " + Settings.FITNESS_VERSION);
 			}
 			
+			startupDialog.incProgress("Setup Evolution");
 			Evolution evolution = new Evolution(inputWindow, fitnessEvaluator, mutationManager);
 			new EvolutionFrame(evolution);
 			
+			startupDialog.incProgress("Setup Bassist");
 			SimpleBassist simpleBassist = new SimpleBassist();
 			metronome.addMetronomeListener(simpleBassist);
-			SimpleBassistFrame simpleBassistFrame = new SimpleBassistFrame(simpleBassist);
+			new SimpleBassistFrame(simpleBassist);
 			
 			// TODO work on Bassist
 //			BassGenerator bassGenerator = new BassGenerator(outputGenerator);
@@ -122,16 +134,22 @@ public class Init {
 //			metronome.addMetronomeListener(bassist);
 //			new PrimitiveBassistFrame(bassist);
 			
+			startupDialog.incProgress("Open Keyboard Frame");
 			new MidiKeyboardDummyFrame(outputManager, inputManager);
 			
 			//**********************
 			// after frame creating
 			//**********************
 			
+			startupDialog.incProgress("Load Default Files");
 			LoadSavePanel.loadAllDefaultFiles();
-
-			FrameManager.showAll();
+			
+			startupDialog.incProgress("Rearrange Frames");
 			FrameManager.rearrangeFrames();			
+
+			startupDialog.endProgress("Ready.");
+			
+			FrameManager.showAll();
 		
 		} catch (Exception e) {
 			if (Settings.DEBUG) {
