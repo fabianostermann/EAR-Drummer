@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 
-public class FrameManager extends JFrame {
+public class FrameManager extends JDialog {
 	
 	private static final long serialVersionUID = 8043273266935226000L;
 	

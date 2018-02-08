@@ -1,8 +1,9 @@
 package gui;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 
-public class ManagedFrame extends JFrame {
+public class ManagedFrame extends JDialog {
 
 	private static final long serialVersionUID = -1076179390331059000L;
 
@@ -16,9 +17,6 @@ public class ManagedFrame extends JFrame {
 	@Override
 	public void setVisible(boolean b) {
 		super.setVisible(b);
-		if (b) {
-			this.setState(JFrame.NORMAL);
-		}
 		FrameManager.staticRefresh();
 	}
 	
