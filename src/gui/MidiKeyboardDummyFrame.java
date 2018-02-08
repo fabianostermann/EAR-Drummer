@@ -42,7 +42,7 @@ public class MidiKeyboardDummyFrame extends ManagedFrame implements KeyListener 
 		useDummyButton.addKeyListener(this);
 
 		this.setLocationByPlatform(true);
-		this.setVisible(true);
+		this.setVisible(false);
 
 	}
 	

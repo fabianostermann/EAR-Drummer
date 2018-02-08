@@ -29,7 +29,7 @@ public class PrimitiveBassistFrame extends ManagedFrame {
 		this.pack();
 
 		this.setLocationByPlatform(true);
-		this.setVisible(true);
+		this.setVisible(false);
 
 	}
 

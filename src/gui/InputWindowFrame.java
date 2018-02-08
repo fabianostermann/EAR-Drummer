@@ -18,7 +18,7 @@ public class InputWindowFrame extends ManagedFrame {
 		this.setSize(1000, 250);
 		
 		this.setLocationByPlatform(true);
-		this.setVisible(true);
+		this.setVisible(false);
 		
 	}
 	

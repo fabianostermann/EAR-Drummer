@@ -47,7 +47,7 @@ public class CombiManagerFrame extends ManagedFrame implements LoadSaveable {
 		this.pack();
 		
 		this.setLocationByPlatform(true);
-		this.setVisible(true);
+		this.setVisible(false);
 		
 		startSliderColorThread();
 	}

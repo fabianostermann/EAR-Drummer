@@ -5,15 +5,17 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowStateListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
-import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class FrameManager extends JDialog {
+public class FrameManager extends JFrame implements WindowStateListener {
 	
 	private static final long serialVersionUID = 8043273266935226000L;
 	
@@ -25,9 +27,19 @@ public class FrameManager extends JDialog {
 		
 		this.initGUI();
 		this.pack();
+		this.setResizable(false);
 		
 		this.setLocationByPlatform(true);
-		this.setVisible(true);
+		this.setVisible(false);
+		
+		this.addWindowStateListener(this);
+	}
+	
+	public static void showAll() {
+		instance.setVisible(true);
+		for (FrameBox box : instance.frameBoxes) {
+			box.frame.setVisible(true);
+		}
 	}
 	
 	public static void addFrame(ManagedFrame frame) {
@@ -50,13 +62,11 @@ public class FrameManager extends JDialog {
 	private JPanel frameBoxPane = new JPanel();
 	
 	private void initGUI() {
-		
-		frameBoxPane = new JPanel();
+
 		frameBoxPane.setLayout(new BoxLayout(frameBoxPane, BoxLayout.Y_AXIS));
-		frameBoxPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		frameBoxPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 25, 50));
 		
 		this.rebuild();
-		
 		this.getContentPane().add(frameBoxPane, BorderLayout.CENTER);
 		
 	}
@@ -111,6 +121,20 @@ public class FrameManager extends JDialog {
 		}
 	}
 	
+	@Override
+	public void windowStateChanged(WindowEvent e) {
+		if (e.getNewState() == JFrame.ICONIFIED){
+			for (FrameBox box : instance.frameBoxes) {
+				box.frame.setMinimized(true);
+			}
+		}
+		else if (e.getNewState() == JFrame.NORMAL){
+			for (FrameBox box : instance.frameBoxes) {
+				box.frame.setMinimized(false);
+			}
+		}
+	}
+
 	@Override
 	public void dispose() {
 		super.dispose();

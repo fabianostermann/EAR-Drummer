@@ -34,7 +34,7 @@ public class OutputManagerFrame extends ManagedFrame implements ItemListener {
 		this.setResizable(false);
 
 		this.setLocationByPlatform(true);
-		this.setVisible(true);
+		this.setVisible(false);
 		
 	}
 	

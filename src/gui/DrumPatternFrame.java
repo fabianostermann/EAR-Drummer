@@ -39,7 +39,7 @@ public class DrumPatternFrame extends ManagedFrame implements MetronomeListener,
 		this.setEditable(editable);
 		
 		this.setLocationByPlatform(true);
-		this.setVisible(true);
+		this.setVisible(false);
 		
 	}
 	

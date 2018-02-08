@@ -45,7 +45,7 @@ public class RuleManagerFrame extends ManagedFrame implements LoadSaveable {
 		this.pack();
 
 		this.setLocationByPlatform(true);
-		this.setVisible(true);
+		this.setVisible(false);
 		
 		startSliderColorThread();
 	}

@@ -33,7 +33,7 @@ public class SimpleBassistFrame extends ManagedFrame implements Observer {
 		this.pack();
 
 		this.setLocationByPlatform(true);
-		this.setVisible(true);
+		this.setVisible(false);
 		
 		bassist.addObserver(this);
 	}

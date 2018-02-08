@@ -40,7 +40,7 @@ public class EvolutionFrame extends ManagedFrame implements Observer, ChangeList
 //		this.setResizable(false);
 
 		this.setLocationByPlatform(true);
-		this.setVisible(true);
+		this.setVisible(false);
 		
 		evolution.addObserver(this);
 	}

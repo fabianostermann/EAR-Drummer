@@ -129,7 +129,9 @@ public class Init {
 			//**********************
 			
 			LoadSavePanel.loadAllDefaultFiles();
-			FrameManager.rearrangeFrames();
+
+			FrameManager.showAll();
+			FrameManager.rearrangeFrames();			
 		
 		} catch (Exception e) {
 			if (Settings.DEBUG) {

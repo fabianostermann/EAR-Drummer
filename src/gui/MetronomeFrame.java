@@ -41,7 +41,7 @@ public class MetronomeFrame extends ManagedFrame implements MetronomeListener, C
 		this.metronome.addMetronomeListener(this);
 
 		this.setLocationByPlatform(true);
-		this.setVisible(true);
+		this.setVisible(false);
 		
 	}
 
