@@ -17,10 +17,7 @@ public class FrameManager extends JFrame {
 	
 	private static final long serialVersionUID = 8043273266935226000L;
 	
-	private static final FrameManager frameManager = new FrameManager();
-	public static FrameManager getInstance() {
-		return frameManager;
-	}
+	private static FrameManager instance = new FrameManager();
 
 	private FrameManager() {
 		this.setTitle("Frame Manager");
@@ -33,16 +30,16 @@ public class FrameManager extends JFrame {
 		this.setVisible(true);
 	}
 	
-	public void addFrame(ManagedFrame frame) {
-		frameBoxes.add(new FrameBox(frame));
-		this.rebuild();
+	public static void addFrame(ManagedFrame frame) {
+		instance.frameBoxes.add(instance.new FrameBox(frame));
+		instance.rebuild();
 	}
 	
-	public void deleteFrame(ManagedFrame frame) {
-		for (int i = 0; i < frameBoxes.size(); i++) {
-			if (frameBoxes.get(i).frame == frame) {
-				frameBoxes.remove(i);
-				this.rebuild();
+	public static void deleteFrame(ManagedFrame frame) {
+		for (int i = 0; i < instance.frameBoxes.size(); i++) {
+			if (instance.frameBoxes.get(i).frame == frame) {
+				instance.frameBoxes.remove(i);
+				instance.rebuild();
 				return;
 			}
 		}
@@ -81,18 +78,24 @@ public class FrameManager extends JFrame {
 		}
 	}
 	
-	public void rearrange() {
+	public static void staticRefresh() {
+		instance.refresh();
+	}
+	
+	/**
+	 * try to place all frames on one screen
+	 */
+	public static void rearrangeFrames() {
 		
-		// try to place all frames on one screen
 		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		Rectangle screenBounds = env.getDefaultScreenDevice().getDefaultConfiguration().getBounds();
 		
 		int xLocation = screenBounds.x + 10, yLocation = screenBounds.y + 10, maxHeight = 0;
 		
-		this.setLocation(xLocation, yLocation);
-		xLocation = this.getLocation().x + this.getWidth() + 10;
-		maxHeight = this.getHeight();
-		for (FrameBox frameBox : frameBoxes) {
+		instance.setLocation(xLocation, yLocation);
+		xLocation = instance.getLocation().x + instance.getWidth() + 10;
+		maxHeight = instance.getHeight();
+		for (FrameBox frameBox : instance.frameBoxes) {
 			if (xLocation + frameBox.frame.getWidth() + 10 > screenBounds.width) {
 				xLocation = screenBounds.x + 10;
 				yLocation += maxHeight + 20;

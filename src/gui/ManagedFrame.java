@@ -10,7 +10,7 @@ public class ManagedFrame extends JFrame {
 		
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		
-		FrameManager.getInstance().addFrame(this);
+		FrameManager.addFrame(this);
 	}
 	
 	@Override
@@ -19,12 +19,12 @@ public class ManagedFrame extends JFrame {
 		if (b) {
 			this.setState(JFrame.NORMAL);
 		}
-		FrameManager.getInstance().refresh();
+		FrameManager.staticRefresh();
 	}
 	
 	@Override
 	public void dispose() {
-		FrameManager.getInstance().deleteFrame(this);
+		FrameManager.deleteFrame(this);
 		super.dispose();
 	}
 	

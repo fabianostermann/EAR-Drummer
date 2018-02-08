@@ -60,6 +60,7 @@ public class Init {
 			//*************************************
 			// initiate all frames and components
 			//*************************************
+			
 			InputWindow inputWindow = new InputWindow();
 			InputReceiver inputReceiver = new InputReceiver(inputWindow);
 			InputManager inputManager = new InputManager(inputReceiver);
@@ -128,7 +129,7 @@ public class Init {
 			//**********************
 			
 			LoadSavePanel.loadAllDefaultFiles();
-			FrameManager.getInstance().rearrange();
+			FrameManager.rearrangeFrames();
 		
 		} catch (Exception e) {
 			if (Settings.DEBUG) {
