@@ -1,5 +1,7 @@
 package init;
 
+import javax.swing.JOptionPane;
+
 import genetic.DrumPattern;
 import genetic.Evolution;
 import genetic.FitnessEvaluator;
@@ -13,6 +15,7 @@ import gui.EvolutionFrame;
 import gui.FrameManager;
 import gui.InputManagerFrame;
 import gui.InputWindowFrame;
+import gui.LoadSavePanel;
 import gui.MetronomeFrame;
 import gui.MidiKeyboardDummyFrame;
 import gui.OutputManagerFrame;
@@ -51,11 +54,12 @@ public class Init {
 			}
 			
 			
-			//TODO settings window!
+			//TODO more settings, static or dynamic
 			//needs to be able to set up following (maybe online?): Settings.Ticks, RhythmNote.numberOfDrums, default pattern!
 			
-			
-			//initiate all frames and components
+			//*************************************
+			// initiate all frames and components
+			//*************************************
 			InputWindow inputWindow = new InputWindow();
 			InputReceiver inputReceiver = new InputReceiver(inputWindow);
 			InputManager inputManager = new InputManager(inputReceiver);
@@ -119,12 +123,22 @@ public class Init {
 			
 			new MidiKeyboardDummyFrame(outputManager, inputManager);
 			
+			//**********************
+			// after frame creating
+			//**********************
+			
+			LoadSavePanel.loadAllDefaultFiles();
 			FrameManager.getInstance().rearrange();
 		
 		} catch (Exception e) {
-			// TODO show error information window
-			e.printStackTrace();
-			System.exit(1);
+			if (Settings.DEBUG) {
+				e.printStackTrace();
+				System.exit(1);
+			} else {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, e.getMessage(), "Fatal Error", JOptionPane.ERROR_MESSAGE);
+				System.exit(1);
+			}
 		}
 	}
 

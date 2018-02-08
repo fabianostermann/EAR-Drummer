@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.RandomAccessFile;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JMenu;
@@ -20,6 +22,7 @@ public class LoadSavePanel extends JPanel {
 
 	private static final long serialVersionUID = 1985141919514178009L;
 
+	private final String TOP_FOLDER = "CONFIG";
 	private final String SAVE_FOLDER;
 	private final String DEFAULT_FILENAME = "default";
 	
@@ -32,6 +35,17 @@ public class LoadSavePanel extends JPanel {
 	
 	private final LoadSaveable parent;
 	
+	private static final List<LoadSavePanel> memento = new LinkedList<>();
+
+	public static void loadAllDefaultFiles() {
+		for (LoadSavePanel lsp : memento)
+			lsp.loadDefaultFile();
+	}
+	
+	public void loadDefaultFile() {
+		loadFile(new File(SAVE_FOLDER+DEFAULT_FILENAME));
+	}
+	
 	@Override
 	public void setEnabled(boolean enabled) {
 		super.setEnabled(enabled);
@@ -43,6 +57,8 @@ public class LoadSavePanel extends JPanel {
 	
 	public LoadSavePanel(LoadSaveable loadSaveable, String saveFolder, String defaultSaveName) {
 		super(new FlowLayout(FlowLayout.LEFT));
+		
+		memento.add(this);
 		
 		this.parent = loadSaveable;
 		this.SAVE_FOLDER = "./"+saveFolder+"/";
@@ -163,9 +179,5 @@ public class LoadSavePanel extends JPanel {
 		} else {
 			infoLabel.setText("File '"+loadFile.getName()+"' does not exist.");
 		}
-	}
-	
-	public void loadDefaultFile() {
-		loadFile(new File(SAVE_FOLDER+DEFAULT_FILENAME));
 	}
 }
