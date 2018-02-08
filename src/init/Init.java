@@ -7,7 +7,6 @@ import genetic.Generation;
 import genetic.combine.CombiManager;
 import genetic.mutations.MutationManager;
 import genetic.rules.RuleManager;
-import gui.ChordSheetFrame;
 import gui.CombiManagerFrame;
 import gui.DrumPatternFrame;
 import gui.EvolutionFrame;
@@ -18,6 +17,7 @@ import gui.MetronomeFrame;
 import gui.MidiKeyboardDummyFrame;
 import gui.OutputManagerFrame;
 import gui.RuleManagerFrame;
+import gui.SimpleBassistFrame;
 import gui.SoloRecorderFrame;
 import input.InputManager;
 import input.InputReceiver;
@@ -25,10 +25,10 @@ import input.InputWindow;
 import output.DrumGenerator;
 import output.OutputGenerator;
 import output.OutputManager;
-import playback.ChordSheetManager;
 import playback.Metronome;
 import playback.PatternPlayer;
 import record.SoloRecorder;
+import bass.SimpleBassist;
 
 public class Init {
 	
@@ -117,8 +117,13 @@ public class Init {
 			Evolution evolution = new Evolution(inputWindow, fitnessEvaluator, mutationManager);
 			new EvolutionFrame(evolution);
 			
-			ChordSheetManager chordSheetManager = new ChordSheetManager();
-			ChordSheetFrame chordSheetFrame = new ChordSheetFrame(chordSheetManager);
+//			SimpleBassist simpleBassist = new SimpleBassist();
+//			metronome.addMetronomeListener(simpleBassist);
+//			SimpleBassistFrame simpleBassistFrame = new SimpleBassistFrame(simpleBassist);
+//			
+			// TODO remove and delete both modules
+			//ChordSheetManager chordSheetManager = new ChordSheetManager();
+			//ChordSheetFrame chordSheetFrame = new ChordSheetFrame(chordSheetManager);
 			
 			// TODO work on Bassist
 //			BassGenerator bassGenerator = new BassGenerator(outputGenerator);
