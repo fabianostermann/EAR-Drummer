@@ -1,5 +1,7 @@
 package gui;
 
+import init.ImageLoader;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -44,7 +46,7 @@ public class SimpleBassistFrame extends ManagedFrame implements Observer {
 	
 	private LoadSavePanel loadSavePanel;
 
-	private JButton resetButton = new JButton("Reset");
+	private JButton resetButton = ImageLoader.createButton("Reset");
 	private JLabel statusLabel = new JLabel("no status");
 	private JPanel settingsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 	

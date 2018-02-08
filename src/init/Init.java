@@ -78,16 +78,6 @@ public class Init {
 			
 			DrumPattern pattern = new DrumPattern(Settings.TICKS);
 			
-			//TODO: set init pattern empty
-			try {
-				for (int i = 0; true; i+=4) {
-					pattern.set(i, 3, 80);
-					pattern.set(i+2, 3, 90);
-					pattern.set(i+2, 1, 80);
-					pattern.set(i+3, 3, 80);
-				}
-			} catch (IndexOutOfBoundsException e) {}
-			
 			new DrumPatternFrame(pattern, metronome, true);
 			
 			DrumPatternFrame currentPatternFrame = new DrumPatternFrame(pattern, metronome, false);

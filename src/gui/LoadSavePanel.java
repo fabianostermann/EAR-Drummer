@@ -21,6 +21,7 @@ public class LoadSavePanel extends JPanel {
 	private static final long serialVersionUID = 1985141919514178009L;
 
 	private final String SAVE_FOLDER;
+	private final String DEFAULT_FILENAME = "default";
 	
 	private JMenuBar menuBar;
 	private JMenu loadMenu;
@@ -40,14 +41,14 @@ public class LoadSavePanel extends JPanel {
 		this.deleteButton.setEnabled(enabled);
 	}
 	
-	public LoadSavePanel(LoadSaveable loadSaveable, String saveFolder, String defaultName) {
+	public LoadSavePanel(LoadSaveable loadSaveable, String saveFolder, String defaultSaveName) {
 		super(new FlowLayout(FlowLayout.LEFT));
 		
 		this.parent = loadSaveable;
 		this.SAVE_FOLDER = "./"+saveFolder+"/";
 		
 		// TODO generate an unused defaultname number
-		saveTagField = new JTextField(defaultName, 15);
+		saveTagField = new JTextField(defaultSaveName, 15);
 		
 		menuBar = new JMenuBar();
 		loadMenu = new JMenu("Load");
@@ -132,15 +133,7 @@ public class LoadSavePanel extends JPanel {
 			item.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if (loadFile.exists()) {
-						try {
-							RandomAccessFile raf = new RandomAccessFile(loadFile, "r");
-							parent.loadFromFile(raf);
-							raf.close();
-							saveTagField.setText(loadFile.getName());
-							infoLabel.setText(loadFile.getName() + " loaded.");
-						} catch (Exception ex) { ex.printStackTrace(); infoLabel.setText("Error:"+ex.getMessage()); }
-					}
+					loadFile(loadFile);
 					updateLoadMenu();
 				}
 			});
@@ -156,9 +149,23 @@ public class LoadSavePanel extends JPanel {
 			}
 		});
 		loadMenu.add(item);
-		
 	}
 	
-
+	private void loadFile(File loadFile) {
+		if (loadFile.exists()) {
+			try {
+				RandomAccessFile raf = new RandomAccessFile(loadFile, "r");
+				parent.loadFromFile(raf);
+				raf.close();
+				saveTagField.setText(loadFile.getName());
+				infoLabel.setText(loadFile.getName() + " loaded.");
+			} catch (Exception ex) { ex.printStackTrace(); infoLabel.setText("Error:"+ex.getMessage()); }
+		} else {
+			infoLabel.setText("File '"+loadFile.getName()+"' does not exist.");
+		}
+	}
 	
+	public void loadDefaultFile() {
+		loadFile(new File(SAVE_FOLDER+DEFAULT_FILENAME));
+	}
 }

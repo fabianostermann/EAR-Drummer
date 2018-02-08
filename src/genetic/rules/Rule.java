@@ -31,7 +31,7 @@ public abstract class Rule extends Observable {
 		return this.description;
 	}
 	
-	protected float weight = 1f;
+	protected float weight = 0.f;
 	
 	public void setWeight(float weight) {
 		weight = Math.max(0f, weight);
