@@ -117,13 +117,9 @@ public class Init {
 			Evolution evolution = new Evolution(inputWindow, fitnessEvaluator, mutationManager);
 			new EvolutionFrame(evolution);
 			
-//			SimpleBassist simpleBassist = new SimpleBassist();
-//			metronome.addMetronomeListener(simpleBassist);
-//			SimpleBassistFrame simpleBassistFrame = new SimpleBassistFrame(simpleBassist);
-//			
-			// TODO remove and delete both modules
-			//ChordSheetManager chordSheetManager = new ChordSheetManager();
-			//ChordSheetFrame chordSheetFrame = new ChordSheetFrame(chordSheetManager);
+			SimpleBassist simpleBassist = new SimpleBassist();
+			metronome.addMetronomeListener(simpleBassist);
+			SimpleBassistFrame simpleBassistFrame = new SimpleBassistFrame(simpleBassist);
 			
 			// TODO work on Bassist
 //			BassGenerator bassGenerator = new BassGenerator(outputGenerator);
