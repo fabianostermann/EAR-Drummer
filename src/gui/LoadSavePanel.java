@@ -10,6 +10,7 @@ import java.io.RandomAccessFile;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -27,7 +28,7 @@ public class LoadSavePanel extends JPanel {
 	private final String DEFAULT_FILENAME = "default";
 	
 	private JMenuBar menuBar;
-	private JMenu loadMenu;
+	private JMenu loadMenu = new JMenu("Load");
 	private JTextField saveTagField;
 	private JButton saveButton = ImageLoader.createButton("Save");
 	private JButton deleteButton = ImageLoader.createButton("Delete");
@@ -70,7 +71,11 @@ public class LoadSavePanel extends JPanel {
 		saveTagField = new JTextField(defaultSaveName, 15);
 		
 		menuBar = new JMenuBar();
-		loadMenu = new JMenu("Load");
+		ImageIcon icon;
+		if ((icon = ImageLoader.getImageIcon(loadMenu.getText())) != null) {
+			loadMenu.setText(null);
+			loadMenu.setIcon(icon);
+		}
 		menuBar.add(loadMenu);
 		updateLoadMenu();
 		saveButton.addActionListener(new ActionListener() {

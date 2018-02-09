@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?> 
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1"> 
 <rect x="0" y="0" width="100" height="100" fill="none" />
-<polyline points="30,10 60,45 65,65 45,60 10,30" fill="red" /> 
-<polyline points="90,10 60,45 55,65 75,60 110,30" fill="red" /> 
-<polyline points="30,110 60,75 65,55 45,60 10,90" fill="red" /> 
-<polyline points="90,110 60,75 55,55 75,60 110,90" fill="red" /> 
-<circle cx="60" cy="60" r="55" stroke="red" stroke-width="10" fill="none" />
+<!-- bin -->
+<rect x="20" y="16" width="60" height="67" fill="dimgray" />
+<rect x="20" y="70" width="60" height="30" rx="10" ry="10" fill="dimgray" />
+<!-- notches -->
+<rect x="34" y="30" width="4" height="50" rx="2" ry="2" fill="floralwhite" />
+<rect x="48" y="30" width="4" height="50" rx="2" ry="2" fill="floralwhite" />
+<rect x="62" y="30" width="4" height="50" rx="2" ry="2" fill="floralwhite" />
+<!-- cover -->
+<rect x="10" y="3" width="80" height="10" rx="5" ry="5" fill="dimgray" />
+<rect x="10" y="8" width="80" height="5" fill="dimgray" />
+<rect x="35" y="0" width="30" height="8" rx="7" ry="7" fill="dimgray" />
+
 </svg>

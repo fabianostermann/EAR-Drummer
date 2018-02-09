@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1"> 
+<rect x="0" y="0" width="100" height="100" fill="none" />
+<!-- back folder -->
+<polygon points="5,95 5,20 30,20 40,30 80,30 80,95" fill="orange" />
+<polyline points="6,22 29,22 39,32 79,32" fill="none" stroke="yellow" />
+<polyline points="5,95 5,20 30,20 40,30 80,30 80,95" fill="none" stroke="chocolate" />
+<!-- green arrow -->
+<rect x="50" y="25" width="25" height="50" fill="limegreen" />
+<polygon points="40,28 85,28 62,0" fill="limegreen" />
+<polyline points="85,28 62,0" fill="none" stroke="green" />
+<polyline points="43,26 62,2 82,26" fill="none" stroke="lime" />
+<!-- front folder -->
+<polygon points="5,95 20,50 95,50 80,95" fill="darkorange" />
+<polyline points="5,95 20,50 95,50" fill="none" stroke="yellow" />
+<polyline points="95,50 80,95 5,95" fill="none" stroke="chocolate" />
+<!-- left line -->
+<polyline points="80,95 5,95 5,20" fill="none" stroke="chocolate" />
+</svg>
+
