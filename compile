@@ -3,6 +3,9 @@
 SRCPATH=src
 BINPATH=bin
 
+LOGOFILE=EarDrumLogo_v1.jpg
+IMGREPO=http://www.fabianos.de/eardrummer/img
+
 if [ -e $BINPATH ]
 then echo "Folder '$BINPATH' exists."
 else echo "making folder '$BINPATH'"; mkdir $BINPATH
@@ -13,6 +16,11 @@ echo "done."
 
 cd img
 ./create_images.sh
+# get logo
+if [ -e $LOGOFILE ]
+then echo "Logofile $LOGOFILE exists."
+else wget "$IMGREPO/$LOGOFILE"
+fi
 cd ..
 
 if [ -e $BINPATH ]
