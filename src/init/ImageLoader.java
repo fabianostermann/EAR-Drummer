@@ -16,6 +16,8 @@ public class ImageLoader {
 	private static final String IMAGE_FOLDER = "./img/"; 
 	private static final String MAP_FILENAME = "imgmap";
 	
+	private static final String LOGO_ID = "logo";
+	
 	private static final String COMMENT_CHAR = "#";
 	
 	public static Map<String, ImageIcon> image = new HashMap<>();
@@ -28,7 +30,7 @@ public class ImageLoader {
 			String line;
 			while ((line = raf.readLine()) != null) {
 				line = line.replaceAll(" ", "");
-				if (line.contains(COMMENT_CHAR) || line.isEmpty())
+				if (line.startsWith(COMMENT_CHAR) || line.isEmpty())
 					continue;
 				labels.add(line);
 			}
@@ -64,6 +66,10 @@ public class ImageLoader {
 			return new JButton(icon);
 		else
 			return new JButton(text);
+	}
+
+	public static ImageIcon getLogo() {
+		return getImageIcon(LOGO_ID);
 	}
 	
 }

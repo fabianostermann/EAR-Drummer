@@ -1,5 +1,7 @@
 package gui;
 
+import init.ImageLoader;
+
 import java.awt.BorderLayout;
 
 import javax.swing.JDialog;
@@ -19,6 +21,8 @@ public class StartupDialog extends JDialog {
 	
 	public StartupDialog() {
 		this.setUndecorated(true);
+		
+		infoPane.add(new JLabel(ImageLoader.getLogo()));
 		
 		progBar.setIndeterminate(true);
 		progBar.setMinimum(0);

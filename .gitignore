@@ -5,3 +5,4 @@
 *.class
 /.settings
 /img/*.png
+*.jpg
