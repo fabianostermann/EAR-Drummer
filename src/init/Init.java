@@ -42,6 +42,8 @@ public class Init {
 	public static void main(String[] args) {
 		
 		try {
+			// show the program start with startup dialog
+			StartupDialog startupDialog = new StartupDialog();
 			
 			if (args.length > 0) {
 				for (String s : args) {
@@ -64,8 +66,6 @@ public class Init {
 			//*************************************
 			// initiate all frames and components
 			//*************************************
-			
-			StartupDialog startupDialog = new StartupDialog();
 			
 			startupDialog.incProgress("Setup Input Modules");
 			ConsoleArea consoleArea = new ConsoleArea();
@@ -152,7 +152,8 @@ public class Init {
 			startupDialog.incProgress("Rearrange Frames");
 			FrameManager.rearrangeFrames();			
 
-			startupDialog.endProgress("Ready.");
+			// close startup frame
+			startupDialog.endProgress("System Startup completed!");
 			
 			FrameManager.showAll();
 		
