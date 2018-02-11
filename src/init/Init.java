@@ -8,15 +8,17 @@ import genetic.combine.CombiManager;
 import genetic.mutations.MutationManager;
 import genetic.rules.RuleManager;
 import gui.CombiManagerFrame;
+import gui.ConsoleArea;
 import gui.DrumPatternFrame;
 import gui.EvolutionFrame;
 import gui.FrameManager;
-import gui.InputManagerFrame;
+import gui.InputManagerPane;
 import gui.InputWindowFrame;
 import gui.LoadSavePanel;
 import gui.MetronomeFrame;
 import gui.MidiKeyboardDummyFrame;
-import gui.OutputManagerFrame;
+import gui.MidiManagerFrame;
+import gui.OutputManagerPane;
 import gui.RuleManagerFrame;
 import gui.SimpleBassistFrame;
 import gui.SoloRecorderFrame;
@@ -66,16 +68,19 @@ public class Init {
 			StartupDialog startupDialog = new StartupDialog();
 			
 			startupDialog.incProgress("Setup Input Modules");
+			ConsoleArea consoleArea = new ConsoleArea();
 			InputWindow inputWindow = new InputWindow();
 			InputReceiver inputReceiver = new InputReceiver(inputWindow);
 			InputManager inputManager = new InputManager(inputReceiver);
-			new InputManagerFrame(inputManager);
+			InputManagerPane inputManagerPane = new InputManagerPane(inputManager, consoleArea);
 			new InputWindowFrame(inputWindow);
 
 			startupDialog.incProgress("Setup Output Modules");
 			OutputGenerator outputGenerator = new OutputGenerator();
 			OutputManager outputManager = new OutputManager(outputGenerator);
-			new OutputManagerFrame(outputManager);
+			OutputManagerPane outputManagerPane = new OutputManagerPane(outputManager, consoleArea);
+			
+			new MidiManagerFrame(consoleArea, inputManagerPane, outputManagerPane);
 			
 			startupDialog.incProgress("Setup Metronome");
 			Metronome metronome = new Metronome(Settings.TICKS, Settings.TPM, Settings.SWING);

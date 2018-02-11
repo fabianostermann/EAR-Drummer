@@ -1,8 +1,11 @@
 package gui;
 
+import init.ImageLoader;
 import input.InputManager;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -13,25 +16,26 @@ import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 @SuppressWarnings("serial")
-public class InputManagerFrame extends ManagedFrame implements ItemListener {
+public class InputManagerPane extends JPanel implements ItemListener {
 	
 	private InputManager inputManager;
+	private ConsoleArea console;
 	
-	public InputManagerFrame(InputManager inputManager) {
+	public InputManagerPane(InputManager inputManager, ConsoleArea console) {
 		
 		this.inputManager = inputManager;
+		this.console = console;
 		
-		this.setTitle("Midi Input Manager");
+		//this.setTitle("Midi Input Manager");
 		
 		this.initGUI();
-		this.setSize(400,250);
-		this.setResizable(false);
+		//this.setSize(400,250);
+		//this.setResizable(false);
 
-		this.setLocationByPlatform(true);
-		this.setVisible(false);
+		//this.setLocationByPlatform(true);
+		//this.setVisible(false);
 		
 	}
 	
@@ -43,14 +47,11 @@ public class InputManagerFrame extends ManagedFrame implements ItemListener {
 		private JLabel labelReceiver;
 		private JLabel labelConnected;
 	
-	private JScrollPane scrollPaneConsole;
-		private ConsoleArea console;
-	
 	protected void initGUI() {
 		
 		infoPane = new JPanel();
 		infoPane.setLayout(new GridLayout(0,1));
-		infoPane.setBorder(BorderFactory.createTitledBorder("Info"));
+		infoPane.setBorder(BorderFactory.createTitledBorder("Input Manager"));
 		
 			boxMidiDevice = new JComboBox<MidiDevice.Info>(inputManager.getMidiDeviceInfo());
 			boxMidiDevice.addItem(null);
@@ -60,24 +61,15 @@ public class InputManagerFrame extends ManagedFrame implements ItemListener {
 			
 			labelMidiDevice = new JLabel();
 			infoPane.add(labelMidiDevice);
+			labelConnected = new JLabel();
+			infoPane.add(labelConnected);			
 			labelTransmitter = new JLabel();
 			infoPane.add(labelTransmitter);
 			labelReceiver = new JLabel();
 			infoPane.add(labelReceiver);
-			labelConnected = new JLabel();
-			infoPane.add(labelConnected);
-			
 			
 			updateInfo();
-		this.getContentPane().add(infoPane, BorderLayout.NORTH);
-		
-			console = new ConsoleArea();
-			console.setEditable(false);
-			
-			console.log("Input Manager Console initialized.");
-			
-			scrollPaneConsole = new JScrollPane(console, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		this.getContentPane().add(scrollPaneConsole, BorderLayout.CENTER);
+		this.add(infoPane);
 	}
 
 	@Override
@@ -106,6 +98,13 @@ public class InputManagerFrame extends ManagedFrame implements ItemListener {
 		updateInfo();
 	}
 	
+	@Override
+	public void setPreferredSize(Dimension dim) {
+		for (Component component : infoPane.getComponents()) {
+			component.setPreferredSize(new Dimension(dim.width-20, 25));
+		}
+	}
+	
 	public void updateInfo() {
 		
 		if (inputManager.getInputDevice() != null)
@@ -123,9 +122,13 @@ public class InputManagerFrame extends ManagedFrame implements ItemListener {
 		else
 			labelReceiver.setText("Receiver: unavailable");
 		
-		labelConnected.setText("Connected: " + inputManager.isConnected());
-		
+		if (inputManager.isConnected()) {
+			labelConnected.setText("Connected");
+			labelConnected.setIcon(ImageLoader.getImageIcon("connected"));
+		} else {
+			labelConnected.setText("Disconnected");
+			labelConnected.setIcon(ImageLoader.getImageIcon("disconnected"));
+		}
 	}
 
-		
 }

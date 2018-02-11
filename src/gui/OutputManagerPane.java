@@ -2,7 +2,12 @@ package gui;
 
 import genetic.RhythmNote;
 
+import init.ImageLoader;
+
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -14,27 +19,28 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 import output.OutputManager;
 
 @SuppressWarnings("serial")
-public class OutputManagerFrame extends ManagedFrame implements ItemListener {
+public class OutputManagerPane extends JPanel implements ItemListener {
 	
 	private OutputManager outputManager;
+	private ConsoleArea console;
 	
-	public OutputManagerFrame(OutputManager outputManager) {
+	public OutputManagerPane(OutputManager outputManager, ConsoleArea console) {
 		
 		this.outputManager = outputManager;
+		this.console = console;
 		
-		this.setTitle("Midi Output Manager");
+		//this.setTitle("Midi Output Manager");
 		
 		this.initGUI();
-		this.setSize(400,250);
-		this.setResizable(false);
+		//this.setSize(400,250);
+		//this.setResizable(false);
 
-		this.setLocationByPlatform(true);
-		this.setVisible(false);
+		//this.setLocationByPlatform(true);
+		//this.setVisible(false);
 		
 	}
 	
@@ -47,14 +53,11 @@ public class OutputManagerFrame extends ManagedFrame implements ItemListener {
 		private JLabel labelConnected;
 		private JCheckBox checkBoxIntelligentDrum;
 	
-	private JScrollPane scrollPaneConsole;
-		private ConsoleArea console;
-	
 	private void initGUI() {
 		
 		infoPane = new JPanel();
 		infoPane.setLayout(new GridLayout(0,1));
-		infoPane.setBorder(BorderFactory.createTitledBorder("Info"));
+		infoPane.setBorder(BorderFactory.createTitledBorder("Output Manager"));
 		
 			boxMidiDevice = new JComboBox<MidiDevice.Info>(outputManager.getMidiDeviceInfo());
 			boxMidiDevice.addItem(null);
@@ -64,12 +67,12 @@ public class OutputManagerFrame extends ManagedFrame implements ItemListener {
 			
 			labelMidiDevice = new JLabel();
 			infoPane.add(labelMidiDevice);
+			labelConnected = new JLabel();
+			infoPane.add(labelConnected);
 			labelTransmitter = new JLabel();
 			infoPane.add(labelTransmitter);
 			labelReceiver = new JLabel();
 			infoPane.add(labelReceiver);
-			labelConnected = new JLabel();
-			infoPane.add(labelConnected);
 			
 			checkBoxIntelligentDrum = new JCheckBox("use intelligent drum");
 			checkBoxIntelligentDrum.addItemListener(new ItemListener() {
@@ -83,16 +86,7 @@ public class OutputManagerFrame extends ManagedFrame implements ItemListener {
 			infoPane.add(checkBoxIntelligentDrum);
 			
 			updateInfo();
-		this.getContentPane().add(infoPane, BorderLayout.NORTH);
-		
-			console = new ConsoleArea();
-			console.setEditable(false);
-		
-			console.log("Output Manager Console initialized.");
-		
-			scrollPaneConsole = new JScrollPane(console, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		this.getContentPane().add(scrollPaneConsole, BorderLayout.CENTER);
-		
+		this.add(infoPane, BorderLayout.NORTH);
 	}
 	
 	@Override
@@ -119,6 +113,13 @@ public class OutputManagerFrame extends ManagedFrame implements ItemListener {
 		updateInfo();
 	}
 	
+	@Override
+	public void setPreferredSize(Dimension dim) {
+		for (Component component : infoPane.getComponents()) {
+			component.setPreferredSize(new Dimension(dim.width-20, 25));
+		}
+	}
+	
 	public void updateInfo() {
 		
 		if (outputManager.getOutputDevice() != null)
@@ -136,9 +137,12 @@ public class OutputManagerFrame extends ManagedFrame implements ItemListener {
 		else
 			labelReceiver.setText("Receiver: unavailable");
 		
-		labelConnected.setText("Connected: " + outputManager.isConnected());
-		
+		if (outputManager.isConnected()) {
+			labelConnected.setText("Connected");
+			labelConnected.setIcon(ImageLoader.getImageIcon("connected"));
+		} else {
+			labelConnected.setText("Disconnected");
+			labelConnected.setIcon(ImageLoader.getImageIcon("disconnected"));
+		}
 	}
-	
-	
 }
