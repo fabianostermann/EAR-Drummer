@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 
 import output.OutputManager;
-import playback.Metronome;
 import record.Record.MidiEvent;
 import record.Record.TickEvent;
 

@@ -15,9 +15,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class FrameManager extends JFrame implements WindowStateListener {
-	
-	private static final long serialVersionUID = 8043273266935226000L;
 	
 	private static FrameManager instance = new FrameManager();
 
@@ -142,10 +141,8 @@ public class FrameManager extends JFrame implements WindowStateListener {
 		//on Window close
 		System.exit(0);
 	}
-	
+
 	private class FrameBox extends JCheckBox implements ActionListener{
-		
-		private static final long serialVersionUID = 2559528641504691920L;
 		
 		private ManagedFrame frame;
 		

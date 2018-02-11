@@ -1,7 +1,6 @@
 package genetic.rules;
 
 import genetic.DrumPattern;
-import init.Settings;
 import init.Streams;
 import input.InputAnalysis;
 

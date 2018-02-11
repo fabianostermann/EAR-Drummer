@@ -1,8 +1,7 @@
 package genetic.mutations;
 
-import init.Settings;
-import init.Streams;
 import genetic.DrumPattern;
+import init.Streams;
 
 public class ReverseMutation extends Mutation {
 

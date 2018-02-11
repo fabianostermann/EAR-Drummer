@@ -3,7 +3,6 @@ package genetic.mutations;
 import genetic.DrumPattern;
 import genetic.Generation;
 import genetic.Random;
-import init.Settings;
 import init.Streams;
 
 import java.util.ArrayList;

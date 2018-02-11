@@ -1,9 +1,8 @@
 package genetic.mutations;
 
-import init.Settings;
-import init.Streams;
 import genetic.DrumPattern;
 import genetic.Random;
+import init.Streams;
 
 public class LoudnessMutation extends Mutation {
 

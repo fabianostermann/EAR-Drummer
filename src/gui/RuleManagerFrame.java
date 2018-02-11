@@ -27,9 +27,8 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+@SuppressWarnings("serial")
 public class RuleManagerFrame extends ManagedFrame implements LoadSaveable {
-
-	private static final long serialVersionUID = 6691172634839759228L;
 	
 	private boolean running = false;
 	
@@ -181,11 +180,7 @@ public class RuleManagerFrame extends ManagedFrame implements LoadSaveable {
 	}
 	
 
-
-
 	private class RuleSlider extends JPanel implements ChangeListener, Observer {
-
-		private static final long serialVersionUID = -5336910785254529425L;
 		
 		public static final int sliderFactor = 100;
 		private JSlider slider;

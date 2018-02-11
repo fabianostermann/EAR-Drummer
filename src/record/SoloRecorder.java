@@ -1,12 +1,12 @@
 package record;
 
-import java.io.IOException;
-import java.io.RandomAccessFile;
-
 import gui.LoadSaveable;
 import init.Streams;
 import input.InputManager;
 import input.InputReceiver;
+
+import java.io.IOException;
+import java.io.RandomAccessFile;
 
 import javax.sound.midi.ShortMessage;
 

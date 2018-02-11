@@ -9,9 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
+@SuppressWarnings("serial")
 public class StartupDialog extends JDialog {
-	
-	private static final long serialVersionUID = 8145416010288192295L;
 
 	/** Value must be adjusted to match number of incProgress() invocations */
 	private static final int PROG_MAX = 15;

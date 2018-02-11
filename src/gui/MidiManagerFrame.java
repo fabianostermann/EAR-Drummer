@@ -2,19 +2,13 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
+@SuppressWarnings("serial")
 public class MidiManagerFrame extends ManagedFrame {
 
-	private static final long serialVersionUID = 302822205905577686L;
-	
 	private static final int FRAME_WIDTH = 400;
 
 	public MidiManagerFrame(ConsoleArea console, JPanel... panes) {

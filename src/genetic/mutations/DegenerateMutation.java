@@ -1,10 +1,10 @@
 package genetic.mutations;
 
-import init.Settings;
-import init.Streams;
 import genetic.DrumPattern;
 import genetic.Generation;
 import genetic.Random;
+import init.Settings;
+import init.Streams;
 
 public class DegenerateMutation extends Mutation {
 

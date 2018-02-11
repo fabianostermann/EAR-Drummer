@@ -3,7 +3,6 @@ package playback;
 import genetic.DrumPattern;
 import genetic.Generation;
 import genetic.RhythmNote;
-import init.Settings;
 import init.Streams;
 
 import java.util.Observable;

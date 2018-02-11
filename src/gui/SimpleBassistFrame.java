@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 
 import bass.SimpleBassist;
 
+@SuppressWarnings("serial")
 public class SimpleBassistFrame extends ManagedFrame implements Observer {
 	
 	private SimpleBassist bassist;

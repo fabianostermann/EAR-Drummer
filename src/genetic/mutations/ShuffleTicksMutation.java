@@ -1,12 +1,10 @@
 package genetic.mutations;
 
-import init.Settings;
+import genetic.DrumPattern;
 import init.Streams;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
-import genetic.DrumPattern;
 
 public class ShuffleTicksMutation extends Mutation {
 

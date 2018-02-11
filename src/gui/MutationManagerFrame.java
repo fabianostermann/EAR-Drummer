@@ -23,10 +23,9 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+@SuppressWarnings("serial")
 public class MutationManagerFrame extends ManagedFrame {
 
-	private static final long serialVersionUID = -4992467557319577390L;
-	
 	private MutationManager mutationManager;
 	
 	public MutationManagerFrame(MutationManager MutationManager) {
@@ -118,11 +117,7 @@ public class MutationManagerFrame extends ManagedFrame {
 	}
 	
 
-
-
 	private class MutationSlider extends JPanel implements ChangeListener {
-
-		private static final long serialVersionUID = -8326880701733422350L;
 		
 		private final static int LIMIT = 100;
 		

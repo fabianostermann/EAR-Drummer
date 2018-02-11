@@ -1,13 +1,11 @@
 package genetic.mutations;
 
-import init.Settings;
+import genetic.DrumPattern;
+import genetic.Random;
 import init.Streams;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
-import genetic.DrumPattern;
-import genetic.Random;
 
 public class SortMutation extends Mutation {
 

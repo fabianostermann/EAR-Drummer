@@ -1,8 +1,6 @@
 package genetic.rules;
 
 import genetic.DrumPattern;
-import genetic.Generation;
-import genetic.Random;
 import input.InputAnalysis;
 
 public class PedalRule extends Rule {

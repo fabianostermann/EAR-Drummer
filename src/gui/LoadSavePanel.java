@@ -19,9 +19,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+@SuppressWarnings("serial")
 public class LoadSavePanel extends JPanel {
-
-	private static final long serialVersionUID = 1985141919514178009L;
 
 	private final String TOP_FOLDER = "config";
 	private final String SAVE_FOLDER;

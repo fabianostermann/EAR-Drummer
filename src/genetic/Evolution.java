@@ -1,9 +1,6 @@
 package genetic;
 
 import genetic.mutations.MutationManager;
-import genetic.rules.Rule;
-import genetic.rules.RuleManager;
-import init.Settings;
 import init.Streams;
 import input.InputAnalysis;
 import input.InputWindow;

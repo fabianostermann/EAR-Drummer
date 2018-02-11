@@ -1,7 +1,7 @@
 package genetic.combine.pattern;
 
-import input.InputAnalysis;
 import genetic.DrumPattern;
+import input.InputAnalysis;
 
 public class MoreTicksPatternFactor extends PatternFactor {
 

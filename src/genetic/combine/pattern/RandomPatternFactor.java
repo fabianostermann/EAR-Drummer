@@ -1,8 +1,8 @@
 package genetic.combine.pattern;
 
-import input.InputAnalysis;
 import genetic.DrumPattern;
 import genetic.Random;
+import input.InputAnalysis;
 
 public class RandomPatternFactor extends PatternFactor {
 

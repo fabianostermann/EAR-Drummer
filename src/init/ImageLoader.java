@@ -1,7 +1,6 @@
 package init;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -34,6 +33,7 @@ public class ImageLoader {
 					continue;
 				labels.add(line);
 			}
+			raf.close();
 		} catch (Exception e) {
 			System.err.println("Could not load map file: "+MAP_FILENAME);
 			labels.clear();

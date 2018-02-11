@@ -1,6 +1,5 @@
 package genetic;
 
-import init.Settings;
 
 public class Recombination {
 	

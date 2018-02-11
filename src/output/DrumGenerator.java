@@ -1,7 +1,6 @@
 package output;
 
 import genetic.RhythmNote;
-import init.Settings;
 import init.Streams;
 
 import javax.sound.midi.ShortMessage;
