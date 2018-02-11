@@ -10,6 +10,8 @@ stop = stop.png
 record = record.png
 rec = record.png
 resume = resume.png
+connected = connected.png
+disconnected = disconnected.png
 
 # Logo for startup
 logo = EarDrumLogo_v1.jpg
