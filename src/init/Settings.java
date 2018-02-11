@@ -4,6 +4,10 @@ import javax.sound.midi.MidiDevice.Info;
 import javax.sound.midi.MidiSystem;
 
 public class Settings {
+
+	public static final String TITLE = "EAR DRUMMER";
+	public static final String AUTHOR = "Fabian Ostermann";
+	public static final String VERSION = "v0.1";
 	
 	public static boolean DEBUG = false;
 	

@@ -63,10 +63,14 @@ public class FrameManager extends JFrame implements WindowStateListener {
 	private void initGUI() {
 
 		frameBoxPane.setLayout(new BoxLayout(frameBoxPane, BoxLayout.Y_AXIS));
-		frameBoxPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 25, 50));
+		frameBoxPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 15, 30));
 		
 		this.rebuild();
-		this.getContentPane().add(frameBoxPane, BorderLayout.CENTER);
+		
+		JPanel etchedBorderedPane = new JPanel();
+		etchedBorderedPane.add(frameBoxPane);
+		etchedBorderedPane.setBorder(BorderFactory.createEtchedBorder());
+		this.getContentPane().add(etchedBorderedPane, BorderLayout.CENTER);
 		
 	}
 	
