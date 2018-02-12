@@ -29,6 +29,7 @@ import input.InputWindow;
 
 import javax.swing.JOptionPane;
 
+import output.BassGenerator;
 import output.DrumGenerator;
 import output.OutputGenerator;
 import output.OutputManager;
@@ -129,15 +130,10 @@ public class Init {
 			new EvolutionFrame(evolution);
 			
 			startupDialog.incProgress("Setup Bassist");
-			SimpleBassist simpleBassist = new SimpleBassist();
+			BassGenerator bassGenerator = new BassGenerator(outputGenerator);
+			SimpleBassist simpleBassist = new SimpleBassist(bassGenerator);
 			metronome.addMetronomeListener(simpleBassist);
 			new SimpleBassistFrame(simpleBassist);
-			
-			// TODO work on Bassist
-//			BassGenerator bassGenerator = new BassGenerator(outputGenerator);
-//			PrimitiveBassist bassist = new PrimitiveBassist(bassGenerator, evolution);
-//			metronome.addMetronomeListener(bassist);
-//			new PrimitiveBassistFrame(bassist);
 			
 			startupDialog.incProgress("Open Keyboard Frame");
 			new MidiKeyboardDummyFrame(outputManager, inputManager);
