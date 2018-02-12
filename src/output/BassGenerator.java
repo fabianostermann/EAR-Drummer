@@ -5,15 +5,7 @@ import javax.sound.midi.ShortMessage;
 
 public class BassGenerator {
 	
-	//TODO think about bass
-	
 	public static final int CHANNEL = 8;
-	
-	public static final int ELECTRIC = 33;
-	public static final int ACOUSTIC = 32;
-	public static final int FRETLESS = 35;
-	public static final int SYNTH1 = 38;
-	public static final int SYNTH2 = 39;
 
 	
 	private OutputGenerator outputGenerator;
@@ -21,7 +13,7 @@ public class BassGenerator {
 	public BassGenerator(OutputGenerator outputGenerator) {
 		this.outputGenerator = outputGenerator;
 		
-		this.changeInstrument(ACOUSTIC);
+		this.changeInstrument(GM1.Acoustic_Bass);
 	}
 	
 	public void changeInstrument(int instrument) {
