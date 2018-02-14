@@ -20,7 +20,7 @@ import gui.MidiKeyboardDummyFrame;
 import gui.MidiManagerFrame;
 import gui.OutputManagerPane;
 import gui.RuleManagerFrame;
-import gui.SimpleBassistFrame;
+import gui.SimpleBassistManagerFrame;
 import gui.SoloRecorderFrame;
 import gui.StartupDialog;
 import input.InputManager;
@@ -36,7 +36,7 @@ import output.OutputManager;
 import playback.Metronome;
 import playback.PatternPlayer;
 import record.SoloRecorder;
-import bass.SimpleBassist;
+import bass.SimpleBassistManager;
 
 public class Init {
 	
@@ -131,9 +131,9 @@ public class Init {
 			
 			startupDialog.incProgress("Setup Bassist");
 			BassGenerator bassGenerator = new BassGenerator(outputGenerator);
-			SimpleBassist simpleBassist = new SimpleBassist(bassGenerator);
+			SimpleBassistManager simpleBassist = new SimpleBassistManager(bassGenerator);
 			metronome.addMetronomeListener(simpleBassist);
-			new SimpleBassistFrame(simpleBassist);
+			new SimpleBassistManagerFrame(simpleBassist);
 			
 			startupDialog.incProgress("Open Keyboard Frame");
 			new MidiKeyboardDummyFrame(outputManager, inputManager);

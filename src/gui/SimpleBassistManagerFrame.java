@@ -10,17 +10,19 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import bass.SimpleBassist;
+import bass.SimpleBassistManager;
 
 @SuppressWarnings("serial")
-public class SimpleBassistFrame extends ManagedFrame implements Observer {
+public class SimpleBassistManagerFrame extends ManagedFrame implements Observer {
 	
-	private SimpleBassist bassist;
+	private SimpleBassistManager bassist;
 
-	public SimpleBassistFrame(SimpleBassist bassist) {
+	public SimpleBassistManagerFrame(SimpleBassistManager bassist) {
 
 		if (bassist == null)
 			throw new NullPointerException();
@@ -51,6 +53,8 @@ public class SimpleBassistFrame extends ManagedFrame implements Observer {
 	private JLabel statusLabel = new JLabel("no status");
 	private JPanel settingsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 	
+	private JComboBox<SimpleBassist> boxBassists;
+	
 	private void initGUI() {
 		
 		makeChordTable();
@@ -61,6 +65,9 @@ public class SimpleBassistFrame extends ManagedFrame implements Observer {
 		resetButton.setEnabled(false);
 		settingsPanel.add(resetButton);
 		settingsPanel.add(statusLabel);
+		boxBassists = new JComboBox<>(SimpleBassist.list);
+		// TODO implement ChangeListener
+		settingsPanel.add(boxBassists);
 		this.getContentPane().add(settingsPanel, BorderLayout.SOUTH);
 	}
 	
@@ -94,7 +101,7 @@ public class SimpleBassistFrame extends ManagedFrame implements Observer {
 		if (observable != bassist)
 			return;
 		
-		if (arg == SimpleBassist.TABLE_CHANGED) {
+		if (arg == SimpleBassistManager.TABLE_CHANGED) {
 			makeChordTable();
 		}
 		
