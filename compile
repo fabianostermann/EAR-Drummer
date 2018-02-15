@@ -6,6 +6,8 @@ BINPATH=bin
 LOGOFILE=EarDrumLogo_v1.jpg
 IMGREPO=http://www.fabianos.de/eardrummer/img
 
+echo "INFO: You will need javaJRE OR openJDK installed for compiling."
+
 if [ -e $BINPATH ]
 then echo "Folder '$BINPATH' exists."
 else echo "making folder '$BINPATH'"; mkdir $BINPATH
