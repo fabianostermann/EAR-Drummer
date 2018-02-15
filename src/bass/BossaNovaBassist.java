@@ -12,18 +12,16 @@ public class BossaNovaBassist implements SimpleBassist {
 		
 		int midi = -1;
 		
-		int caseMiddleOfBar = -Math.floorDiv(-numOfTicks,2); // equals Math.ceilDiv(numOfTicks,2)
-
 		// Bossa Nova
 		if (currTick == 0) {
 			 // the one of the bar
 			midi = 120+table.chordRoots[barCount];
-		} else if (currTick == caseMiddleOfBar) {
+		} else if (currTick == 3) {
+			midi = 120+table.chordRoots[barCount] +table.chordNotes[barCount][2];
+		} else if (currTick == 4) {
 			// the middleOfTheBar
 			midi = 120+table.chordRoots[barCount] +table.chordNotes[barCount][2];
-		} else if (currTick == caseMiddleOfBar-1) {
-			midi = 120+table.chordRoots[barCount] +table.chordNotes[barCount][2];
-		} else if (currTick == numOfTicks - 1) {
+		} else if (currTick == numOfTicks-1) {
 			// before next one
 			midi = 120+table.chordRoots[(barCount+1) % table.chordRoots.length];
 		} else {
