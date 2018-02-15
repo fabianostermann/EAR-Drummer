@@ -6,9 +6,13 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.sound.midi.MidiDevice;
+import javax.sound.midi.MidiUnavailableException;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -20,15 +24,15 @@ import bass.SimpleBassistManager;
 @SuppressWarnings("serial")
 public class SimpleBassistManagerFrame extends ManagedFrame implements Observer {
 	
-	private SimpleBassistManager bassist;
+	private SimpleBassistManager bassistManager;
 
-	public SimpleBassistManagerFrame(SimpleBassistManager bassist) {
+	public SimpleBassistManagerFrame(SimpleBassistManager bassistManager) {
 
-		if (bassist == null)
+		if (bassistManager == null)
 			throw new NullPointerException();
 
-		this.bassist = bassist;
-		loadSavePanel = new LoadSavePanel(bassist, "sheets", "sheet1");
+		this.bassistManager = bassistManager;
+		loadSavePanel = new LoadSavePanel(bassistManager, "sheets", "sheet1");
 
 		this.setTitle("Simple Bassist");
 
@@ -38,7 +42,7 @@ public class SimpleBassistManagerFrame extends ManagedFrame implements Observer 
 		this.setLocationByPlatform(true);
 		this.setVisible(false);
 		
-		bassist.addObserver(this);
+		bassistManager.addObserver(this);
 	}
 	
 	// GUI elements
@@ -66,13 +70,19 @@ public class SimpleBassistManagerFrame extends ManagedFrame implements Observer 
 		settingsPanel.add(resetButton);
 		settingsPanel.add(statusLabel);
 		boxBassists = new JComboBox<>(SimpleBassist.list);
-		// TODO implement ChangeListener
+		boxBassists.addItemListener(new ItemListener() {
+			@Override public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					bassistManager.setBassist((SimpleBassist)boxBassists.getSelectedItem());
+				}
+			}
+		});
 		settingsPanel.add(boxBassists);
 		this.getContentPane().add(settingsPanel, BorderLayout.SOUTH);
 	}
 	
 	private void makeChordTable() {
-		String[] chordNames = this.bassist.getChordTable().chordNames;
+		String[] chordNames = this.bassistManager.getChordTable().chordNames;
 		
 		chordTablePane.removeAll();
 		chordNamesLabels = new JLabel[chordNames.length];
@@ -98,7 +108,7 @@ public class SimpleBassistManagerFrame extends ManagedFrame implements Observer 
 
 	@Override
 	public void update(Observable observable, Object arg) {
-		if (observable != bassist)
+		if (observable != bassistManager)
 			return;
 		
 		if (arg == SimpleBassistManager.TABLE_CHANGED) {
@@ -106,7 +116,7 @@ public class SimpleBassistManagerFrame extends ManagedFrame implements Observer 
 		}
 		
 		for (int i = 0; i < chordNamesLabels.length; i++) {
-			if (i == bassist.getBarCount())
+			if (i == bassistManager.getBarCount())
 				chordNamesLabels[i].setForeground(Color.RED);
 			else
 				chordNamesLabels[i].setForeground(Color.BLACK);

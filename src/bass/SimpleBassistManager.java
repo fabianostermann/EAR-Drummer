@@ -89,4 +89,8 @@ public class SimpleBassistManager extends Observable implements MetronomeListene
 	public void setMidiVolume(int volume) {
 		this.midiVolume = volume;
 	}
+	
+	public void setBassist(SimpleBassist bassist) {
+		this.bassist = bassist;
+	}
 }
