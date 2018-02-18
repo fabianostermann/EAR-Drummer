@@ -16,6 +16,8 @@ public class Settings {
 	}
 	public static FitnessVersion FITNESS_VERSION = FitnessVersion.RuleBased;
 
+	public static final String CONFIG_FOLDER = "config";
+	
 	//Metronome default settings
 	public static int TICKS = 8;
 	public static int MIN_TPM = 100;

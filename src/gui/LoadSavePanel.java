@@ -1,6 +1,7 @@
 package gui;
 
 import init.ImageLoader;
+import init.Settings;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -21,9 +22,9 @@ import javax.swing.JTextField;
 @SuppressWarnings("serial")
 public class LoadSavePanel extends JPanel {
 
-	private final String TOP_FOLDER = "config";
+	private final String TOP_FOLDER = Settings.CONFIG_FOLDER;
 	private final String SAVE_FOLDER;
-	private final String DEFAULT_FILENAME = "default";
+	private final String DEFAULT_FILENAME = "studie2018";
 	
 	private final String defaultSaveName;
 	
