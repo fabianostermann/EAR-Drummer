@@ -21,7 +21,7 @@ public class SimpleBassistManager extends Observable implements MetronomeListene
 	
 	private SimpleBassist bassist = SimpleBassist.list[0];
 	
-	private int barCount = -1;
+	private int barCount;
 	private ChordLib.ChordTable table = new ChordLib.ChordTable();
 	private int midiVolume = 100;
 	
@@ -29,6 +29,8 @@ public class SimpleBassistManager extends Observable implements MetronomeListene
 		this.bassGenerator = bassGenerator;
 		
 		table = ChordLib.interpretChordTableString("");
+		
+		resetBarCount();
 	}
 	
 	@Override
@@ -76,6 +78,10 @@ public class SimpleBassistManager extends Observable implements MetronomeListene
 	
 	public int getBarCount() {
 		return Math.max(0, this.barCount);
+	}
+	
+	public void resetBarCount() {
+		this.barCount = -1;
 	}
 	
 	public ChordLib.ChordTable getChordTable() {

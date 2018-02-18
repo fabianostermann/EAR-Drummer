@@ -68,10 +68,10 @@ public class WalkIn4Bassist implements SimpleBassist {
 			if (recursionLevel++ > SAVE_RECURSION_DEPTH) {
 				System.err.println("Reached save recursion depth ("+SAVE_RECURSION_DEPTH+") of 'WalkIn4' Bassist.");
 			} else {
-				midi = nextNote(barCount, currTick, numOfTicks, table);				
+				midi = nextNote(barCount, currTick, numOfTicks, table);
 			}
 		}
-			
+		
 		lastMidi = midi;
 		return midi;
 	}

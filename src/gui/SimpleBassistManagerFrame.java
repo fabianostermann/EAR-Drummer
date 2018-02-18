@@ -6,17 +6,22 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.sound.midi.MidiDevice;
-import javax.sound.midi.MidiUnavailableException;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.JSpinner;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import bass.SimpleBassist;
 import bass.SimpleBassistManager;
@@ -53,6 +58,11 @@ public class SimpleBassistManagerFrame extends ManagedFrame implements Observer 
 	
 	private LoadSavePanel loadSavePanel;
 
+	
+	private JPanel volumePane = new JPanel();
+	private JSlider volumeSlider;
+	private JLabel volumeLabel = new JLabel();
+	
 	private JButton resetButton = ImageLoader.createButton("Reset");
 	private JLabel statusLabel = new JLabel("no status");
 	private JPanel settingsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -66,9 +76,12 @@ public class SimpleBassistManagerFrame extends ManagedFrame implements Observer 
 		
 		this.getContentPane().add(loadSavePanel, BorderLayout.NORTH);
 		
-		resetButton.setEnabled(false);
+		resetButton.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				bassistManager.resetBarCount();
+			}
+		});
 		settingsPanel.add(resetButton);
-		settingsPanel.add(statusLabel);
 		boxBassists = new JComboBox<>(SimpleBassist.list);
 		boxBassists.addItemListener(new ItemListener() {
 			@Override public void itemStateChanged(ItemEvent e) {
@@ -78,6 +91,21 @@ public class SimpleBassistManagerFrame extends ManagedFrame implements Observer 
 			}
 		});
 		settingsPanel.add(boxBassists);
+		volumeSlider = new JSlider(0, 127, bassistManager.getMidiVolume());
+		volumeSlider.addChangeListener(new ChangeListener() {
+			@Override public void stateChanged(ChangeEvent e) {
+				bassistManager.setMidiVolume(volumeSlider.getValue());
+				volumeSlider.setToolTipText(""+bassistManager.getMidiVolume());
+				volumeLabel.setText(""+bassistManager.getMidiVolume());
+			}
+		});
+		volumePane.add(volumeSlider);
+		volumeLabel.setText(""+bassistManager.getMidiVolume());
+		volumePane.add(new JLabel("Volume:"));
+		volumePane.add(volumeLabel);
+		volumePane.setBorder(BorderFactory.createEtchedBorder());
+		settingsPanel.add(volumePane);
+		settingsPanel.add(statusLabel);
 		this.getContentPane().add(settingsPanel, BorderLayout.SOUTH);
 	}
 	
