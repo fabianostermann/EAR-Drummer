@@ -21,8 +21,8 @@ public class Settings {
 	//Metronome default settings
 	public static int TICKS = 8;
 	public static int MIN_TPM = 100;
-	public static int TPM = 300;
-	public static int MAX_TPM = 900;
+	public static int TPM = 200;
+	public static int MAX_TPM = 700;
 	public static float SWING = 0.67f;
 	
 	//MIDI devices settings

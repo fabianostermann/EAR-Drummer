@@ -24,7 +24,7 @@ public class LoadSavePanel extends JPanel {
 
 	private final String TOP_FOLDER = Settings.CONFIG_FOLDER;
 	private final String SAVE_FOLDER;
-	private final String DEFAULT_FILENAME = "studie2018";
+	private final String DEFAULT_FILENAME = "default";
 	
 	private final String defaultSaveName;
 	
