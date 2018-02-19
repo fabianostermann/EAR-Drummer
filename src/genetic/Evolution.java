@@ -14,10 +14,10 @@ public class Evolution extends ProgressObservable implements Runnable {
 	//TODO optimize on performance by minimizing declarations
 	
 	// initial
-	public int POPULATION_SIZE = 1;
-	public int SLEEP_TIME = 250;
-	public int MUTATION_EXPANSION_LIMIT = 5000;
-	public int INPUT_WINDOW_SIZE = 1500;
+	public int POPULATION_SIZE = 10;
+	public int SLEEP_TIME = 150;
+	public int MUTATION_EXPANSION_LIMIT = 2000;
+	public int INPUT_WINDOW_SIZE = 2000;
 
 	private ArrayList<DrumPattern> nextGeneration = new ArrayList<DrumPattern>();
 	
