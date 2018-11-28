@@ -1,12 +1,12 @@
 KeepOriginal:1.0
-KeepInstruments:0.81
-KeepTicks:0.8
+KeepInstruments:0.75
+KeepTicks:0.84
 Random:0.1
-Loudness:0.3
-Virtuoso:0.56
+Loudness:0.51
+Virtuoso:0.61
 Chromatic:0.51
 Holdsworth:1.0
-Legato:0.99
+Legato:0.5
 Staccato:0.52
 FreeJazz:1.0
 Ostinato:0.32
