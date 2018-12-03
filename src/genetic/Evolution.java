@@ -14,8 +14,8 @@ public class Evolution extends ProgressObservable implements Runnable {
 	//TODO optimize on performance by minimizing declarations
 	
 	// initial
-	public int POPULATION_SIZE = 10;
-	public int SLEEP_TIME = 150;
+	public int POPULATION_SIZE = 25;
+	public int SLEEP_TIME = 2000;
 	public int MUTATION_EXPANSION_LIMIT = 2000;
 	public int INPUT_WINDOW_SIZE = 2000;
 
