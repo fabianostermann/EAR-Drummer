@@ -1,21 +1,19 @@
-# PatternJazzDrummer
-This is a java8 realtime system that generates rhythmical drum patterns outputted via midi to accompany a jazz soloist sending its melodies in via midi.
+# EAR Drummer
 
-#Translation of RuleBased Approach to CombinationBased one (see init/Settings.java)
-Rule -> SoloFactor, PatternFactor
+EAR Drummer is a realtime interactive music system that generates rhythmical drum patterns.\
+It produces midi output that provides backing music to accompany a Jazz soloist.\
+It uses **E**volutionary Computing, is fully **A**utonomous and **R**eacts to midi input.
 
-chromatic -> chromatic, moreTicks
-freeJazz -> freeJazz, random
-holdworth -> holdsworth, instrumentJumps
-keepInstruments -> -, keepInstruments
-legato -> legato, moreTicks
-keepOriginal -> -, keepOriginal
-ostinato -> ostinato, doubleAccent
-pedal -> pedal, morePause
-random -> random, random
-staccato -> staccato, accent
-keepTicks -> -, keepTicks
-virtuoso -> virtuoso, newInstruments
-wide -> wide, allInstruments
+## Quick Start
 
-LOUDNESS RULE ??
+EAR Drummer is implemented in pure Java.\
+The easiest way of running it is by executing the released Jar.\
+If you want to compile the project's source, it is recommended to use the Ant build file.\
+An short instruction to the GUI can be found in the *doc/* directory.
+
+## Future Plans:
+
+* Transformation of *RuleBased* Approach to *CombinationBased*\
+(see src/init/Settings.java -> FitnessVersion.CombinationBased)\
+Rules become different combinations of SoloFactors and PatternFactors
+
