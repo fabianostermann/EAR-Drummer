@@ -1,15 +1,15 @@
-# About EAR Drummer
+# GUI guide
 
-The first thing to do is compiling and starting the software.
-In order to do so follow the **Setup Guide**.
-When the software and its many windows appear on your screen and you got puzzled read on right here.
+When the program and its many windows appear on your screen and you got puzzled read on right here.
 
+## What EAR Drummer wants to do
 
-## What the software wants to do
+Simply said, *EAR Drummer* is a reative drum machine.
+When playing improvised music like Jazz music an interactive accompaniment is desired.
+If there is no human musicians band available to practice playalong records are favoured very often.
+But records do not react to your playing. Music generating software that is available for personal computers since 20 years from now could do that, but that complex task is often feared by commercial software producers.
 
-Simply said, *EAR Drummer* is a reative drum machine. When playing improvised music like jazz music an interactive accompaniment is desired. If there is no human musicians band available to practice playalong records are favoured very often. But records do not react to your playing. Music generating software that is available for personal computers since 20 years from now could do that, but that complex task is often feared by commercial software producers.
-*EAR Drummer* tries to fill that gap in the rhythmic area.
-
+*EAR Drummer* aims to fill that gap in the rhythmic area.
 
 ## Hardware Setup
 
@@ -24,7 +24,7 @@ The windows are presented in the following.
 ### Frame Manager Window
 
 This window opens and closes windows. The software will start up showing all of its eleven windows. All of them have their entry in the *Frame Manager*. A closed window is just checked out. Check it in to reopen it.
-**Important**: To exit the software close the *Frame Manager* and all windows will disappear!
+**Important**: To exit the software close the *Frame Manager* and all windows will close!
 
 ### Midi Input/Output Manager
 
@@ -87,7 +87,6 @@ Metronome settings are also recorded and set by the metronome.
 ### Midi Keyboard Dummy
 
 This window shows one button that makes the computer keyboard a pentatonic claviature when pressed. Use for tests.
-
 
 ## Audio Examples 
 Examples of generated music are available at
