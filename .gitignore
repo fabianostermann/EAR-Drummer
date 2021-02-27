@@ -1,5 +1,5 @@
-/debug.txt
-/error.txt
+/debug.log
+/error.log
 /.classpath
 /.project
 *.class

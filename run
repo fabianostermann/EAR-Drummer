@@ -1,9 +1,0 @@
-#!/bin/sh
-
-BINPATH=bin
-
-if [ -e $BINPATH ]
-then 
-java -classpath $BINPATH init/Init $1
-else echo "Execute './compile' first"
-fi

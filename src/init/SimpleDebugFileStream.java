@@ -18,10 +18,12 @@ public class SimpleDebugFileStream extends PrintStream {
 	
 	private boolean isClosed = false;
 	
+	private final static String LOG_FILE_SUFFIX = ".log";
+	
 	public SimpleDebugFileStream(String name, PrintStream...streams ) throws FileNotFoundException {
-		super(name+".txt");
+		super(name+LOG_FILE_SUFFIX);
 		
-		this.file = new File(name+".txt");
+		this.file = new File(name+LOG_FILE_SUFFIX);
 		
 		this.additionalStreams = streams;
 		
