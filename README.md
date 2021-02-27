@@ -1,5 +1,7 @@
 # EAR Drummer
 
+<img align="right" src="img/EarDrumLogo_v1.jpg" width="200" />
+
 EAR Drummer is a realtime interactive music system that generates rhythmical drum patterns.\
 It produces midi output that provides backing music to accompany a Jazz soloist.\
 It uses **E**volutionary Computing, is fully **A**utonomous and **R**eacts to midi input.
