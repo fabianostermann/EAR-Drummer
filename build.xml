@@ -1,0 +1,62 @@
+<?xml version = "1.0"?>
+<project name="EAR-Drummer" default="compile" basedir=".">
+
+<property name="src" value="src"/>
+<property name="bin" value="bin"/>
+<property name="jar" value="jar"/>
+<property name="jarfile" value="EAR-Drummer.jar"/>
+
+
+	<target name="compile"
+		depends="prepare">
+		<javac includeantruntime="false"
+			destdir="${bin}"
+			>
+			<!-- add following to <javac> if errors occur:
+			source="1.8"
+			target="1.8" -->
+			<classpath>
+				<!--pathelement path="lib/?.jar"/-->
+			</classpath>
+			<src path="${src}"/>
+		</javac>
+	</target>
+
+	<target name="pack"
+		depends="compile">
+		<jar destfile="${jarfile}">
+			<fileset dir="${bin}"/>
+			<!--zipfileset includes="**/*.class" src="lib/?.jar"/-->
+			<manifest>
+				<attribute name="Main-Class"
+					value="init.Init"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="prepare">
+		<mkdir dir="${bin}"/>
+	</target>
+
+	<target name="clean">
+		<delete dir="${bin}"/>
+	</target>
+
+	<target name="run" depends="pack">
+		<java jar="EAR-Drummer.jar" fork="true">
+			<arg line=""/>
+		</java>
+	</target>
+	
+	<target name="run-with-args" depends="pack, input-runargs">
+		<java jar="EAR-Drummer.jar" fork="true">
+			<arg line="${args}"/>
+		</java>
+	</target>
+	
+	<target name="input-runargs" unless="args">
+		<input addProperty="args" message="Type arguments:"/>
+	</target>
+
+</project>
+
