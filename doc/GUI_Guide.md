@@ -88,7 +88,3 @@ Metronome settings are also recorded and set by the metronome.
 
 This window shows one button that makes the computer keyboard a pentatonic claviature when pressed. Use for tests.
 
-## Audio Examples 
-Examples of generated music are available at
-http://sig-ma.de/wp-content/uploads/2017/01/JazzDrumPatterns.zip
-
