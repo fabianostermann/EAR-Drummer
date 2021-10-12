@@ -13,7 +13,7 @@ Demo material showing EAR Drummer in action is available on [Zenodo](https://doi
 ## Quick Start
 
 EAR Drummer is implemented in pure Java.\
-The easiest way of running EAR Drummer is by executing the released Jar.\
+The easiest way of running EAR Drummer is by executing the latest Jar under [Releases](https://github.com/OysterSandwich/EAR-Drummer/releases).\
 If you want to compile the project's source, it is recommended to use the [Ant](https://ant.apache.org/) build file.\
 A short instruction to the GUI can be found in the *doc/* directory.
 
