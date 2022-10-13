@@ -8,7 +8,7 @@ It uses **E**volutionary Computing, is fully **A**utonomous and **R**eacts to mi
 
 ## Demo & Papers
 
-Demo material showing EAR Drummer in action is available on [Zenodo](https://doi.org/10.5281/zenodo.5564676).\
+Demo material showing EAR Drummer in action is available on [YouTube](https://www.youtube.com/watch?v=FhbpEud-Fkg&list=PLm62WPxCDoFR7OsANv2p8i4KF9zDXb3QL) and [Zenodo](https://doi.org/10.5281/zenodo.5564676).\
 Addtionally, two papers were published in the context of EAR Drummer, see [EvoMUSART](https://doi.org/10.1007/978-3-319-55750-2_17) and [TISMIR](https://doi.org/10.5334/tismir.90).
 
 ## Quick Start
